@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Academia Santi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap');
+
+  :root {
+    --bg: #0f0c29;
+    --bg2: #1a1640;
+    --card: #1e1b4b;
+    --card2: #252060;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --gold: #fbbf24;
+    --green: #10b981;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --text: #f0edff;
+    --muted: #8b83c4;
+    --border: rgba(124,58,237,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== SCREENS ===== */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ===== PROFILES ===== */
+  #screen-profiles {
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: radial-gradient(ellipse at top, #2d1b69 0%, #0f0c29 70%);
+  }
+
+  .profiles-logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.8rem;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(251,191,36,0.5);
+    margin-bottom: 0.2rem;
+    text-align: center;
+  }
+
+  .profiles-sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .profiles-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    max-width: 400px;
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    min-width: 120px;
+    position: relative;
+  }
+
+  .profile-card:hover {
+    border-color: var(--accent2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(124,58,237,0.3);
+  }
+
+  .profile-emoji { font-size: 2.4rem; margin-bottom: 0.4rem; }
+
+  .profile-name {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  .profile-stars {
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-top: 0.2rem;
+  }
+
+  .profile-delete {
+    position: absolute;
+    top: 6px; right: 8px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .profile-card:hover .profile-delete { opacity: 1; }
+
+  .btn-add-profile {
+    background: none;
+    border: 2px dashed var(--accent);
+    border-radius: 20px;
+    padding: 1.2rem 1.5rem;
+    color: var(--accent2);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+  }
+  .btn-add-profile:hover { background: rgba(124,58,237,0.1); transform: translateY(-3px); }
+
+  /* ===== ADD PROFILE MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 24px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .modal h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+
+  .emoji-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .emoji-btn {
+    font-size: 1.6rem;
+    background: var(--card2);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    width: 48px; height: 48px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .emoji-btn.selected { border-color: var(--accent2); background: rgba(124,58,237,0.2); }
+
+  .modal input {
+    width: 100%;
+    background: var(--card2);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    outline: none;
+  }
+  .modal input:focus { border-color: var(--accent2); }
+
+  .modal-btns { display: flex; gap: 0.7rem; }
+
+  .btn { 
+    flex: 1;
+    padding: 0.7rem;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-secondary { background: var(--card2); color: var(--muted); }
+  .btn-secondary:hover { color: var(--text); }
+
+  /* ===== HOME ===== */
+  #screen-home {
+    background: radial-gradient(ellipse at top, #2d1b69 0%, #0f0c29 70%);
+  }
+
+  .home-header {
+    padding: 1.2rem 1.2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .user-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.4rem 0.9rem 0.4rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .user-pill:hover { border-color: var(--accent2); }
+  .user-pill-emoji { font-size: 1.3rem; }
+
+  .home-xp {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .home-hero {
+    padding: 1.5rem 1.2rem 1rem;
+    text-align: center;
+  }
+
+  .home-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2rem;
+    color: var(--gold);
+    text-shadow: 0 0 24px rgba(251,191,36,0.4);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .home-greeting {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .subjects-grid {
+    padding: 0 1rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+
+  .subject-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .subject-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+
+  .subject-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .subject-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+
+  .subject-name {
+    font-weight: 800;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .subject-progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
+
+  .subject-progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s;
+  }
+
+  .subject-progress-text {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* subject colors */
+  .s-mat { border-color: rgba(59,130,246,0.4); }
+  .s-mat::before { background: #3b82f6; }
+  .s-mat .subject-progress-fill { background: #3b82f6; }
+  .s-mat .subject-icon::after { }
+
+  .s-esp { border-color: rgba(236,72,153,0.4); }
+  .s-esp::before { background: #ec4899; }
+  .s-esp .subject-progress-fill { background: #ec4899; }
+
+  .s-cie { border-color: rgba(16,185,129,0.4); }
+  .s-cie::before { background: #10b981; }
+  .s-cie .subject-progress-fill { background: #10b981; }
+
+  .s-fin { border-color: rgba(251,191,36,0.4); }
+  .s-fin::before { background: #fbbf24; }
+  .s-fin .subject-progress-fill { background: #fbbf24; }
+
+  .s-soc { border-color: rgba(167,139,250,0.4); }
+  .s-soc::before { background: #a78bfa; }
+  .s-soc .subject-progress-fill { background: #a78bfa; }
+
+  .s-ia { border-color: rgba(251,113,133,0.4); }
+  .s-ia::before { background: #fb7185; }
+  .s-ia .subject-progress-fill { background: #fb7185; }
+
+  /* ===== SUBJECT SCREEN ===== */
+  #screen-subject {
+    background: var(--bg);
+  }
+
+  .subject-header {
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0.2rem;
+    transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--text); }
+
+  .subject-header-info { flex: 1; }
+  .subject-header-icon { font-size: 1.6rem; }
+  .subject-header-name {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .topics-list {
+    padding: 1rem;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .topic-block {
+    margin-bottom: 1rem;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 2px solid var(--border);
+  }
+
+  .topic-header {
+    padding: 0.9rem 1rem;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .topic-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .topic-name {
+    font-weight: 800;
+    font-size: 0.95rem;
+    flex: 1;
+  }
+
+  .topic-stars {
+    font-size: 0.8rem;
+    color: var(--gold);
+  }
+
+  .topic-locked .topic-num {
+    background: var(--card2);
+    color: var(--muted);
+  }
+
+  .topic-locked .topic-name { color: var(--muted); }
+
+  .levels-row {
+    display: flex;
+    padding: 0.7rem;
+    gap: 0.5rem;
+    background: var(--bg2);
+  }
+
+  .level-btn {
+    flex: 1;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 0.5rem 0.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .level-btn:hover:not(.locked):not(.completed) {
+    border-color: var(--accent2);
+    background: rgba(124,58,237,0.15);
+  }
+
+  .level-btn.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .level-btn.completed {
+    background: rgba(16,185,129,0.15);
+    border-color: rgba(16,185,129,0.5);
+  }
+
+  .level-btn.current {
+    border-color: var(--accent2);
+    background: rgba(124,58,237,0.2);
+    animation: pulse-border 2s infinite;
+  }
+
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(168,85,247,0.3); }
+    50% { box-shadow: 0 0 0 4px rgba(168,85,247,0.1); }
+  }
+
+  .level-btn-num {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--muted);
+  }
+
+  .level-btn-icon { font-size: 1.1rem; margin: 0.1rem 0; }
+
+  .level-btn-stars {
+    font-size: 0.65rem;
+    color: var(--gold);
+    min-height: 0.8rem;
+  }
+
+  /* ===== QUIZ SCREEN ===== */
+  #screen-quiz {
+    background: var(--bg);
+  }
+
+  .quiz-header {
+    padding: 1rem 1.2rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .quiz-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+  }
+
+  .quiz-title {
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .hearts-row {
+    display: flex;
+    gap: 0.3rem;
+    font-size: 1.2rem;
+  }
+
+  .progress-bar-quiz {
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 6px;
+    transition: width 0.4s;
+  }
+
+  .quiz-body {
+    flex: 1;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .question-box {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .question-level-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .question-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .option-btn {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 0.9rem 1.1rem;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent2);
+    background: rgba(124,58,237,0.15);
+  }
+
+  .option-btn.correct {
+    border-color: var(--green);
+    background: rgba(16,185,129,0.2);
+    color: #6ee7b7;
+  }
+
+  .option-btn.wrong {
+    border-color: var(--red);
+    background: rgba(239,68,68,0.2);
+    color: #fca5a5;
+  }
+
+  .option-letter {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--card2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .feedback-box {
+    border-radius: 14px;
+    padding: 0.9rem 1.1rem;
+    margin-top: 0.8rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: none;
+  }
+
+  .feedback-box.correct {
+    background: rgba(16,185,129,0.15);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: #6ee7b7;
+    display: block;
+  }
+
+  .feedback-box.wrong {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3);
+    color: #fca5a5;
+    display: block;
+  }
+
+  .next-btn {
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .btn-big {
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 16px;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    transition: all 0.2s;
+  }
+  .btn-big:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* ===== RESULTS SCREEN ===== */
+  #screen-results {
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.2rem;
+    text-align: center;
+    background: radial-gradient(ellipse at top, #2d1b69 0%, #0f0c29 70%);
+  }
+
+  .results-emoji { font-size: 4rem; margin-bottom: 0.5rem; }
+
+  .results-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .results-subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+  .results-stars {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .results-score {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .results-xp {
+    background: rgba(251,191,36,0.15);
+    border: 1px solid rgba(251,191,36,0.3);
+    border-radius: 12px;
+    padding: 0.6rem 1.2rem;
+    color: var(--gold);
+    font-weight: 800;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+  }
+
+  .papa-msg {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    max-width: 320px;
+  }
+
+  .papa-msg strong { color: var(--gold); }
+
+  .results-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .btn-outline {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    background: none;
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent2); color: var(--text); }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.7rem 1.4rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    z-index: 200;
+    transition: transform 0.3s;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- PROFILES SCREEN -->
+<div id="screen-profiles" class="screen active">
+  <div class="profiles-logo">🏆 Academia</div>
+  <div class="profiles-sub">¿Quién va a estudiar hoy?</div>
+  <div class="profiles-grid" id="profiles-grid"></div>
+  <button class="btn-add-profile" onclick="openAddProfile()">＋ Agregar usuario</button>
+</div>
+
+<!-- ADD PROFILE MODAL -->
+<div class="modal-overlay" id="modal-add">
+  <div class="modal">
+    <h3>Nuevo usuario</h3>
+    <div class="emoji-picker" id="emoji-picker"></div>
+    <input type="text" id="new-profile-name" placeholder="Nombre..." maxlength="12">
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeAddProfile()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveNewProfile()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- HOME SCREEN -->
+<div id="screen-home" class="screen">
+  <div class="home-header">
+    <button class="user-pill" onclick="showScreen('profiles')">
+      <span class="user-pill-emoji" id="current-emoji">🎮</span>
+      <span id="current-name">Santi</span>
+    </button>
+    <div class="home-xp">⚡ <span id="current-xp">0</span> XP</div>
+  </div>
+  <div class="home-hero">
+    <div class="home-title">¡A estudiar!</div>
+    <div class="home-greeting" id="home-greeting">Elige una materia 👇</div>
+  </div>
+  <div class="subjects-grid" id="subjects-grid"></div>
+</div>
+
+<!-- SUBJECT SCREEN -->
+<div id="screen-subject" class="screen">
+  <div class="subject-header">
+    <button class="back-btn" onclick="showScreen('home')">←</button>
+    <div class="subject-header-icon" id="subj-icon">📐</div>
+    <div class="subject-header-info">
+      <div class="subject-header-name" id="subj-name">Matemáticas</div>
+    </div>
+  </div>
+  <div class="topics-list" id="topics-list"></div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="screen-quiz" class="screen">
+  <div class="quiz-header">
+    <div class="quiz-header-top">
+      <div class="quiz-title" id="quiz-title">Nivel 1</div>
+      <div class="hearts-row" id="hearts-row">❤️❤️❤️</div>
+    </div>
+    <div class="progress-bar-quiz">
+      <div class="progress-bar-fill" id="quiz-progress" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="quiz-body">
+    <div class="question-box">
+      <div class="question-level-badge" id="q-badge">Nivel 1 · Reconocer</div>
+      <div class="question-text" id="q-text">Pregunta...</div>
+    </div>
+    <div class="options-list" id="options-list"></div>
+    <div class="feedback-box" id="feedback-box"></div>
+    <div class="next-btn">
+      <button class="btn-big" id="next-btn" onclick="nextQuestion()" style="display:none">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="screen-results" class="screen">
+  <div class="results-emoji" id="results-emoji">🌟</div>
+  <div class="results-title" id="results-title">¡Excelente!</div>
+  <div class="results-subtitle" id="results-subtitle">Nivel completado</div>
+  <div class="results-stars" id="results-stars">⭐⭐⭐</div>
+  <div class="results-score" id="results-score">5/5 correctas</div>
+  <div class="results-xp" id="results-xp">+150 XP</div>
+  <div class="papa-msg" id="papa-msg"></div>
+  <div class="results-btns">
+    <button class="btn-big" id="results-next-btn" onclick="continueAfterResults()">Siguiente nivel →</button>
+    <button class="btn-outline" onclick="goToSubject()">Volver a temas</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// =====================
+// DATA
+// =====================
+
+const SUBJECTS = [
+  { id:'mat', name:'Matemáticas', icon:'📐', cls:'s-mat', topics: MAT_TOPICS() },
+  { id:'esp', name:'Español', icon:'📖', cls:'s-esp', topics: ESP_TOPICS() },
+  { id:'cie', name:'Ciencias', icon:'🔬', cls:'s-cie', topics: CIE_TOPICS() },
+  { id:'fin', name:'Finanzas', icon:'💰', cls:'s-fin', topics: FIN_TOPICS() },
+  { id:'soc', name:'Socioemocional', icon:'💜', cls:'s-soc', topics: SOC_TOPICS() },
+  { id:'ia',  name:'IA', icon:'🤖', cls:'s-ia',  topics: IA_TOPICS() },
+];
+
+const LEVEL_LABELS = ['Reconocer','Calcular','Aplicar','⚽ Reto Real Madrid'];
+
+function MAT_TOPICS() { return [
+  { name:'Decimales ×÷', levels:[
+    [// L1 Reconocer
+      {q:'¿Cuántos ceros se añaden al multiplicar 78 × 100?', opts:['1','2','3','4'], ans:1},
+      {q:'¿Qué pasa con el punto decimal al multiplicar 0.5 × 10?', opts:['Se mueve 1 lugar a la derecha','Se mueve 1 lugar a la izquierda','No se mueve','Desaparece'], ans:0},
+      {q:'¿Cuál es el resultado de 0.2 × 10?', opts:['0.02','2','0.002','20'], ans:1},
+      {q:'¿Cuántos lugares se mueve el punto al multiplicar por 1000?', opts:['1','2','3','4'], ans:2},
+      {q:'¿Cuál es el resultado de 6 × 100?', opts:['600','60','6000','0.06'], ans:0},
+    ],[// L2 Calcular
+      {q:'0.13 × 100 = ?', opts:['1.3','13','130','0.013'], ans:1},
+      {q:'0.489 × 1000 = ?', opts:['48.9','4.89','489','4890'], ans:2},
+      {q:'0.76 × 1000 = ?', opts:['76','760','7.6','7600'], ans:1},
+      {q:'169 ÷ 10 = ?', opts:['1690','16.9','1.69','0.169'], ans:1},
+      {q:'0.74 × 1000 = ?', opts:['7.4','74','740','7400'], ans:2},
+    ],[// L3 Aplicar
+      {q:'Un kg de frijol cuesta $20.50. ¿Cuánto cuestan 100 kg?', opts:['$205','$2050','$20.50','$2500'], ans:1},
+      {q:'Un litro de gasolina cuesta $22.90. ¿Cuánto cuestan 10 litros?', opts:['$22.90','$229','$2290','$22900'], ans:1},
+      {q:'Un kg de queso cuesta $65.80. ¿Cuánto cuestan 10 kg?', opts:['$6.58','$65.80','$658','$6580'], ans:2},
+      {q:'Una enchilada cuesta $5.50. ¿Cuánto cuestan 100 enchiladas?', opts:['$55','$550','$5500','$5.50'], ans:1},
+      {q:'Un pantalón cuesta $230. ¿Cuánto cuestan 100 pantalones?', opts:['$2300','$23000','$230','$2.30'], ans:1},
+    ],[// L4 Real Madrid
+      {q:'El sueldo diario de Mbappé es $310,000. ¿Cuánto gana en 10 días?', opts:['$310,000','$3,100,000','$31,000,000','$3,100'], ans:1},
+      {q:'Un jersey del Real Madrid cuesta $1,250.50. ¿Cuánto cuestan 100 jerseys?', opts:['$12,505','$125,050','$1,250,500','$12,500'], ans:1},
+      {q:'La cancha del Bernabéu mide 0.105 km de largo. ¿Cuántos metros son?', opts:['10.5','105','1050','0.105'], ans:1},
+      {q:'Vinicius hizo 0.45 goles por partido en 10 partidos. ¿Cuántos goles en total?', opts:['0.045','0.45','4.5','45'], ans:2},
+      {q:'Una entrada al Bernabéu cuesta $1,800. ¿Cuánto recaudan con 1000 entradas?', opts:['$18,000','$180,000','$1,800,000','$18,000,000'], ans:2},
+    ]
+  ]},
+  { name:'Fracciones ×÷', levels:[
+    [
+      {q:'¿Cuánto es 1/2 de 10?', opts:['2','5','8','10'], ans:1},
+      {q:'¿Qué significa "2/3 de 90"?', opts:['90 ÷ 2','90 × 2/3','90 + 2/3','90 - 2/3'], ans:1},
+      {q:'¿Cuánto es 1/4 de 20?', opts:['4','5','8','10'], ans:1},
+      {q:'¿Cuánto es 1/3 de 30?', opts:['3','9','10','13'], ans:2},
+      {q:'¿Cuánto es 3/4 de 40?', opts:['10','20','30','40'], ans:2},
+    ],[
+      {q:'25 × 4/5 = ?', opts:['16','20','25','100'], ans:1},
+      {q:'1/6 de 3000 = ?', opts:['300','500','600','1000'], ans:1},
+      {q:'2/5 de 8000 = ?', opts:['1600','2000','3200','4000'], ans:2},
+      {q:'3/4 ÷ 1/8 = ?', opts:['3/32','6','8','12'], ans:1},
+      {q:'1/3 de 4500 = ?', opts:['450','900','1500','1350'], ans:2},
+    ],[
+      {q:'Ángel compró 3/4 kg de chorizo y lo dividió en partes de 1/8 kg. ¿Cuántas partes hizo?', opts:['3','4','6','8'], ans:2},
+      {q:'Un pantalón necesita 3/7 m de tela. ¿Cuántos pantalones se hacen con 36 metros?', opts:['12','21','27','84'], ans:3},
+      {q:'Se compraron 3 sandías y se dividen en porciones de 2/8 cada una. ¿Cuántas porciones hay?', opts:['6','8','12','16'], ans:2},
+      {q:'¿Cuánto es el doble de 3 1/8?', opts:['6 1/8','6 1/4','6 2/8','6 3/8'], ans:1},
+      {q:'¿Cuánto es el triple de 5/8?', opts:['15/8','15/24','5/24','5/8'], ans:0},
+    ],[
+      {q:'El Real Madrid ganó 3/4 de sus 28 partidos. ¿Cuántos ganó?', opts:['14','21','22','24'], ans:1},
+      {q:'Bellingham corrió 2/3 del campo (105 m). ¿Cuántos metros corrió?', opts:['35','52.5','70','85'], ans:2},
+      {q:'Del salario de Modric, 1/5 va a impuestos. Si gana $5,000,000 al año, ¿cuánto paga?', opts:['$500,000','$1,000,000','$2,000,000','$2,500,000'], ans:1},
+      {q:'3/8 de los 88,000 aficionados del Bernabéu son turistas. ¿Cuántos son?', opts:['11,000','22,000','33,000','44,000'], ans:2},
+      {q:'Rodrygo marcó goles en 2/5 de los 15 partidos que jugó. ¿En cuántos partidos anotó?', opts:['3','5','6','7'], ans:2},
+    ]
+  ]},
+  { name:'Enteros positivos y negativos', levels:[
+    [
+      {q:'¿Cuál número es negativo?', opts:['5','0','-3','100'], ans:2},
+      {q:'(-2) + (-2) + (-2) es equivalente a:', opts:['(-2) × 3','(-2) × (-3)','2 × 3','2 × (-3)'], ans:0},
+      {q:'¿Cuál es la regla para multiplicar dos negativos?', opts:['El resultado es negativo','El resultado es positivo','El resultado es cero','No se puede'], ans:1},
+      {q:'¿Cuánto es (-1) × 5?', opts:['5','-5','1','-1'], ans:1},
+      {q:'¿El producto de un positivo por un negativo es...?', opts:['Positivo','Negativo','Cero','Depende'], ans:1},
+    ],[
+      {q:'(8) × (-9) = ?', opts:['-72','-17','72','17'], ans:0},
+      {q:'(-12) × (-5) = ?', opts:['-60','60','-17','17'], ans:1},
+      {q:'(-3) × (-9) = ?', opts:['-27','27','-12','12'], ans:1},
+      {q:'5 × (-20) = ?', opts:['100','-100','25','-25'], ans:1},
+      {q:'(-8) × (4) = ?', opts:['32','-32','12','-12'], ans:1},
+    ],[
+      {q:'La temperatura bajó 4°C cada hora durante 3 horas. ¿Cuánto bajó en total?', opts:['7°C','-7°C','12°C','-12°C'], ans:3},
+      {q:'En un juego perdiste 6 puntos en cada una de las 5 rondas. ¿Cuántos puntos tienes?', opts:['30','-30','11','-11'], ans:1},
+      {q:'Un submarino baja 15 metros por minuto durante 4 minutos. ¿A qué profundidad está?', opts:['19 m','-19 m','60 m','-60 m'], ans:3},
+      {q:'Debes $8 a cada uno de 7 amigos. ¿Cuánto debes en total?', opts:['$15','-$15','$56','-$56'], ans:3},
+      {q:'Una empresa pierde $2,500 al día. ¿Cuánto pierde en 4 días?', opts:['$6,500','-$6,500','$10,000','-$10,000'], ans:3},
+    ],[
+      {q:'El Real Madrid ganó 3 partidos (+2 pts) y perdió 4 (-1 pt). ¿Cuántos puntos de diferencia tiene?', opts:['6','-6','2','-2'], ans:3},
+      {q:'Mbappé marcó en 5 partidos seguidos (+3 pts cada uno) pero tuvo tarjeta en 2 (-2 pts). Resultado:', opts:['11','19','-1','7'], ans:0},
+      {q:'El Bernabéu baja 8°C de día a noche. Si de día hay 22°C, ¿cuánto hace de noche?', opts:['30°C','-30°C','14°C','-14°C'], ans:2},
+      {q:'Si pierdes 7 puntos en cada uno de 4 partidos de fantasy fútbol, ¿cuántos puntos pierdes?', opts:['28','-28','11','-11'], ans:1},
+      {q:'El valor de una acción del Real Madrid bajó $3.50 cada día durante 6 días. ¿Cuánto bajó en total?', opts:['$9.50','-$9.50','$21','-$21'], ans:3},
+    ]
+  ]},
+  { name:'Proporcionalidad', levels:[
+    [
+      {q:'¿Qué es proporcionalidad directa?', opts:['Cuando una cantidad sube, la otra baja','Cuando ambas cantidades suben o bajan juntas','Cuando las cantidades no tienen relación','Cuando una cantidad se divide'], ans:1},
+      {q:'¿Cuál es un ejemplo de proporcionalidad directa?', opts:['Más albañiles, menos días','Más velocidad, menos tiempo','Más km, más gasolina','Más trabajadores, menos trabajo'], ans:2},
+      {q:'¿Cuál es un ejemplo de proporcionalidad inversa?', opts:['Más precio, más calidad','Más horas trabajadas, más pago','Más personas, menos tiempo para terminar algo','Más distancia, más gasolina'], ans:2},
+      {q:'Si 1 kg de papas cuesta $8.50, ¿cuánto cuestan 2 kg?', opts:['$4.25','$8.50','$17','$25.50'], ans:2},
+      {q:'La relación precio-cantidad comprada es:', opts:['Inversa','Directa','Sin relación','Depende'], ans:1},
+    ],[
+      {q:'Un camión recorre 800 km en 7 horas. ¿Cuántos km recorre por hora?', opts:['80','100','114.28','120'], ans:2},
+      {q:'Si 3 pintores tardan 20 días en pintar una casa, ¿cuánto tardan 6 pintores?', opts:['10','15','20','40'], ans:0},
+      {q:'Una secretaria escribe 460 palabras en 4 minutos. ¿Cuántas escribe en 1 minuto?', opts:['46','92','115','460'], ans:2},
+      {q:'Si 15 gallinas consumen alimento en 26 días, ¿en cuántos días lo consumen 30 gallinas?', opts:['52','26','13','6.5'], ans:2},
+      {q:'Un agricultor cosechó 563 kg de maíz y recibió $4,222.50. ¿Cuánto vale 1 kg?', opts:['$5.50','$6.50','$7.50','$8.50'], ans:2},
+    ],[
+      {q:'5 personas pintaron una escuela en 36 horas. ¿Cuánto tardarán 9 pintores?', opts:['20 h','18 h','15 h','12 h'], ans:0},
+      {q:'Un agricultor recibe $7.50 por kg de maíz. Si cosecha 450 kg, ¿cuánto gana?', opts:['$2,750','$3,375','$3,500','$4,125'], ans:1},
+      {q:'4 albañiles construyen una casa en 30 días. ¿Cuánto tardarán 7?', opts:['17.14 días','20 días','10 días','14 días'], ans:0},
+      {q:'Si 5 personas recaudan $7.75, ¿cuánto recaudan 10 personas?', opts:['$12.50','$15.50','$15','$7.75'], ans:1},
+      {q:'Un camión tardó 12 horas en 8 paradas. ¿Cuánto tarda en 15 paradas? (proporcionalidad directa)', opts:['22.5 h','20 h','18 h','24 h'], ans:0},
+    ],[
+      {q:'El Real Madrid viaja 1,200 km en 2 horas en avión. ¿Cuánto tarda en ir 3,000 km?', opts:['3 h','5 h','4 h','6 h'], ans:1},
+      {q:'10 jugadores del Real Madrid firman autógrafos en 30 minutos. ¿Cuánto tardan 5 jugadores?', opts:['15 min','60 min','45 min','20 min'], ans:1},
+      {q:'Si Mbappé marca 2 goles cada 3 partidos, ¿cuántos marca en 12 partidos?', opts:['4','6','8','12'], ans:2},
+      {q:'El Bernabéu tiene 88,000 asientos. Si 3/4 están ocupados, ¿cuántos aficionados hay?', opts:['44,000','55,000','66,000','77,000'], ans:2},
+      {q:'Si 8 trabajadores construyen el estadio nuevo en 600 días, ¿cuántos días necesitan 12 trabajadores?', opts:['300','400','450','500'], ans:1},
+    ]
+  ]},
+  { name:'Ecuaciones 2×2', levels:[
+    [
+      {q:'¿Qué es una ecuación?', opts:['Una suma de números','Una igualdad con una o más incógnitas','Un tipo de fracción','Una figura geométrica'], ans:1},
+      {q:'¿Qué es una incógnita?', opts:['El resultado de una suma','Una variable desconocida que queremos encontrar','Un número negativo','Una fracción'], ans:1},
+      {q:'¿Cuántas ecuaciones necesitas para resolver un sistema 2×2?', opts:['1','2','3','4'], ans:1},
+      {q:'En el sistema "x + y = 5" y "x - y = 1", ¿cuántas incógnitas hay?', opts:['1','2','3','4'], ans:1},
+      {q:'¿Qué método usa tablas y una gráfica para resolver ecuaciones?', opts:['Algebraico','Sustitución','Gráfico','Eliminación'], ans:2},
+    ],[
+      {q:'Si y - 2x = 0 y x = 1, ¿cuánto vale y?', opts:['0','1','2','3'], ans:2},
+      {q:'Si y + x = 3 y x = 1, ¿cuánto vale y?', opts:['1','2','3','4'], ans:1},
+      {q:'¿Cuál par (x,y) satisface x + y = 4?', opts:['(1,2)','(2,3)','(2,2)','(3,2)'], ans:2},
+      {q:'En Y = -X + 4, si x = 2, ¿cuánto es Y?', opts:['2','3','4','6'], ans:0},
+      {q:'En Y = 2X - 5, si x = 3, ¿cuánto es Y?', opts:['1','2','3','4'], ans:0},
+    ],[
+      {q:'¿En qué punto se cruzan las rectas y = x y y = -x + 4?', opts:['(1,1)','(2,2)','(2,-2)','(0,4)'], ans:1},
+      {q:'Si 2 refrescos y 1 agua cuestan $35, y 1 refresco y 1 agua cuestan $20, ¿cuánto cuesta el refresco?', opts:['$10','$12','$15','$18'], ans:2},
+      {q:'La suma de dos números es 10 y su diferencia es 4. ¿Cuál es el número mayor?', opts:['5','6','7','8'], ans:2},
+      {q:'Un lápiz y un cuaderno cuestan $28. Dos cuadernos cuestan $40. ¿Cuánto cuesta el lápiz?', opts:['$6','$8','$10','$12'], ans:1},
+      {q:'x + y = 5 y 3x + y = 9. ¿Cuánto vale x?', opts:['1','2','3','4'], ans:1},
+    ],[
+      {q:'Los goles de Vinicius y Mbappé suman 25. Mbappé marcó 3 más que Vinicius. ¿Cuántos hizo Vinicius?', opts:['10','11','12','13'], ans:1},
+      {q:'El estadio tiene 2 tipos de boletos. Con 3 VIP y 2 generales pagan $2,700. Con 1 VIP y 2 generales pagan $1,500. ¿Cuánto cuesta el VIP?', opts:['$400','$500','$600','$700'], ans:2},
+      {q:'Dos jugadores corrieron en total 21 km. Uno corrió 3 km más que el otro. ¿Cuánto corrió el que menos corrió?', opts:['8','9','10','12'], ans:1},
+      {q:'Si x + y = 11 y x - y = 3, ¿cuánto vale y?', opts:['3','4','5','7'], ans:1},
+      {q:'El Real Madrid gastó en dos fichajes $120M. Un fichaje costó $20M más que el otro. ¿Cuánto costó el más barato?', opts:['$40M','$50M','$60M','$70M'], ans:1},
+    ]
+  ]},
+  { name:'Sucesiones', levels:[
+    [
+      {q:'En la sucesión 2, 7, 12, 17... ¿cuánto se suma cada vez?', opts:['2','5','7','10'], ans:1},
+      {q:'¿Cuál es el siguiente número en 2, 4, 6, 8...?', opts:['9','10','11','12'], ans:1},
+      {q:'¿Cuál es la regla de la sucesión 3, 7, 11, 15...?', opts:['Se suma 3','Se suma 4','Se multiplica por 2','Se resta 3'], ans:1},
+      {q:'¿Cuál es el término 5 de la sucesión 1, 4, 7, 10...?', opts:['11','13','14','16'], ans:1},
+      {q:'En -4, -2, 0, 2... ¿qué se suma cada vez?', opts:['-2','0','1','2'], ans:3},
+    ],[
+      {q:'Con la regla 2n + 1, ¿cuánto vale el término n = 4?', opts:['7','8','9','10'], ans:2},
+      {q:'Con la regla 3n - 8, ¿cuánto vale n = 5?', opts:['5','7','8','15'], ans:1},
+      {q:'¿Cuál es la expresión algebraica de 2, 4, 6, 8...?', opts:['n + 1','2n','n²','3n - 1'], ans:1},
+      {q:'Con la regla n², ¿cuánto vale n = 7?', opts:['14','21','49','77'], ans:2},
+      {q:'¿Cuál es la expresión de la sucesión 3, 5, 7, 9...?', opts:['n + 2','2n + 1','3n','2n - 1'], ans:1},
+    ],[
+      {q:'La sucesión de goles de Mbappé es 2, 7, 12, 17... En el partido 15, ¿cuántos goles lleva acumulados?', opts:['62','72','75','77'], ans:1},
+      {q:'Un estadio vende 1,000 boletos el día 1, 1,500 el día 2, 2,000 el día 3. Sigue la sucesión. ¿Cuántos el día 5?', opts:['2,500','3,000','3,500','4,000'], ans:1},
+      {q:'La expresión 5n - 3 describe los puntos que acumula Santi. ¿Cuántos puntos en la posición 12?', opts:['55','57','60','65'], ans:1},
+      {q:'Una sucesión empieza en -1 y aumenta 3 cada vez. ¿Cuál es el término 10?', opts:['26','27','28','29'], ans:1},
+      {q:'La expresión algebraica de -8, -5, -2, 1... es:', opts:['3n - 11','3n - 8','2n - 10','n - 8'], ans:0},
+    ],[
+      {q:'Mbappé marca 3 goles en su primer partido en el Real Madrid, 5 en el segundo, 7 en el tercero. ¿Cuántos en el partido 8?', opts:['15','17','19','21'], ans:1},
+      {q:'El salario de Vinicius sube $500,000 cada año. En el año 1 gana $5M. ¿Cuánto gana en el año 6?', opts:['$7M','$7.5M','$8M','$8.5M'], ans:1},
+      {q:'La sucesión de asistencias de un jugador sigue 2n + 1. ¿Cuántas asistencias en la temporada 15?', opts:['29','30','31','32'], ans:2},
+      {q:'Si el precio de un jersey sube $50 al año y cuesta $1,200 hoy, ¿cuánto costará en 7 años?', opts:['$1,500','$1,550','$1,600','$1,650'], ans:1},
+      {q:'¿Cuál de estas NO es una expresión equivalente a 3n - 8?', opts:['n + n + n - 8','(3n - 6) - 2','3(n - 8)','n·3 - 8'], ans:2},
+    ]
+  ]},
+  { name:'Figuras y expresiones', levels:[
+    [
+      {q:'Si a = 4 y b = 3, ¿cuánto es 2a?', opts:['6','8','12','24'], ans:1},
+      {q:'Si a = 4 y b = 3, ¿cuánto es 4b?', opts:['7','12','16','24'], ans:1},
+      {q:'¿Qué significa "expresión algebraica equivalente"?', opts:['Expresiones con el mismo resultado','Expresiones con las mismas letras','Expresiones sin números','Expresiones negativas'], ans:0},
+      {q:'¿Cuánto es 3(a + 2) si a = 4?', opts:['14','15','18','20'], ans:2},
+      {q:'¿Son 5x + 15 y 5(x + 3) expresiones equivalentes?', opts:['Sí','No','Solo si x = 1','Solo si x = 0'], ans:0},
+    ],[
+      {q:'Un rectángulo tiene base (x + 4) y altura 6. Su área es:', opts:['6x + 4','6x + 24','6x + 10','10x + 4'], ans:1},
+      {q:'Si la expresión del área es 4(a + 6) y a = 3, ¿cuánto mide el área?', opts:['28','32','36','40'], ans:2},
+      {q:'3(b + 2) si b = 5 es igual a:', opts:['10','15','18','21'], ans:3},
+      {q:'¿Cuánto es 2a × 4b si a = 4 y b = 3?', opts:['96','48','24','192'], ans:0},
+      {q:'3b + 6 si b = 3.5 es:', opts:['16','16.5','17','17.5'], ans:1},
+    ],[
+      {q:'Un campo de fútbol tiene largo (x + 30) m y ancho 68 m. Si x = 75, ¿cuánto mide el área?', opts:['6,120','7,140','8,060','9,200'], ans:1},
+      {q:'El costo de una camisa es 2(a + b) donde a = costo base y b = bordado. Si a = $150 y b = $50, ¿cuánto cuesta?', opts:['$200','$400','$450','$500'], ans:1},
+      {q:'La expresión 4(a + 6) equivale a:', opts:['4a + 6','4a + 24','a + 24','4a + 10'], ans:1},
+      {q:'¿Cuánto es 2.5(x + 3) + 2.5(x + 3) si x = 3?', opts:['15','25','30','60'], ans:2},
+      {q:'Un terreno tiene dos parcelas: A = 2ab y B = 4b². Si a = 5 y b = 3, ¿cuánto vale A + B?', opts:['46','66','86','106'], ans:1},
+    ],[
+      {q:'El salario de Bellingham es (base + bono). Su base es $a millones y bono es $b millones. Si a = 8 y b = 2, ¿cuánto gana?', opts:['$8M','$10M','$12M','$16M'], ans:1},
+      {q:'El área del campo del Bernabéu es 105(x + 5). Si x = 63, ¿cuál es el área?', opts:['6,720','7,140','8,200','8,400'], ans:1},
+      {q:'Un jersey de Real Madrid cuesta 2(precio_base + impuesto). Si base = $800 e impuesto = $125, ¿cuánto cuesta?', opts:['$1,750','$1,850','$1,925','$2,050'], ans:1},
+      {q:'La fórmula del valor de mercado de un jugador es 3(habilidad + fama). Si habilidad = 85 y fama = 90, ¿cuánto vale?', opts:['175','350','425','525'], ans:3},
+      {q:'5(x + 3) y 5x + 15 dan el mismo resultado si x = 10?', opts:['No, 5(10+3)=65 y 5(10)+15=65','No, son diferentes','Sí, ambos dan 65','Sí, ambos dan 75'], ans:2},
+    ]
+  ]},
+  { name:'Polígonos', levels:[
+    [
+      {q:'¿Qué es un polígono?', opts:['Una figura con lados curvos','Una figura cerrada con lados rectos','Un círculo','Una figura con exactamente 4 lados'], ans:1},
+      {q:'¿Cuántos lados tiene un hexágono?', opts:['4','5','6','8'], ans:2},
+      {q:'¿Cuál es la suma de ángulos internos de un triángulo?', opts:['90°','180°','270°','360°'], ans:1},
+      {q:'¿Qué es un polígono regular?', opts:['Un polígono muy grande','Un polígono con todos los lados y ángulos iguales','Un polígono con 4 lados','Un polígono negro'], ans:1},
+      {q:'¿Cuántos lados tiene un pentágono?', opts:['4','5','6','7'], ans:1},
+    ],[
+      {q:'¿Cuál es la suma de ángulos internos de un cuadrilátero?', opts:['180°','360°','540°','720°'], ans:1},
+      {q:'Un hexágono tiene 6 lados. ¿En cuántos triángulos se divide con diagonales desde un vértice?', opts:['2','3','4','6'], ans:2},
+      {q:'La suma de ángulos internos de un hexágono es:', opts:['540°','600°','720°','900°'], ans:2},
+      {q:'¿Cuántas diagonales se pueden trazar en un pentágono desde un solo vértice?', opts:['1','2','3','4'], ans:1},
+      {q:'Un octágono se divide en ¿cuántos triángulos?', opts:['4','5','6','8'], ans:2},
+    ],[
+      {q:'Una cancha de fútbol americano tiene forma de rectángulo. Con 100 yd de largo y 53 yd de ancho, ¿cuántos grados tienen sus ángulos internos?', opts:['90° cada uno','180° c/u','360° total','90° total'], ans:0},
+      {q:'Una pizza se corta como un polígono regular de 8 lados. ¿Cuántos grados tiene cada ángulo interno?', opts:['120°','135°','140°','150°'], ans:1},
+      {q:'Un terreno hexagonal regular tiene diagonales desde todos los vértices. ¿Cuántos triángulos forma?', opts:['3','4','5','6'], ans:1},
+      {q:'La suma de ángulos internos de un decágono (10 lados) es:', opts:['1080°','1260°','1440°','1620°'], ans:2},
+      {q:'Un parque pentagonal tiene ángulos que suman:', opts:['360°','450°','540°','720°'], ans:2},
+    ],[
+      {q:'El campo del Bernabéu es rectangular. ¿Cuántos grados suma la diagonal que cruza el campo?', opts:['90°','180°','270°','360°'], ans:1},
+      {q:'El escudo del Real Madrid tiene forma de un polígono. Si tiene 8 lados iguales, ¿cuántos grados tiene cada ángulo?', opts:['120°','135°','140°','145°'], ans:1},
+      {q:'Si un estadio pentagonal tiene diagonales desde todos sus vértices, ¿cuántos triángulos forma?', opts:['2','3','4','5'], ans:1},
+      {q:'¿Cuántas diagonales tiene un hexágono desde UN vértice (no contando los lados)?', opts:['2','3','4','5'], ans:1},
+      {q:'La diferencia entre los ángulos internos de un hexágono y un pentágono regular es:', opts:['12°','15°','18°','24°'], ans:1},
+    ]
+  ]},
+  { name:'Conversión de medidas', levels:[
+    [
+      {q:'¿Cuántos centímetros hay en 1 metro?', opts:['10','100','1000','10000'], ans:1},
+      {q:'¿Cuántos metros hay en 1 kilómetro?', opts:['10','100','1000','10000'], ans:2},
+      {q:'Para convertir de metros a centímetros, ¿qué hacemos?', opts:['Dividir entre 100','Multiplicar por 100','Dividir entre 1000','Multiplicar por 10'], ans:1},
+      {q:'¿Cuántos milímetros hay en 1 cm?', opts:['1','5','10','100'], ans:2},
+      {q:'1 km = __ m', opts:['10','100','1000','10000'], ans:2},
+    ],[
+      {q:'4,589 km = __ m', opts:['458.9','45890','458,900','4,589,000'], ans:3},
+      {q:'345 m = __ cm', opts:['3.45','34.5','3450','34500'], ans:2},
+      {q:'9,764 mm = __ m', opts:['0.9764','9.764','97.64','976.4'], ans:1},
+      {q:'387 m = __ km', opts:['0.387','3.87','38.7','387'], ans:0},
+      {q:'0.234 m = __ cm', opts:['0.00234','0.0234','2.34','23.4'], ans:3},
+    ],[
+      {q:'La etapa ciclista es de 38 km. Gabriel lleva 36 km 300 m. ¿Cuántos metros le faltan?', opts:['1,300 m','1,700 m','2,000 m','2,300 m'], ans:1},
+      {q:'Gabriel mide 120 cm. ¿Cuántos decímetros mide más de 1 metro?', opts:['1 dm','2 dm','3 dm','4 dm'], ans:1},
+      {q:'Elena vive a 2 km de la escuela y Gema a 2,000 m. ¿Quién vive más cerca?', opts:['Elena','Gema','Las dos igual','No se puede saber'], ans:2},
+      {q:'Una cinta azul mide 1 m 2 dm y 5 cm. ¿Cuántos cm mide en total?', opts:['105 cm','115 cm','125 cm','135 cm'], ans:2},
+      {q:'Margarita tiene 5 metros de cinta y quiere cortarla en pedazos de 1 dm. ¿Cuántos pedazos?', opts:['5','10','50','500'], ans:2},
+    ],[
+      {q:'El campo del Bernabéu mide 105 m × 68 m. ¿Cuántos km² es su área?', opts:['0.000714','0.00714','0.0714','0.714'], ans:1},
+      {q:'Mbappé corrió 11.4 km en un partido. ¿Cuántos metros corrió?', opts:['1,140','11,400','114,000','1,140,000'], ans:1},
+      {q:'Un jugador mide 6 ft 2 in. Sabiendo que 1 ft = 30.48 cm y 1 in = 2.54 cm, ¿cuánto mide en cm?', opts:['175.26 cm','182.88 cm','187.96 cm','193.04 cm'], ans:2},
+      {q:'La distancia Madrid-Barcelona es 621 km. ¿Cuántos metros son?', opts:['6,210','62,100','621,000','6,210,000'], ans:2},
+      {q:'Un estadio nuevo se construye en un terreno de 35,000 m². ¿Cuántas hectáreas son? (1 ha = 10,000 m²)', opts:['0.35','3.5','35','350'], ans:1},
+    ]
+  ]},
+  { name:'Perímetro y área', levels:[
+    [
+      {q:'¿Qué es el perímetro?', opts:['El área de la figura','La suma de todos los lados','La mitad de la figura','El volumen'], ans:1},
+      {q:'¿Cuál es la fórmula del área de un rectángulo?', opts:['base + altura','base × altura','2(base + altura)','base² '], ans:1},
+      {q:'¿Qué es la apotema?', opts:['Un lado del polígono','La distancia del centro al lado','La diagonal','El perímetro'], ans:1},
+      {q:'El área de un polígono regular es:', opts:['Perímetro × lado','(Perímetro × apotema) / 2','Lado × apotema','Lado²'], ans:1},
+      {q:'Un cuadrado de lado 5 cm tiene perímetro:', opts:['10 cm','15 cm','20 cm','25 cm'], ans:2},
+    ],[
+      {q:'Un rectángulo de base 6.2 cm y altura 11 cm tiene área:', opts:['17.2 cm²','34.4 cm²','68.2 cm²','72.6 cm²'], ans:2},
+      {q:'Un pentágono regular tiene lado 5.5 cm y apotema 3 cm. Su área es:', opts:['41.25 cm²','44 cm²','46.5 cm²','49.5 cm²'], ans:0},
+      {q:'El área de un cuadrado es 225 m². ¿Cuánto mide su lado?', opts:['12 m','13 m','15 m','18 m'], ans:2},
+      {q:'Un hexágono regular de lado 7 cm y apotema 9.2 cm tiene área:', opts:['193.2 cm²','196.8 cm²','200.4 cm²','210 cm²'], ans:0},
+      {q:'El perímetro de un rectángulo es 47.6 m y la base mide 15.2 m. ¿Cuánto mide la altura?', opts:['7.6 m','8.6 m','9.6 m','10.6 m'], ans:2},
+    ],[
+      {q:'Un cuadrado tiene área 225 m². ¿Cuánto mide su perímetro?', opts:['45 m','60 m','75 m','90 m'], ans:1},
+      {q:'Un campo rectangular mide 45 m × 30 m. ¿Cuánto mide su perímetro?', opts:['75 m','120 m','150 m','180 m'], ans:2},
+      {q:'Un rombo tiene diagonales de 12 cm y 5 cm. Su área es:', opts:['17 cm²','30 cm²','60 cm²','120 cm²'], ans:1},
+      {q:'El perímetro de un pentágono regular es 75.8 m. ¿Cuánto mide cada lado?', opts:['14.16 m','15.16 m','16.16 m','17.16 m'], ans:1},
+      {q:'Un rectángulo tiene área de 54 cm² y base de 9 cm. ¿Cuánto mide su altura?', opts:['4 cm','5 cm','6 cm','7 cm'], ans:2},
+    ],[
+      {q:'La cancha del Bernabéu mide 105 m × 68 m. ¿Cuál es su área?', opts:['6,840 m²','7,140 m²','7,560 m²','8,120 m²'], ans:1},
+      {q:'El escudo del Real Madrid cabe en un hexágono de lado 8.6 m y apotema 7.4 m. ¿Cuál es el área del hexágono?', opts:['190.44 m²','191.04 m²','192.44 m²','193.04 m²'], ans:1},
+      {q:'Un jugador corre todo el perímetro de la cancha (105 m × 68 m). ¿Cuántos metros corre?', opts:['316 m','346 m','386 m','416 m'], ans:1},
+      {q:'El área blanca de una portería (3 cm de marco) exterior es 4 cm × 3 cm, interior 3 cm × 2 cm. ¿Área del marco?', opts:['4 cm²','6 cm²','8 cm²','12 cm²'], ans:1},
+      {q:'Si el área del círculo central del campo es 25π m², ¿cuánto mide el radio?', opts:['3 m','4 m','5 m','6 m'], ans:2},
+    ]
+  ]},
+  { name:'Volumen de prismas', levels:[
+    [
+      {q:'¿Cuál es la fórmula del volumen de un prisma rectangular?', opts:['base + altura','base × altura','largo × ancho × alto','largo + ancho + alto'], ans:2},
+      {q:'¿En qué unidades se mide el volumen?', opts:['m²','m','m³','cm²'], ans:2},
+      {q:'Un cubo de lado 4 cm tiene volumen:', opts:['12 cm³','16 cm³','48 cm³','64 cm³'], ans:3},
+      {q:'¿1 litro equivale a cuántos cm³?', opts:['10','100','1000','10000'], ans:2},
+      {q:'Un prisma rectangular de 5×3×2 cm tiene volumen:', opts:['10 cm³','20 cm³','30 cm³','60 cm³'], ans:2},
+    ],[
+      {q:'Un prisma de base 9.5 × 5 cm y altura 15.4 cm tiene volumen:', opts:['431.2 cm³','731.3 cm³','831.5 cm³','931.7 cm³'], ans:1},
+      {q:'Un cubo de 4.6 cm tiene volumen:', opts:['97.34 cm³','97.34 cm³','97.336 cm³','97.336 cm³'], ans:2},
+      {q:'Prisma: 7 × 7 × 15 cm. Volumen:', opts:['490','630','735','840'], ans:2},
+      {q:'Prisma: 14 × 14 × 6 cm. Volumen:', opts:['840','1,008','1,176','1,344'], ans:2},
+      {q:'Prisma: 20 × 7 × 17 cm. Volumen:', opts:['1,820','2,380','2,940','3,500'], ans:1},
+    ],[
+      {q:'Una habitación mide 5 m × 4 m × 2.5 m. ¿Cuántos m³ de aire contiene?', opts:['40','50','60','70'], ans:1},
+      {q:'Una piscina de 8 m × 6 m × 1.5 m. ¿Cuántos litros necesita para llenarse? (1 m³ = 1,000 L)', opts:['72,000','90,000','108,000','144,000'], ans:0},
+      {q:'Un tinaco de 4.5 × 3 × 4.25 m. ¿Cuánto es su volumen?', opts:['47.375 m³','57.375 m³','67.375 m³','77.375 m³'], ans:1},
+      {q:'Un prisma tiene volumen de 234 m³, largo de 3.2 m y ancho de 8 m. ¿Cuánto mide la altura?', opts:['7.5 m','8.5 m','9.1 m','9.5 m'], ans:2},
+      {q:'¿Cuántos litros caben en una caja de 30 × 20 × 15 cm?', opts:['3','6','9','12'], ans:2},
+    ],[
+      {q:'El vestuario del Bernabéu mide 15 m × 12 m × 3 m. ¿Cuántos m³ tiene?', opts:['360','480','540','720'], ans:2},
+      {q:'Un camión de la liga mide 12 m × 2.5 m × 3 m. ¿Cuántos m³ de carga caben?', opts:['60','75','90','105'], ans:2},
+      {q:'Una bañera del hotel del equipo mide 1.8 × 0.8 × 0.6 m. ¿Cuántos litros?', opts:['634','734','864','964'], ans:2},
+      {q:'Si el túnel del estadio mide 50 × 3 × 2.5 m, ¿cuántos m³ tiene?', opts:['275','325','375','425'], ans:2},
+      {q:'¿Cuántas cajas de 0.5 × 0.5 × 0.5 m caben en un camión de 5 × 2 × 2 m?', opts:['40','60','80','100'], ans:2},
+    ]
+  ]},
+  { name:'Probabilidad', levels:[
+    [
+      {q:'¿Qué es el espacio muestral?', opts:['El resultado más probable','Todos los resultados posibles','El resultado que ocurrió','La probabilidad de 0'], ans:1},
+      {q:'Al lanzar un dado de 6 caras, ¿cuántos resultados posibles hay?', opts:['3','4','5','6'], ans:3},
+      {q:'¿Cuál es la probabilidad de sacar cara al lanzar una moneda?', opts:['1/4','1/3','1/2','2/3'], ans:2},
+      {q:'Si hay 10 bolas (4 rojas, 6 azules), ¿cuál es la probabilidad de sacar una roja?', opts:['1/4','2/5','4/10 = 2/5','1/2'], ans:2},
+      {q:'Una probabilidad de 0 significa:', opts:['Es seguro que ocurre','Es muy probable','Es imposible','Es poco probable'], ans:2},
+    ],[
+      {q:'Una bolsa tiene 2 negras, 3 blancas, 4 rojas y 5 verdes. P(roja) = ?', opts:['4/14','4/13','4/12','4/10'], ans:0},
+      {q:'De la misma bolsa, P(no negra) = ?', opts:['12/14','11/14','10/14','9/14'], ans:0},
+      {q:'Se lanzan 2 monedas. P(águila, águila) = ?', opts:['1/2','1/3','1/4','1/8'], ans:2},
+      {q:'Urna con 5 café, 7 negro, 12 rojo, 3 azul. P(negro) = ?', opts:['7/25','7/27','7/30','7/12'], ans:1},
+      {q:'De la misma urna, P(NO rojo) = ?', opts:['15/27','12/27','18/27','20/27'], ans:0},
+    ],[
+      {q:'En un torneo hay 6 equipos. ¿Cuál es la probabilidad de adivinar al campeón?', opts:['1/3','1/6','1/4','2/6'], ans:1},
+      {q:'En una bolsa hay 6 azules, 4 verdes, 9 rojas y 3 blancas. ¿Cuál es la probabilidad de sacar una verde?', opts:['4/22','4/21','4/20','4/19'], ans:0},
+      {q:'De la misma bolsa, ¿cuál es la probabilidad de sacar roja o blanca?', opts:['12/22','11/22','10/22','9/22'], ans:0},
+      {q:'Si lanzas un dado, ¿cuál es la probabilidad de sacar número par?', opts:['1/6','1/3','1/2','2/3'], ans:2},
+      {q:'Una ruleta tiene 8 secciones iguales: 3 rojas, 3 azules, 2 verdes. P(verde) = ?', opts:['1/8','2/8 = 1/4','3/8','4/8'], ans:1},
+    ],[
+      {q:'El Real Madrid puede ganar (50%), empatar (30%) o perder (20%) un partido. P(no perder) = ?', opts:['50%','60%','70%','80%'], ans:3},
+      {q:'En un penalti, Mbappé anota el 85% de las veces. P(falla) = ?', opts:['5%','10%','15%','20%'], ans:2},
+      {q:'En una tanda de penaltis de 5 tiros, ¿cuántas formas hay de fallar el primero y anotar los demás?', opts:['1','2','4','5'], ans:0},
+      {q:'De 22 jugadores en un partido, ¿cuál es la probabilidad de que el capitán sea elegido al azar?', opts:['1/11','1/22','2/22','3/22'], ans:1},
+      {q:'Si en los últimos 20 partidos el Madrid ganó 14, empataron 4 y perdieron 2, ¿cuál es la probabilidad frecuencial de ganar?', opts:['3/5','7/10','3/4','4/5'], ans:1},
+    ]
+  ]},
+]}
+
+function ESP_TOPICS() { return [
+  { name:'Tipos de textos', levels:[
+    [{q:'¿Qué es un texto narrativo?',opts:['Cuenta una historia con personajes','Explica un proceso','Da instrucciones','Convence de algo'],ans:0},
+     {q:'¿Cuál es un ejemplo de texto descriptivo?',opts:['Un cuento','Una receta','La descripción de un lugar','Un artículo de opinión'],ans:2},
+     {q:'¿Qué tipo de texto intenta convencer?',opts:['Narrativo','Descriptivo','Argumentativo','Informativo'],ans:2},
+     {q:'Un manual de instrucciones es un texto...',opts:['Narrativo','Instructivo','Poético','Dramático'],ans:1},
+     {q:'¿Cuál es un texto expositivo?',opts:['Una novela','Un poema','Un artículo enciclopédico','Una obra de teatro'],ans:2}],
+    [{q:'¿Qué elemento NO pertenece a un cuento?',opts:['Personajes','Trama','Nota al pie técnica','Desenlace'],ans:2},
+     {q:'¿Qué es el narrador omnisciente?',opts:['El protagonista que narra','Alguien que sabe todo de todos los personajes','Un personaje secundario','El autor del texto'],ans:1},
+     {q:'¿Qué función tiene la introducción en un texto?',opts:['Concluir las ideas','Presentar el tema','Desarrollar argumentos','Resumir conclusiones'],ans:1},
+     {q:'¿Qué es el tema de un texto?',opts:['El título','La idea central que se desarrolla','Los personajes','El lugar donde ocurre'],ans:1},
+     {q:'¿Cuál es la estructura de un texto argumentativo?',opts:['Inicio-nudo-desenlace','Tesis-argumentos-conclusión','Introducción-desarrollo-cierre','Planteo-conflicto-resolución'],ans:1}],
+    [{q:'Santi lee un artículo sobre por qué el Real Madrid es el mejor club. ¿Qué tipo de texto es?',opts:['Narrativo','Informativo','Argumentativo','Descriptivo'],ans:2},
+     {q:'Un recetario de cocina es un texto...',opts:['Argumentativo','Instructivo','Narrativo','Poético'],ans:1},
+     {q:'¿Cuál es la diferencia entre un cuento y una novela?',opts:['La novela tiene más personajes','El cuento es más corto y enfocado','La novela siempre es de aventuras','El cuento siempre tiene moraleja'],ans:1},
+     {q:'¿Qué es una anécdota?',opts:['Un poema largo','Un relato breve sobre algo que ocurrió','Una descripción técnica','Una obra de teatro'],ans:1},
+     {q:'En una entrevista al entrenador del Real Madrid, ¿qué tipo de texto es?',opts:['Narrativo','Expositivo-informativo','Poético','Dramático'],ans:1}],
+    [{q:'Mbappé escribe sus memorias sobre su carrera. ¿Qué género es?',opts:['Novela de ficción','Autobiografía','Cuento','Crónica deportiva'],ans:1},
+     {q:'Un periódico publica: "El Real Madrid debería vender a su centrocampista". ¿Qué tipo de texto es?',opts:['Noticia','Reportaje','Artículo de opinión','Crónica'],ans:2},
+     {q:'¿Qué diferencia una noticia de un artículo de opinión?',opts:['La noticia es más larga','La noticia informa hechos, la opinión valora o interpreta','La opinión tiene más fotos','No hay diferencia'],ans:1},
+     {q:'Una crónica deportiva del partido Real Madrid vs Barcelona es principalmente...',opts:['Argumentativa','Instructiva','Narrativo-informativa','Poética'],ans:2},
+     {q:'¿Cuál es la función del párrafo de cierre en un texto argumentativo?',opts:['Presentar nuevos argumentos','Resumir y reforzar la tesis','Introducir el tema','Citar fuentes'],ans:1}]
+  ]},
+  { name:'Figuras retóricas', levels:[
+    [{q:'¿Qué es una metáfora?',opts:['Una comparación usando "como"','Identificar una cosa con otra sin usar "como"','Una exageración','Una repetición'],ans:1},
+     {q:'"Tan valiente como un león" es un ejemplo de...',opts:['Metáfora','Símil','Hipérbole','Anáfora'],ans:1},
+     {q:'¿Qué es una hipérbole?',opts:['Una comparación','Una exageración intencional','Una repetición de sonidos','Una personificación'],ans:1},
+     {q:'"El sol me saludó esta mañana" es un ejemplo de...',opts:['Hipérbole','Metáfora','Personificación','Símil'],ans:2},
+     {q:'¿Qué es una anáfora?',opts:['Comparar dos cosas','Repetir palabras al inicio de versos o frases','Exagerar algo','Dar vida a objetos'],ans:1}],
+    [{q:'"Mbappé es un rayo en la cancha" es una...',opts:['Hipérbole','Símil','Metáfora','Anáfora'],ans:2},
+     {q:'"¡Te lo he dicho un millón de veces!" es una...',opts:['Metáfora','Hipérbole','Personificación','Anáfora'],ans:1},
+     {q:'"Corre, corre, corre sin parar" es una...',opts:['Metáfora','Hipérbole','Anáfora','Personificación'],ans:2},
+     {q:'¿Cuál de estas es una metáfora?',opts:['"Rápido como el viento"','"El tiempo es oro"','"¡Me muero de risa!"','"El árbol creció"'],ans:1},
+     {q:'"El viento susurra secretos" es una...',opts:['Metáfora','Hipérbole','Personificación','Aliteración'],ans:2}],
+    [{q:'En el anuncio "¡Real Madrid, la pasión que nunca se apaga!", ¿cuál figura hay?',opts:['Hipérbole','Metáfora','Anáfora','Símil'],ans:1},
+     {q:'El comentarista dice: "Vinicius voló por la banda izquierda". ¿Qué figura usa?',opts:['Hipérbole','Anáfora','Metáfora','Personificación'],ans:2},
+     {q:'"Ganamos, ganamos, ganamos la Champions" repite el narrador. ¿Qué figura es?',opts:['Metáfora','Hipérbole','Anáfora','Símil'],ans:2},
+     {q:'"Bellingham juega como los ángeles" es un...',opts:['Metáfora','Símil','Hipérbole','Personificación'],ans:1},
+     {q:'Una canción del Real Madrid dice "El Bernabéu late con cada gol". ¿Qué figura es?',opts:['Símil','Metáfora','Personificación','Hipérbole'],ans:2}],
+    [{q:'Escribe el tipo de figura: "La pelota bailó en la red"',opts:['Hipérbole','Personificación','Metáfora','Símil'],ans:1},
+     {q:'"¡Esperé mil años para este gol!" dice Mbappé. ¿Qué figura es?',opts:['Anáfora','Metáfora','Hipérbole','Personificación'],ans:2},
+     {q:'¿Cuál opción contiene una anáfora?',opts:['"Corrió como un toro"','"Es un diamante en bruto"','"Juega, ríe, baila en la cancha"','"Hoy gané, mañana gané, siempre gané"'],ans:3},
+     {q:'"El Bernabéu es un volcán cuando marca el Madrid" combina:',opts:['Símil y anáfora','Metáfora e hipérbole','Personificación y símil','Anáfora y hipérbole'],ans:1},
+     {q:'¿Cuál figura NO se encontraría en poesía lírica principalmente?',opts:['Metáfora','Símil','Hipérbole','Instructivo'],ans:3}]
+  ]},
+  { name:'Ortografía y gramática', levels:[
+    [{q:'¿Cuándo se usa "haber"?',opts:['Como verbo auxiliar (hay, ha, han)','Para indicar lugar','Como preposición','Siempre con tilde'],ans:0},
+     {q:'¿Qué es un sustantivo?',opts:['Palabra que modifica al verbo','Palabra que nombra personas, animales o cosas','Palabra que une oraciones','Palabra que indica acción'],ans:1},
+     {q:'"Rápidamente" es un...',opts:['Sustantivo','Adjetivo','Adverbio','Verbo'],ans:2},
+     {q:'¿Cuál palabra lleva tilde?',opts:['Mesa','Lapiz','Casa','Amor'],ans:1},
+     {q:'¿Qué es un verbo?',opts:['Nombra cosas','Indica acción o estado','Describe cómo es algo','Une palabras'],ans:1}],
+    [{q:'"El equipo juega bien." ¿Cuál es el sujeto?',opts:['juega','bien','El equipo','juega bien'],ans:2},
+     {q:'¿Cuál oración está bien escrita?',opts:['Voy a ver habersi llueve','Voy a ver a ver si llueve','Voy haber si llueve','Voy a ver si llueve'],ans:3},
+     {q:'¿Cuál es el complemento directo de "Santi compró el balón"?',opts:['Santi','compró','el balón','ninguno'],ans:2},
+     {q:'"Ellos fueron al partido" está en tiempo...',opts:['Presente','Pasado','Futuro','Imperativo'],ans:1},
+     {q:'¿Cuál es un adjetivo en la oración "El rápido delantero marcó un golazo espectacular"?',opts:['delantero','marcó','rápido','golazo'],ans:2}],
+    [{q:'Elige la opción correcta: "El Madrid _____ muy bien en el partido"',opts:['jugo','jugó','Jugó','Jugo'],ans:1},
+     {q:'¿Cuál oración usa correctamente "sino" / "si no"?',opts:['"Sino estudias no apruebas"','"Si no estudias no apruebas"','"Sino no estudias apruebas"','"Si no, estudias apruebas"'],ans:1},
+     {q:'¿Cuál tiene un error ortográfico?',opts:['"El partido fue emocionante"','"Bienvenidos al estadio"','"El arvitraje fue bueno"','"Marcaron tres goles"'],ans:2},
+     {q:'Completa: "Tanto Mbappé ___ Vinicius son delanteros"',opts:['como','que','ni','o'],ans:0},
+     {q:'"Ayer _____ (haber) mucho tráfico cerca del estadio". ¿Cuál es correcto?',opts:['habían','habieron','hubo','hubieron'],ans:2}],
+    [{q:'Redacta mentalmente: El Madrid ganó el partido. ¿Cuál expansión es correcta?',opts:['"El Real Madrid ganó brillantemente el partido de ayer"','"El Real Madrid ayer ganó brillantemente"','"Brillantemente el Madrid ganó ayer el partido"','Todas son correctas'],ans:3},
+     {q:'¿Cuál uso de las mayúsculas es incorrecto?',opts:['"Real Madrid"','"Bernabéu"','"El Equipo jugó bien"','"Champions League"'],ans:2},
+     {q:'"El Clásico ____ el partido más visto del mundo." ¿Cuál es correcto?',opts:['es','és','a sido','siendo'],ans:0},
+     {q:'¿Qué figura retórica y qué tiempo verbal hay en "¡El Madrid vencerá mil veces más!"?',opts:['Anáfora, pasado','Hipérbole, futuro','Metáfora, presente','Personificación, futuro'],ans:1},
+     {q:'Identifica el error: "Los jugadores del Madrid estaban muy canasados después del partido"',opts:['jugadores','estaban','canasados','partido'],ans:2}]
+  ]}
+]}
+
+function CIE_TOPICS() { return [
+  { name:'Célula y seres vivos', levels:[
+    [{q:'¿Cuál es la unidad básica de todos los seres vivos?',opts:['El tejido','El órgano','La célula','El sistema'],ans:2},
+     {q:'¿Qué diferencia a una célula animal de una vegetal?',opts:['La animal tiene núcleo','La vegetal tiene pared celular y cloroplastos','La animal tiene membrana','La vegetal no tiene núcleo'],ans:1},
+     {q:'¿Dónde está el material genético (ADN) de la célula?',opts:['Membrana','Citoplasma','Núcleo','Vacuola'],ans:2},
+     {q:'¿Qué organelo produce energía en la célula?',opts:['Núcleo','Ribosoma','Mitocondria','Vacuola'],ans:2},
+     {q:'¿Qué es la fotosíntesis?',opts:['Respiración celular','Proceso por el que las plantas producen alimento con luz solar','División celular','Movimiento celular'],ans:1}],
+    [{q:'¿Cuál es la función de la membrana celular?',opts:['Producir energía','Controlar qué entra y sale de la célula','Contener el ADN','Realizar la fotosíntesis'],ans:1},
+     {q:'¿Qué son los ribosomas?',opts:['Producen energía','Sintetizan proteínas','Almacenan agua','Controlan la célula'],ans:1},
+     {q:'¿Cuál organelo solo está en células vegetales?',opts:['Mitocondria','Núcleo','Cloroplasto','Membrana'],ans:2},
+     {q:'¿Qué es la mitosis?',opts:['División celular que produce dos células idénticas','Unión de dos células','Muerte celular','Respiración'],ans:0},
+     {q:'¿Cuál es la diferencia entre célula procariota y eucariota?',opts:['El tamaño','La procariota no tiene núcleo definido','La eucariota no tiene ADN','No hay diferencia'],ans:1}],
+    [{q:'¿Por qué las plantas son organismos autótrofos?',opts:['Porque se mueven','Porque producen su propio alimento','Porque respiran','Porque tienen raíces'],ans:1},
+     {q:'Si una célula tiene 0.01 mm de tamaño, ¿cuántas caben en 1 mm?',opts:['10','100','1000','10000'],ans:1},
+     {q:'¿Cuál tejido está formado por células que se contraen?',opts:['Tejido epitelial','Tejido muscular','Tejido nervioso','Tejido conectivo'],ans:1},
+     {q:'¿Qué ocurre durante la respiración celular?',opts:['Se produce glucosa','Se libera energía del alimento','Se captura luz solar','Se divide la célula'],ans:1},
+     {q:'¿Por qué los hongos NO son plantas?',opts:['Tienen células','No realizan fotosíntesis','No tienen núcleo','No se reproducen'],ans:1}],
+    [{q:'Los músculos de Mbappé al correr utilizan energía. ¿Qué proceso celular la produce?',opts:['Fotosíntesis','Mitosis','Respiración celular aeróbica','Meiosis'],ans:2},
+     {q:'Un deportista necesita proteínas para recuperar músculo. ¿Qué organelo las sintetiza?',opts:['Mitocondria','Ribosoma','Núcleo','Vacuola'],ans:1},
+     {q:'El césped del Bernabéu es verde gracias a la clorofila en los...',opts:['Núcleos','Ribosomas','Cloroplastos','Vacuolas'],ans:2},
+     {q:'Si una muestra de músculo tiene 500 células y cada una se divide una vez, ¿cuántas células habrá?',opts:['500','750','1000','1500'],ans:2},
+     {q:'¿Cuál nivel de organización es el correcto de menor a mayor?',opts:['Órgano→tejido→célula','Célula→tejido→órgano→sistema','Sistema→órgano→célula','Tejido→célula→sistema'],ans:1}]
+  ]},
+  { name:'Leyes de Newton', levels:[
+    [{q:'¿Cuántas leyes del movimiento describió Newton?',opts:['1','2','3','4'],ans:2},
+     {q:'La primera ley de Newton habla de:',opts:['Fuerza y masa','Acción y reacción','Inercia','Velocidad'],ans:2},
+     {q:'¿Qué es la inercia?',opts:['La fuerza de gravedad','La tendencia de un objeto a mantener su estado de movimiento','La resistencia del aire','La velocidad de un objeto'],ans:1},
+     {q:'F = m × a es la fórmula de la:',opts:['Primera ley','Segunda ley','Tercera ley','Ley de gravedad'],ans:1},
+     {q:'La tercera ley dice:',opts:['F = ma','A mayor masa, mayor fuerza','A toda acción le corresponde una reacción igual y opuesta','Un objeto en reposo tiende a seguir en reposo'],ans:2}],
+    [{q:'Un balón de 0.5 kg recibe una fuerza de 10 N. ¿Cuál es su aceleración?',opts:['5 m/s²','10 m/s²','20 m/s²','50 m/s²'],ans:2},
+     {q:'Si un jugador pesa 70 kg y corre con aceleración de 2 m/s², ¿qué fuerza aplica?',opts:['35 N','70 N','140 N','280 N'],ans:2},
+     {q:'¿Qué ocurre con la aceleración si duplicas la masa pero mantienes la misma fuerza?',opts:['Se duplica','Se mantiene igual','Se divide entre 2','Se divide entre 4'],ans:2},
+     {q:'Un auto frena con fuerza de 5000 N. Si pesa 1000 kg, ¿cuál es su desaceleración?',opts:['2 m/s²','5 m/s²','10 m/s²','50 m/s²'],ans:1},
+     {q:'¿Por qué un objeto en el espacio sigue moviéndose sin fuerzas?',opts:['Tiene motor','Por la primera ley (inercia)','Por la gravedad','Por la tercera ley'],ans:1}],
+    [{q:'Cuando Mbappé chuta el balón, ¿cuál ley explica por qué el balón sale disparado?',opts:['Primera ley','Segunda ley (F=ma)','Tercera ley','Ley de gravedad'],ans:1},
+     {q:'Cuando el portero salta y atrapa el balón, retrocede por:',opts:['Primera ley','Segunda ley','Tercera ley (reacción)','Ley de gravedad'],ans:2},
+     {q:'Un árbitro de 80 kg corre con aceleración 1.5 m/s². ¿Qué fuerza aplica?',opts:['53.3 N','80 N','120 N','160 N'],ans:2},
+     {q:'¿Por qué es más difícil mover un jugador que un balón?',opts:['Por la tercera ley','Porque el jugador tiene más masa (segunda ley)','Primera ley','No hay diferencia'],ans:1},
+     {q:'El VAR mide que el balón tardó 0.5 s en ir de la patada a la portería, recorriendo 25 m. ¿Cuál fue su velocidad promedio?',opts:['12.5 m/s','25 m/s','50 m/s','100 m/s'],ans:2}],
+    [{q:'En el Bernabéu, Bellingham remata un balón de 0.45 kg con F = 90 N. ¿Con qué aceleración sale?',opts:['0.005 m/s²','2 m/s²','40.5 m/s²','200 m/s²'],ans:3},
+     {q:'Si Mbappé corre y frena de 10 m/s a 0 en 2 segundos, y pesa 73 kg, ¿qué fuerza de fricción lo detiene?',opts:['36.5 N','73 N','146 N','365 N'],ans:3},
+     {q:'Dos jugadores colisionan: uno de 80 kg y otro de 70 kg. ¿Cuál siente más fuerza de impacto?',opts:['El de 80 kg','El de 70 kg','Los dos sienten la misma fuerza (3ª ley)','Depende de la velocidad'],ans:2},
+     {q:'Un balón recibe fuerza F y acelera a 20 m/s². Si la masa se triplica y F se mantiene, ¿cuánto acelera?',opts:['6.67 m/s²','10 m/s²','20 m/s²','60 m/s²'],ans:0},
+     {q:'¿Por qué los jugadores usan tacos en el campo? Relaciona con Newton:',opts:['Mayor fricción → puede aplicar más fuerza (2ª ley)','Menor masa → más aceleración','Tercera ley: el campo los empuja','Para verse bien'],ans:0}]
+  ]}
+]}
+
+function FIN_TOPICS() { return [
+  { name:'Ahorro e inversión', levels:[
+    [{q:'¿Qué es el ahorro?',opts:['Gastar todo lo que ganas','Guardar parte de tus ingresos','Pedir dinero prestado','Invertir en bolsa'],ans:1},
+     {q:'¿Cuál es la diferencia entre necesidad y deseo?',opts:['No hay diferencia','La necesidad es esencial para vivir; el deseo es opcional','El deseo es más importante','Las necesidades cuestan más'],ans:1},
+     {q:'¿Qué es un presupuesto?',opts:['Una deuda','Un plan de cómo gastar e ingresar dinero','Un tipo de inversión','Un banco'],ans:1},
+     {q:'Si ganas $500 y gastas $420, ¿cuánto ahorras?',opts:['$80','$920','$500','$420'],ans:0},
+     {q:'¿Qué es el interés bancario?',opts:['El dinero que el banco te cobra por guardar tu dinero','El costo de pedir prestado o la ganancia de ahorrar','El saldo de tu cuenta','Tu salario'],ans:1}],
+    [{q:'Si ahorras $200 al mes, ¿cuánto ahorras en 1 año?',opts:['$1,200','$2,000','$2,400','$3,000'],ans:2},
+     {q:'Si tienes $5,000 en el banco al 10% de interés anual, ¿cuánto ganas en 1 año?',opts:['$100','$500','$1,000','$5,000'],ans:1},
+     {q:'Tu presupuesto mensual es $3,000. Si el 30% va a comida, ¿cuánto es?',opts:['$300','$600','$900','$1,200'],ans:2},
+     {q:'¿Qué es una inversión?',opts:['Gastar dinero en algo innecesario','Usar dinero ahora esperando ganar más en el futuro','Pedir un préstamo','Guardar dinero bajo el colchón'],ans:1},
+     {q:'Si inviertes $10,000 y ganas 15% al año, ¿cuánto tienes al final del año?',opts:['$10,150','$10,500','$11,000','$11,500'],ans:3}],
+    [{q:'Santi gana $600 por semana cortando césped. Quiere comprar unos tenis de $1,800. ¿Cuántas semanas necesita ahorrar si guarda el 50%?',opts:['3','4','5','6'],ans:3},
+     {q:'NATYO vende 200 yogures al día a $35 cada uno. ¿Cuánto ingresa por semana (6 días)?',opts:['$35,000','$42,000','$49,000','$63,000'],ans:1},
+     {q:'Si el 20% de las ventas de NATYO van a gastos, y vende $42,000, ¿cuánta ganancia queda?',opts:['$8,400','$33,600','$38,400','$42,000'],ans:1},
+     {q:'¿Cuál es la mejor decisión financiera?',opts:['Gastar todo el salario en ropa','Ahorrar el 10% de lo que ganas cada mes','Pedir prestado para comprar ropa','Nunca gastar nada'],ans:1},
+     {q:'Si NATYO invierte $50,000 en nueva maquinaria y gana $8,000 más al mes, ¿en cuántos meses recupera la inversión?',opts:['4','5','6','7'],ans:2}],
+    [{q:'El salario de Mbappé es $1,000,000 al mes. Si ahorra el 25%, ¿cuánto ahorra al año?',opts:['$2,500,000','$3,000,000','$4,000,000','$5,000,000'],ans:1},
+     {q:'El Real Madrid invirtió $180M en fichajes y espera recuperar 3× en mercadotecnia en 5 años. ¿Cuánto espera recuperar?',opts:['$180M','$360M','$540M','$720M'],ans:2},
+     {q:'Si el valor de un jugador sube 12% al año y hoy vale $50M, ¿cuánto valdrá en 1 año?',opts:['$54M','$56M','$58M','$60M'],ans:1},
+     {q:'NATYO planea abrir nueva sucursal con préstamo de $200,000 al 15% anual. ¿Cuánto paga de interés el primer año?',opts:['$15,000','$20,000','$25,000','$30,000'],ans:3},
+     {q:'¿Cuál es el concepto clave de "interés compuesto"?',opts:['Ganar interés solo sobre el capital original','Ganar interés sobre el capital Y sobre los intereses acumulados','Pagar interés solo una vez','No hay diferencia con interés simple'],ans:1}]
+  ]}
+]}
+
+function SOC_TOPICS() { return [
+  { name:'Emociones y bienestar', levels:[
+    [{q:'¿Qué es la inteligencia emocional?',opts:['La inteligencia para matemáticas','La capacidad de reconocer y manejar tus emociones y las de otros','Ser muy inteligente en ciencias','No sentir emociones'],ans:1},
+     {q:'¿Cuál es una emoción básica?',opts:['Confusión','Alegría','Aburrimiento','Curiosidad'],ans:1},
+     {q:'¿Qué es la empatía?',opts:['Sentir lo mismo que otro','Entender y compartir los sentimientos de otras personas','Ignorar a los demás','Solo ayudar a amigos'],ans:1},
+     {q:'¿Qué haces cuando tienes una emoción muy intensa y necesitas calmarte?',opts:['Explotar de enojo','Ignorar el sentimiento','Respirar profundo y pensar antes de actuar','Guardar el sentimiento para siempre'],ans:2},
+     {q:'¿Qué es el autoconocimiento?',opts:['Conocer a mucha gente','Conocer tus propias fortalezas, debilidades y emociones','Estudiar mucho','Ser famoso'],ans:1}],
+    [{q:'Santi se pone nervioso antes de un examen. ¿Cuál estrategia le ayuda?',opts:['No dormir para estudiar más','Practicar respiración y organizar su tiempo','Posponer el estudio','Decir que no puede'],ans:1},
+     {q:'¿Qué es la resiliencia?',opts:['Rendirse ante las dificultades','La capacidad de recuperarse de situaciones difíciles','Evitar todos los problemas','No tener emociones'],ans:1},
+     {q:'¿Cuál es un ejemplo de comunicación asertiva?',opts:['"¡Me caes mal!"','"Creo que eso no estuvo bien porque me afectó así"','"No importa, da igual"','"Haz lo que quieras"'],ans:1},
+     {q:'Si un amigo está triste, ¿cuál es la mejor respuesta empática?',opts:['"Ya supéralo"','"¿Qué pasó? Cuéntame"','"A mí también me pasan cosas"','"Eso no es para tanto"'],ans:1},
+     {q:'¿Qué es el estrés?',opts:['Una enfermedad grave','La respuesta del cuerpo ante demandas o presiones','Un tipo de tristeza','Solo un sentimiento'],ans:1}],
+    [{q:'El equipo de Santi perdió un partido importante. ¿Cómo manejar esa frustración?',opts:['Culpar al árbitro','Reconocer el sentimiento, aprender y seguir adelante','Llorar y no jugar más','Enojarse con los compañeros'],ans:1},
+     {q:'¿Cuál hábito ayuda más al bienestar emocional?',opts:['Dormir poco para aprovechar más','Ejercicio regular y sueño suficiente','Pasar todo el día en redes sociales','Comer solo comida rápida'],ans:1},
+     {q:'Santi recibe una crítica de su maestro. ¿Cuál es la respuesta emocionalmente inteligente?',opts:['Enojarse y no hacer caso','Escuchar, reflexionar y usar la crítica para mejorar','Guardar rencor','Decir que el maestro está equivocado'],ans:1},
+     {q:'¿Qué es el pensamiento positivo realista?',opts:['Creer que todo siempre saldrá perfecto','Ver los problemas como oportunidades sin ignorar la realidad','Ignorar los problemas','Siempre decir que todo está mal'],ans:1},
+     {q:'¿Por qué es importante pedir ayuda cuando la necesitas?',opts:['No es importante, debes resolver todo solo','Porque todos necesitamos apoyo a veces','Solo los débiles piden ayuda','Para molestar a los demás'],ans:1}],
+    [{q:'Mbappé dice: "Cuando no marco goles, trabajo más duro en entrenamiento". ¿Qué actitud demuestra?',opts:['Resignación','Resiliencia y mentalidad de crecimiento','Arrogancia','Indiferencia'],ans:1},
+     {q:'Un jugador del Real Madrid falla un penalti en la final. ¿Cuál respuesta es emocionalmente sana?',opts:['Retirarse del fútbol','Culpar a sus compañeros','Sentir la decepción, aprender y comprometerse a mejorar','Negar que falló'],ans:2},
+     {q:'¿Por qué los equipos deportivos exitosos tienen psicólogo?',opts:['Para que los jugadores no hablen','Para ayudar con el rendimiento mental y emocional','Es obligatorio por la Liga','Solo es para los que tienen problemas'],ans:1},
+     {q:'¿Cuál es la diferencia entre autoestima sana y arrogancia?',opts:['No hay diferencia','La autoestima sana se basa en valorarte sin menospreciar a otros','La arrogancia es mejor','La autoestima es de niños'],ans:1},
+     {q:'Santi quiere mejorar en matemáticas pero cree que no puede. ¿Qué tipo de mentalidad tiene?',opts:['Mentalidad de crecimiento','Mentalidad fija','Mentalidad positiva','Mentalidad resiliente'],ans:1}]
+  ]}
+]}
+
+function IA_TOPICS() { return [
+  { name:'Fundamentos de IA', levels:[
+    [{q:'¿Qué significa "IA"?',opts:['Internet Avanzada','Inteligencia Artificial','Información Automatizada','Industria Actual'],ans:1},
+     {q:'¿Cuál es un ejemplo de IA en la vida cotidiana?',opts:['Una calculadora','El asistente de voz del teléfono','Una lámpara','Un libro'],ans:1},
+     {q:'¿Qué es el aprendizaje automático (machine learning)?',opts:['Programar robots físicos','Una computadora que aprende de datos sin ser programada explícitamente','Memorizar información','Usar internet'],ans:1},
+     {q:'¿Qué es un algoritmo?',opts:['Una computadora','Un programa de televisión','Un conjunto de pasos para resolver un problema','Un tipo de base de datos'],ans:2},
+     {q:'¿Cuál de estos NO es un ejemplo de IA?',opts:['Recomendaciones de Netflix','Filtros de spam de email','Una calculadora básica','Reconocimiento facial'],ans:2}],
+    [{q:'¿Qué es una "red neuronal"?',opts:['Una red de internet','Un sistema de IA inspirado en el cerebro humano','Un tipo de virus','Una red social'],ans:1},
+     {q:'¿Qué hace la IA generativa como ChatGPT?',opts:['Solo busca información existente','Genera nuevo contenido (texto, imágenes, etc.) basado en patrones aprendidos','Toma fotos','Controla robots'],ans:1},
+     {q:'¿Qué son los "datos de entrenamiento" en IA?',opts:['Ejercicios físicos','La información con la que se enseña a un modelo de IA','Los usuarios del sistema','El código fuente'],ans:1},
+     {q:'¿Qué es el reconocimiento de voz?',opts:['Una IA que habla por sí sola','La capacidad de una IA de entender y procesar lenguaje hablado','Un tipo de micrófono','Un idioma de programación'],ans:1},
+     {q:'¿Por qué los datos son importantes para la IA?',opts:['No son importantes','Porque la IA aprende y mejora gracias a los datos','Solo para almacenar información','Para llenar espacio en el disco'],ans:1}],
+    [{q:'El VAR del fútbol usa IA para analizar jugadas. ¿Cuál tipo de IA es?',opts:['IA generativa','Visión por computadora','Reconocimiento de voz','Chatbot'],ans:1},
+     {q:'Una app recomienda videos de Real Madrid porque los ves mucho. Esto es:',opts:['Coincidencia','Un sistema de recomendación basado en IA','Publicidad pagada','Un error del sistema'],ans:1},
+     {q:'¿Cuál es una ventaja de la IA en medicina?',opts:['Reemplaza completamente a los doctores','Puede analizar miles de resultados médicos para ayudar en diagnósticos','Es solo para entretenimiento','No tiene ventajas'],ans:1},
+     {q:'¿Qué es un sesgo en IA?',opts:['Un error de código','Cuando la IA aprende patrones injustos o incorrectos de los datos','Una falla de internet','Un tipo de virus'],ans:1},
+     {q:'¿Cuál es una preocupación ética sobre la IA?',opts:['Que procese datos muy rápido','Privacidad de datos y posible desplazamiento de empleos','Que use mucha electricidad','Que sea difícil de usar'],ans:1}],
+    [{q:'El Real Madrid usa IA para analizar el rendimiento de sus jugadores. ¿Qué tipo de datos usa?',opts:['Solo videos','Datos físicos, tácticos, de salud y estadísticas combinados','Solo estadísticas de goles','Solo datos de redes sociales'],ans:1},
+     {q:'Si quisieras crear una IA para predecir quién ganará la Champions, ¿qué datos necesitas principalmente?',opts:['Solo el nombre de los equipos','Historial de partidos, rendimiento de jugadores, estadísticas, lesiones','Solo los resultados del año actual','El ranking de los entrenadores'],ans:1},
+     {q:'¿Cuál es la diferencia entre IA débil y IA fuerte?',opts:['La IA débil es más lenta','La IA débil hace tareas específicas; la IA fuerte (hipotética) tendría inteligencia general como humanos','La IA fuerte usa más electricidad','No hay diferencia'],ans:1},
+     {q:'¿Por qué es importante que los jóvenes aprendan sobre IA hoy?',opts:['Solo es para programadores','Porque la IA transformará todos los trabajos y la sociedad en el futuro','No es importante','Solo para hacer videojuegos'],ans:1},
+     {q:'Claude (la IA que está en esta app) es un ejemplo de:',opts:['IA robótica','Modelo de lenguaje grande (LLM) de IA generativa','Sistema de control industrial','Red social'],ans:1}]
+  ]}
+]}
+
+// =====================
+// APP STATE
+// =====================
+
+const DEFAULT_PROFILES = [
+  { id:'santi', name:'Santi', emoji:'⚽' }
+];
+
+const EMOJIS = ['⚽','🏆','🌟','🦁','🚀','🎮','🔥','💪','🎯','🤩','👑','🐯'];
+
+let state = {
+  profiles: [],
+  currentUserId: null,
+  currentSubjectId: null,
+  currentTopicIdx: null,
+  currentLevelIdx: null,
+  // quiz state
+  questions: [],
+  questionIdx: 0,
+  hearts: 3,
+  correct: 0,
+  answered: false,
+  selectedEmoji: EMOJIS[0],
+};
+
+function getUserData(userId) {
+  const key = `as3_${userId}`;
+  const raw = localStorage.getItem(key);
+  if (raw) return JSON.parse(raw);
+  return { xp: 0, levels: {} };
+}
+
+function saveUserData(userId, data) {
+  localStorage.setItem(`as3_${userId}`, JSON.stringify(data));
+}
+
+function getLevelKey(subjectId, topicIdx, levelIdx) {
+  return `${subjectId}_${topicIdx}_${levelIdx}`;
+}
+
+function getLevelStars(userId, subjectId, topicIdx, levelIdx) {
+  const data = getUserData(userId);
+  return data.levels[getLevelKey(subjectId, topicIdx, levelIdx)] || 0;
+}
+
+function isLevelUnlocked(userId, subjectId, topicIdx, levelIdx) {
+  if (topicIdx === 0 && levelIdx === 0) return true;
+  // Check if previous level in same topic is done
+  if (levelIdx > 0) {
+    return getLevelStars(userId, subjectId, topicIdx, levelIdx - 1) > 0;
+  }
+  // First level of a topic: check if previous topic's last level is done
+  if (topicIdx > 0) {
+    const subj = SUBJECTS.find(s => s.id === subjectId);
+    const prevTopic = subj.topics[topicIdx - 1];
+    const lastLevel = prevTopic.levels.length - 1;
+    return getLevelStars(userId, subjectId, topicIdx - 1, lastLevel) > 0;
+  }
+  return false;
+}
+
+// =====================
+// SCREENS
+// =====================
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+}
+
+// =====================
+// PROFILES
+// =====================
+
+function loadProfiles() {
+  const raw = localStorage.getItem('as3_profiles');
+  if (raw) {
+    state.profiles = JSON.parse(raw);
+  } else {
+    state.profiles = [...DEFAULT_PROFILES];
+    saveProfiles();
+  }
+  renderProfiles();
+}
+
+function saveProfiles() {
+  localStorage.setItem('as3_profiles', JSON.stringify(state.profiles));
+}
+
+function renderProfiles() {
+  const grid = document.getElementById('profiles-grid');
+  grid.innerHTML = '';
+  state.profiles.forEach(p => {
+    const data = getUserData(p.id);
+    const totalStars = Object.values(data.levels).reduce((a, b) => a + b, 0);
+    const div = document.createElement('div');
+    div.className = 'profile-card';
+    div.innerHTML = `
+      <div class="profile-emoji">${p.emoji}</div>
+      <div class="profile-name">${p.name}</div>
+      <div class="profile-stars">${totalStars > 0 ? '⭐ ' + totalStars : 'Nuevo'}</div>
+      ${p.id !== 'santi' ? `<button class="profile-delete" onclick="deleteProfile('${p.id}',event)">✕</button>` : ''}
+    `;
+    div.addEventListener('click', () => selectProfile(p.id));
+    grid.appendChild(div);
+  });
+}
+
+function selectProfile(userId) {
+  state.currentUserId = userId;
+  const p = state.profiles.find(x => x.id === userId);
+  document.getElementById('current-emoji').textContent = p.emoji;
+  document.getElementById('current-name').textContent = p.name;
+  const data = getUserData(userId);
+  document.getElementById('current-xp').textContent = data.xp;
+  renderSubjects();
+  showScreen('home');
+}
+
+function deleteProfile(userId, e) {
+  e.stopPropagation();
+  if (!confirm('¿Eliminar este usuario?')) return;
+  state.profiles = state.profiles.filter(p => p.id !== userId);
+  saveProfiles();
+  renderProfiles();
+}
+
+function openAddProfile() {
+  state.selectedEmoji = EMOJIS[0];
+  renderEmojiPicker();
+  document.getElementById('new-profile-name').value = '';
+  document.getElementById('modal-add').classList.add('active');
+}
+
+function closeAddProfile() {
+  document.getElementById('modal-add').classList.remove('active');
+}
+
+function renderEmojiPicker() {
+  const picker = document.getElementById('emoji-picker');
+  picker.innerHTML = '';
+  EMOJIS.forEach(e => {
+    const btn = document.createElement('button');
+    btn.className = 'emoji-btn' + (e === state.selectedEmoji ? ' selected' : '');
+    btn.textContent = e;
+    btn.addEventListener('click', () => {
+      state.selectedEmoji = e;
+      renderEmojiPicker();
+    });
+    picker.appendChild(btn);
+  });
+}
+
+function saveNewProfile() {
+  const name = document.getElementById('new-profile-name').value.trim();
+  if (!name) { showToast('Escribe un nombre 👤'); return; }
+  const id = 'user_' + Date.now();
+  state.profiles.push({ id, name, emoji: state.selectedEmoji });
+  saveProfiles();
+  closeAddProfile();
+  renderProfiles();
+  showToast('¡Usuario creado! 🎉');
+}
+
+// =====================
+// HOME / SUBJECTS
+// =====================
+
+function renderSubjects() {
+  const grid = document.getElementById('subjects-grid');
+  grid.innerHTML = '';
+  const userId = state.currentUserId;
+
+  SUBJECTS.forEach(s => {
+    const data = getUserData(userId);
+    let totalLevels = 0;
+    let completedLevels = 0;
+    s.topics.forEach((t, ti) => {
+      t.levels.forEach((_, li) => {
+        totalLevels++;
+        if ((data.levels[getLevelKey(s.id, ti, li)] || 0) > 0) completedLevels++;
+      });
+    });
+    const pct = totalLevels > 0 ? Math.round(completedLevels / totalLevels * 100) : 0;
+
+    const card = document.createElement('div');
+    card.className = `subject-card ${s.cls}`;
+    card.innerHTML = `
+      <div class="subject-icon">${s.icon}</div>
+      <div class="subject-name">${s.name}</div>
+      <div class="subject-progress-bar"><div class="subject-progress-fill" style="width:${pct}%"></div></div>
+      <div class="subject-progress-text">${completedLevels}/${totalLevels} niveles</div>
+    `;
+    card.addEventListener('click', () => openSubject(s.id));
+    grid.appendChild(card);
+  });
+}
+
+// =====================
+// SUBJECT
+// =====================
+
+function openSubject(subjectId) {
+  state.currentSubjectId = subjectId;
+  const subj = SUBJECTS.find(s => s.id === subjectId);
+  document.getElementById('subj-icon').textContent = subj.icon;
+  document.getElementById('subj-name').textContent = subj.name;
+  renderTopics(subj);
+  showScreen('subject');
+}
+
+function renderTopics(subj) {
+  const list = document.getElementById('topics-list');
+  list.innerHTML = '';
+  const userId = state.currentUserId;
+
+  subj.topics.forEach((topic, ti) => {
+    const topicUnlocked = isLevelUnlocked(userId, subj.id, ti, 0);
+    const topicStars = topic.levels.reduce((sum, _, li) =>
+      sum + getLevelStars(userId, subj.id, ti, li), 0);
+
+    const block = document.createElement('div');
+    block.className = 'topic-block' + (!topicUnlocked ? ' topic-locked' : '');
+
+    const levelsHTML = topic.levels.map((_, li) => {
+      const stars = getLevelStars(userId, subj.id, ti, li);
+      const unlocked = isLevelUnlocked(userId, subj.id, ti, li);
+      const isCurrent = unlocked && stars === 0;
+
+      let cls = 'level-btn';
+      if (!unlocked) cls += ' locked';
+      else if (stars > 0) cls += ' completed';
+      else cls += ' current';
+
+      const icon = !unlocked ? '🔒' : stars > 0 ? '✅' : `${li + 1}`;
+      const starsDisplay = stars > 0 ? '⭐'.repeat(stars) : '';
+
+      return `<button class="${cls}" ${unlocked ? `onclick="startLevel('${subj.id}',${ti},${li})"` : ''}>
+        <div class="level-btn-num">Nv${li + 1}</div>
+        <div class="level-btn-icon">${icon}</div>
+        <div class="level-btn-stars">${starsDisplay}</div>
+      </button>`;
+    }).join('');
+
+    block.innerHTML = `
+      <div class="topic-header">
+        <div class="topic-num">${topicUnlocked ? (ti + 1) : '🔒'}</div>
+        <div class="topic-name">${topic.name}</div>
+        ${topicStars > 0 ? `<div class="topic-stars">${'⭐'.repeat(topicStars)}</div>` : ''}
+      </div>
+      <div class="levels-row">${levelsHTML}</div>
+    `;
+    list.appendChild(block);
+  });
+}
+
+// =====================
+// QUIZ
+// =====================
+
+function startLevel(subjectId, topicIdx, levelIdx) {
+  state.currentSubjectId = subjectId;
+  state.currentTopicIdx = topicIdx;
+  state.currentLevelIdx = levelIdx;
+
+  const subj = SUBJECTS.find(s => s.id === subjectId);
+  const topic = subj.topics[topicIdx];
+  state.questions = [...topic.levels[levelIdx]];
+  state.questionIdx = 0;
+  state.hearts = 3;
+  state.correct = 0;
+  state.answered = false;
+
+  const subName = `${topic.name} · ${LEVEL_LABELS[levelIdx]}`;
+  document.getElementById('quiz-title').textContent = subName;
+
+  showScreen('quiz');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = state.questions[state.questionIdx];
+  const total = state.questions.length;
+
+  document.getElementById('quiz-progress').style.width =
+    ((state.questionIdx) / total * 100) + '%';
+
+  const subj = SUBJECTS.find(s => s.id === state.currentSubjectId);
+  const topic = subj.topics[state.currentTopicIdx];
+  document.getElementById('q-badge').textContent =
+    `${topic.name} · Nivel ${state.currentLevelIdx + 1} · ${LEVEL_LABELS[state.currentLevelIdx]}`;
+  document.getElementById('q-text').textContent = q.q;
+
+  const hearts = '❤️'.repeat(state.hearts) + (state.hearts < 3 ? '🖤'.repeat(3 - state.hearts) : '');
+  document.getElementById('hearts-row').textContent = hearts;
+
+  const optList = document.getElementById('options-list');
+  optList.innerHTML = '';
+  const letters = ['A','B','C','D'];
+
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span> ${opt}`;
+    btn.addEventListener('click', () => selectOption(i));
+    optList.appendChild(btn);
+  });
+
+  document.getElementById('feedback-box').className = 'feedback-box';
+  document.getElementById('feedback-box').textContent = '';
+  document.getElementById('next-btn').style.display = 'none';
+  state.answered = false;
+}
+
+function selectOption(optIdx) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const q = state.questions[state.questionIdx];
+  const opts = document.querySelectorAll('.option-btn');
+  opts.forEach(b => b.disabled = true);
+
+  const feedback = document.getElementById('feedback-box');
+
+  if (optIdx === q.ans) {
+    opts[optIdx].classList.add('correct');
+    state.correct++;
+    feedback.className = 'feedback-box correct';
+    feedback.textContent = '✅ ¡Correcto!';
+  } else {
+    opts[optIdx].classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    state.hearts--;
+    feedback.className = 'feedback-box wrong';
+    feedback.textContent = `❌ Respuesta correcta: ${q.opts[q.ans]}`;
+
+    if (state.hearts <= 0) {
+      setTimeout(() => endQuiz(false), 1200);
+      return;
+    }
+  }
+
+  document.getElementById('next-btn').style.display = 'block';
+
+  if (state.questionIdx >= state.questions.length - 1) {
+    document.getElementById('next-btn').textContent = 'Ver resultados 🏆';
+  }
+}
+
+function nextQuestion() {
+  state.questionIdx++;
+  if (state.questionIdx >= state.questions.length) {
+    endQuiz(true);
+  } else {
+    renderQuestion();
+  }
+}
+
+function endQuiz(completed) {
+  const total = state.questions.length;
+  const correct = state.correct;
+  const pct = correct / total;
+
+  let stars = 0;
+  if (completed) {
+    if (pct >= 0.9) stars = 3;
+    else if (pct >= 0.7) stars = 2;
+    else if (pct >= 0.5) stars = 1;
+  }
+
+  const xpMap = [0, 50, 100, 150];
+  const xpEarned = xpMap[stars];
+
+  // Save results
+  const userId = state.currentUserId;
+  const data = getUserData(userId);
+  const key = getLevelKey(state.currentSubjectId, state.currentTopicIdx, state.currentLevelIdx);
+  const prevStars = data.levels[key] || 0;
+
+  if (stars > prevStars) {
+    data.levels[key] = stars;
+    data.xp = (data.xp || 0) + (xpEarned - xpMap[prevStars]);
+    saveUserData(userId, data);
+    document.getElementById('current-xp').textContent = data.xp;
+  }
+
+  // Show results
+  const emojis = ['😓','😐','😊','🌟'];
+  const titles = ['¡Sigue intentando!','¡No está mal!','¡Bien hecho!','¡Excelente!'];
+
+  document.getElementById('results-emoji').textContent = completed ? emojis[stars] : '💔';
+  document.getElementById('results-title').textContent = completed ? titles[stars] : '¡Sin vidas!';
+  document.getElementById('results-subtitle').textContent =
+    completed ? `Nivel ${state.currentLevelIdx + 1} completado` : 'Se acabaron los corazones';
+  document.getElementById('results-stars').textContent = stars > 0 ? '⭐'.repeat(stars) : '☆☆☆';
+  document.getElementById('results-score').textContent = `${correct}/${total} correctas`;
+  document.getElementById('results-xp').textContent = xpEarned > 0 ? `+${xpEarned} XP` : '0 XP';
+
+  // Papa messages
+  const msgs = [
+    [`Santi, no te preocupes. <strong>Cada intento te hace más fuerte.</strong> ¡Inténtalo de nuevo, campeón!`,
+     `Santi, el Real Madrid también pierde partidos... <strong>¡pero siempre vuelve más fuerte!</strong> ¡Tú puedes!`],
+    [`Bien Santi, vas avanzando. <strong>Con más práctica lo dominarás.</strong> ¡Tú puedes más!`,
+     `¡Vamos Santi! El esfuerzo se nota. <strong>Sigue practicando y llegarás al nivel de Mbappé.</strong> 💪`],
+    [`¡Muy bien Santi! <strong>Estás progresando de verdad.</strong> Papá está orgulloso de ti. 🌟`,
+     `¡Excelente trabajo! <strong>Así se hace, con dedicación.</strong> Papá te ve y sonríe. ⚽❤️`],
+    [`¡CRACK! <strong>Eso es nivel Real Madrid, hijo.</strong> Papá está súper orgulloso. ¡Tres estrellitas! 🏆⭐⭐⭐`,
+     `¡GOLAZO ACADÉMICO! <strong>Eres el Mbappé de las matemáticas.</strong> Papá te quiere muchísimo. 🌟`]
+  ];
+
+  const msgList = msgs[stars];
+  document.getElementById('papa-msg').innerHTML = '💬 ' + msgList[Math.floor(Math.random() * msgList.length)];
+
+  // Next button
+  const subj = SUBJECTS.find(s => s.id === state.currentSubjectId);
+  const topic = subj.topics[state.currentTopicIdx];
+  const hasNext = state.currentLevelIdx < topic.levels.length - 1 ||
+                  state.currentTopicIdx < subj.topics.length - 1;
+
+  const nextBtn = document.getElementById('results-next-btn');
+  if (stars > 0 && hasNext) {
+    nextBtn.style.display = 'block';
+    nextBtn.textContent = 'Siguiente nivel →';
+  } else if (stars === 0) {
+    nextBtn.style.display = 'block';
+    nextBtn.textContent = 'Intentar de nuevo 🔄';
+  } else {
+    nextBtn.style.display = 'none';
+  }
+
+  showScreen('results');
+}
+
+function continueAfterResults() {
+  const stars = getLevelStars(state.currentUserId, state.currentSubjectId,
+    state.currentTopicIdx, state.currentLevelIdx);
+
+  if (stars === 0) {
+    // Retry
+    startLevel(state.currentSubjectId, state.currentTopicIdx, state.currentLevelIdx);
+    return;
+  }
+
+  const subj = SUBJECTS.find(s => s.id === state.currentSubjectId);
+
+  // Next level in same topic
+  if (state.currentLevelIdx < subj.topics[state.currentTopicIdx].levels.length - 1) {
+    startLevel(state.currentSubjectId, state.currentTopicIdx, state.currentLevelIdx + 1);
+  } else if (state.currentTopicIdx < subj.topics.length - 1) {
+    // First level of next topic
+    startLevel(state.currentSubjectId, state.currentTopicIdx + 1, 0);
+  } else {
+    goToSubject();
+  }
+}
+
+function goToSubject() {
+  const subj = SUBJECTS.find(s => s.id === state.currentSubjectId);
+  openSubject(state.currentSubjectId);
+}
+
+// =====================
+// TOAST
+// =====================
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// =====================
+// INIT
+// =====================
+
+loadProfiles();
+</script>
+</body>
+</html>
