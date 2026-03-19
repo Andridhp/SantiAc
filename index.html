@@ -767,6 +767,458 @@
     white-space: nowrap;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ===== PAPA BTN ===== */
+  .papa-btn {
+    background: rgba(251,191,36,0.15);
+    border: 2px solid rgba(251,191,36,0.4);
+    border-radius: 50px;
+    padding: 0.35rem 0.7rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .papa-btn:hover { background: rgba(251,191,36,0.3); transform: scale(1.1); }
+
+  /* ===== PAPA DASHBOARD ===== */
+  #screen-papa { background: var(--bg); }
+
+  .papa-header {
+    padding: 1rem 1.2rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .papa-header-title { flex: 1; font-weight: 800; font-size: 1.05rem; }
+  .papa-header-user {
+    font-size: 0.85rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.3rem 0.8rem;
+    color: var(--muted);
+  }
+
+  .papa-body { padding: 1rem; overflow-y: auto; flex: 1; }
+
+  .papa-section { margin-bottom: 1.2rem; }
+
+  .papa-section-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  /* Hero card */
+  .papa-hero {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 20px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .papa-hero-emoji { font-size: 3rem; }
+  .papa-hero-info { flex: 1; }
+  .papa-hero-name { font-weight: 800; font-size: 1.1rem; color: white; }
+  .papa-hero-xp { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-top: 0.2rem; }
+  .papa-hero-level {
+    background: rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: white;
+    text-align: center;
+  }
+
+  /* Stats row */
+  .papa-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .papa-stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0.8rem 0.5rem;
+    text-align: center;
+  }
+  .papa-stat-val { font-size: 1.4rem; font-weight: 900; color: var(--gold); }
+  .papa-stat-label { font-size: 0.68rem; color: var(--muted); margin-top: 0.2rem; font-weight: 700; }
+
+  /* Subject progress */
+  .papa-subject-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .papa-subject-top {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .papa-subject-icon { font-size: 1.2rem; }
+  .papa-subject-name { font-weight: 800; font-size: 0.9rem; flex: 1; }
+  .papa-subject-pct { font-size: 0.85rem; font-weight: 800; }
+  .papa-subject-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .papa-subject-fill { height: 100%; border-radius: 6px; transition: width 0.6s; }
+
+  /* Weak/strong areas */
+  .papa-area-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    border: 1px solid var(--border);
+  }
+  .papa-area-badge {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .papa-area-badge.weak { background: rgba(239,68,68,0.2); }
+  .papa-area-badge.strong { background: rgba(16,185,129,0.2); }
+  .papa-area-info { flex: 1; }
+  .papa-area-name { font-weight: 800; font-size: 0.9rem; }
+  .papa-area-detail { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+  .papa-area-stars { font-size: 0.85rem; color: var(--gold); }
+
+  /* Days studied */
+  .papa-days-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .papa-day-chip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .papa-day-chip.studied {
+    background: rgba(16,185,129,0.15);
+    border-color: rgba(16,185,129,0.4);
+    color: #6ee7b7;
+  }
+
+  .papa-empty {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  /* ===== PREMIUM ANIMATIONS & POLISH ===== */
+
+  /* Screen transitions */
+  .screen {
+    animation: none;
+    opacity: 1;
+  }
+  .screen.active {
+    animation: screenIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes screenIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Profile cards stagger */
+  .profile-card {
+    animation: cardPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .profile-card:nth-child(1) { animation-delay: 0.05s; }
+  .profile-card:nth-child(2) { animation-delay: 0.12s; }
+  .profile-card:nth-child(3) { animation-delay: 0.19s; }
+  .profile-card:nth-child(4) { animation-delay: 0.26s; }
+  @keyframes cardPop {
+    from { opacity: 0; transform: scale(0.85) translateY(12px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  /* Subject cards stagger */
+  .subject-card {
+    animation: cardPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .subject-card:nth-child(1) { animation-delay: 0.04s; }
+  .subject-card:nth-child(2) { animation-delay: 0.1s; }
+  .subject-card:nth-child(3) { animation-delay: 0.16s; }
+  .subject-card:nth-child(4) { animation-delay: 0.22s; }
+  .subject-card:nth-child(5) { animation-delay: 0.28s; }
+  .subject-card:nth-child(6) { animation-delay: 0.34s; }
+
+  /* Option buttons */
+  .option-btn {
+    transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateX(0);
+  }
+  .option-btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  .option-btn.correct {
+    animation: correctPulse 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .option-btn.wrong {
+    animation: wrongShake 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes correctPulse {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+  @keyframes wrongShake {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-7px); }
+    40%  { transform: translateX(7px); }
+    60%  { transform: translateX(-5px); }
+    80%  { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+
+  /* Logo pulse on profiles screen */
+  .profiles-logo {
+    animation: logoBreathe 3s ease-in-out infinite;
+  }
+  @keyframes logoBreathe {
+    0%, 100% { text-shadow: 0 0 30px rgba(251,191,36,0.5); }
+    50%       { text-shadow: 0 0 50px rgba(251,191,36,0.85), 0 0 80px rgba(251,191,36,0.3); }
+  }
+
+  /* Results screen stars */
+  .results-stars {
+    animation: starsBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  }
+  @keyframes starsBounce {
+    from { opacity: 0; transform: scale(0.4); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .results-emoji {
+    animation: emojiDrop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes emojiDrop {
+    from { opacity: 0; transform: translateY(-30px) scale(0.6); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .results-title {
+    animation: fadeUp 0.45s ease 0.1s both;
+  }
+  .results-xp {
+    animation: fadeUp 0.45s ease 0.3s both;
+  }
+  .papa-msg {
+    animation: fadeUp 0.45s ease 0.4s both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Confetti canvas */
+  #confetti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  /* Question box slide-in */
+  .question-box {
+    animation: fadeUp 0.3s ease both;
+  }
+  .options-list .option-btn {
+    animation: fadeUp 0.3s ease both;
+  }
+  .options-list .option-btn:nth-child(1) { animation-delay: 0.05s; }
+  .options-list .option-btn:nth-child(2) { animation-delay: 0.1s; }
+  .options-list .option-btn:nth-child(3) { animation-delay: 0.15s; }
+  .options-list .option-btn:nth-child(4) { animation-delay: 0.2s; }
+
+  /* Progress bar animated fill */
+  .subject-progress-fill {
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Level button hover lift */
+  .level-btn:not(.locked):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124,58,237,0.25);
+  }
+  .level-btn { transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1); }
+
+  /* Topic block slide-in stagger */
+  .topic-block {
+    animation: fadeUp 0.35s ease both;
+  }
+
+  /* Next button shimmer */
+  .btn-big {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-big::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: shimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%   { left: -100%; }
+    60%, 100% { left: 150%; }
+  }
+
+  /* Hearts shake when losing one */
+  .hearts-row.lost {
+    animation: heartLost 0.4s ease;
+  }
+  @keyframes heartLost {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.2); }
+    60%  { transform: scale(0.9); }
+    100% { transform: scale(1); }
+  }
+
+  /* Premium profile screen bg particles */
+  #screen-profiles::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 50%, rgba(251,191,36,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #screen-profiles > * { position: relative; z-index: 1; }
+
+  /* Home title shimmer text */
+  .home-title {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #fde68a 60%, #fbbf24 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleShimmer 3s linear infinite;
+  }
+  @keyframes titleShimmer {
+    0%   { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  /* XP badge glow */
+  .home-xp {
+    animation: xpGlow 2s ease-in-out infinite;
+  }
+  @keyframes xpGlow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(251,191,36,0.3)); }
+    50%       { filter: drop-shadow(0 0 10px rgba(251,191,36,0.6)); }
+  }
+
+  /* Subject card ripple on tap */
+  .subject-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .subject-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .subject-card:active::after { opacity: 1; }
+
+  /* Smooth feedback box appear */
+  .feedback-box.correct, .feedback-box.wrong {
+    animation: feedbackSlide 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes feedbackSlide {
+    from { opacity: 0; transform: translateY(8px); max-height: 0; }
+    to   { opacity: 1; transform: translateY(0); max-height: 100px; }
+  }
+
+  /* Papa dashboard hero float */
+  .papa-hero {
+    animation: heroFloat 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes heroFloat {
+    from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Stat cards pop */
+  .papa-stat {
+    animation: cardPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .papa-stat:nth-child(1) { animation-delay: 0.1s; }
+  .papa-stat:nth-child(2) { animation-delay: 0.18s; }
+  .papa-stat:nth-child(3) { animation-delay: 0.26s; }
+
+  /* Modal pop */
+  .modal {
+    animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.88) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  /* Toast slide */
+  .toast.show {
+    animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  }
+
+  /* Pulse ring on current level btn */
+  .level-btn.current::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 14px;
+    border: 2px solid var(--accent2);
+    animation: ringPulse 1.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .level-btn { position: relative; }
+  @keyframes ringPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50%       { opacity: 0.15; transform: scale(1.06); }
+  }
+
 </style>
 </head>
 <body>
@@ -799,13 +1251,27 @@
       <span class="user-pill-emoji" id="current-emoji">🎮</span>
       <span id="current-name">Santi</span>
     </button>
-    <div class="home-xp">⚡ <span id="current-xp">0</span> XP</div>
+    <div style="display:flex;align-items:center;gap:0.6rem;">
+      <div class="home-xp">⚡ <span id="current-xp">0</span> XP</div>
+      <button class="papa-btn" onclick="openPapaDashboard()">👨‍👦</button>
+    </div>
   </div>
   <div class="home-hero">
     <div class="home-title">¡A estudiar!</div>
     <div class="home-greeting" id="home-greeting">Elige una materia 👇</div>
   </div>
   <div class="subjects-grid" id="subjects-grid"></div>
+</div>
+
+
+<!-- PAPA DASHBOARD -->
+<div id="screen-papa" class="screen">
+  <div class="papa-header">
+    <button class="back-btn" onclick="showScreen('home')">←</button>
+    <div class="papa-header-title">👨‍👦 Reporte de Santi</div>
+    <div class="papa-header-user" id="papa-user-badge">⚽ Santi</div>
+  </div>
+  <div class="papa-body" id="papa-body"></div>
 </div>
 
 <!-- SUBJECT SCREEN -->
@@ -860,22 +1326,9 @@
 </div>
 
 <div class="toast" id="toast"></div>
+<canvas id="confetti-canvas"></canvas>
 
 <script>
-// =====================
-// DATA
-// =====================
-
-const SUBJECTS = [
-  { id:'mat', name:'Matemáticas', icon:'📐', cls:'s-mat', topics: MAT_TOPICS() },
-  { id:'esp', name:'Español', icon:'📖', cls:'s-esp', topics: ESP_TOPICS() },
-  { id:'cie', name:'Ciencias', icon:'🔬', cls:'s-cie', topics: CIE_TOPICS() },
-  { id:'fin', name:'Finanzas', icon:'💰', cls:'s-fin', topics: FIN_TOPICS() },
-  { id:'soc', name:'Socioemocional', icon:'💜', cls:'s-soc', topics: SOC_TOPICS() },
-  { id:'ia',  name:'IA', icon:'🤖', cls:'s-ia',  topics: IA_TOPICS() },
-];
-
-const LEVEL_LABELS = ['Reconocer','Calcular','Aplicar','⚽ Reto Real Madrid'];
 
 function MAT_TOPICS() { return [
   { name:'Decimales ×÷', levels:[
@@ -1205,7 +1658,270 @@ function MAT_TOPICS() { return [
 ]}
 
 function ESP_TOPICS() { return [
+  { name:'Comprensión lectora', levels:[
+    [// L1 Reconocer
+      {q:'¿Qué es la idea principal de un texto?',opts:['La primera oración','El mensaje más importante que el autor quiere transmitir','El título','El último párrafo'],ans:1},
+      {q:'¿Qué son las ideas secundarias?',opts:['Las ideas más importantes','Las ideas que apoyan o explican la idea principal','El resumen del texto','Las conclusiones'],ans:1},
+      {q:'¿Qué es inferir en la lectura?',opts:['Copiar el texto','Deducir información que no está escrita directamente','Buscar palabras difíciles','Resumir el texto'],ans:1},
+      {q:'¿Qué es el contexto de una palabra?',opts:['Su definición del diccionario','La información alrededor que ayuda a entender su significado','Su origen etimológico','Su sinónimo'],ans:1},
+      {q:'¿Cuál estrategia ayuda a comprender mejor un texto?',opts:['Leer muy rápido sin parar','Subrayar ideas importantes y hacerse preguntas','Solo leer el título','Memorizar palabra por palabra'],ans:1},
+      {q:'¿Qué es el propósito comunicativo de un texto?',opts:['El número de páginas','La intención del autor al escribirlo','El nombre del autor','El género literario'],ans:1},
+      {q:'¿Qué es un párrafo?',opts:['Una oración muy larga','Un conjunto de oraciones que desarrollan una idea','El título del texto','La conclusión del texto'],ans:1},
+      {q:'¿Qué es la coherencia en un texto?',opts:['Usar palabras difíciles','Que todas las ideas estén relacionadas y tengan sentido entre sí','Que sea muy largo','Que tenga muchos párrafos'],ans:1},
+      {q:'¿Qué es parafrasear?',opts:['Copiar textualmente','Expresar con tus propias palabras lo que dice el texto','Resumir en una palabra','Criticar el texto'],ans:1},
+      {q:'¿Cuál es la diferencia entre un texto literario y uno informativo?',opts:['El literario es más largo','El literario usa recursos artísticos y el informativo transmite datos reales','El informativo tiene imágenes','El literario siempre tiene personajes'],ans:1},
+    ],[// L2 Calcular/Analizar
+      {q:'Lee: "El sol se ocultó detrás de las nubes y la temperatura bajó de repente." ¿Qué podemos inferir?',opts:['Que es de noche','Que se aproxima lluvia o frío','Que es verano','Que el sol desapareció para siempre'],ans:1},
+      {q:'¿Cuál es la idea principal del párrafo: "Los perros son leales, protectores y cariñosos. Por eso son los mejores compañeros del ser humano"?',opts:['Los perros son leales','Los perros son los mejores compañeros del ser humano','Los perros son cariñosos','Los perros son protectores'],ans:1},
+      {q:'En el texto "Era tan veloz que nadie lo podía ver correr", ¿qué figura retórica hay?',opts:['Metáfora','Símil','Hipérbole','Personificación'],ans:2},
+      {q:'¿Qué tipo de texto es un artículo de Wikipedia?',opts:['Narrativo literario','Expositivo-informativo','Argumentativo','Dramático'],ans:1},
+      {q:'¿Cuál conector indica causa?',opts:['Sin embargo','Por lo tanto','Porque','Además'],ans:2},
+      {q:'¿Cuál conector indica consecuencia?',opts:['Aunque','Por eso','Mientras','También'],ans:1},
+      {q:'¿Cuál es el sinónimo de "veloz"?',opts:['Lento','Rápido','Grande','Fuerte'],ans:1},
+      {q:'¿Qué es un antónimo?',opts:['Una palabra de significado similar','Una palabra de significado opuesto','Una palabra difícil','Una palabra extranjera'],ans:1},
+      {q:'¿Qué tipo de narrador usa "yo" para contar la historia?',opts:['Omnisciente','En tercera persona','En primera persona','Testigo'],ans:2},
+      {q:'¿Cuál es la estructura de un texto narrativo?',opts:['Tesis-argumentos-conclusión','Planteamiento-nudo-desenlace','Introducción-desarrollo-cierre','Pregunta-respuesta-reflexión'],ans:1},
+    ],[// L3 Aplicar
+      {q:'Santi lee: "NATYO ofrece yogures naturales frescos diario." ¿Cuál es el propósito del texto?',opts:['Narrar una historia','Informar y persuadir para comprar','Dar instrucciones','Entretener'],ans:1},
+      {q:'En la noticia "El Real Madrid ganó 3-0 al Barcelona", ¿qué responde la pregunta "¿qué pasó?"',opts:['Real Madrid','Barcelona','Ganó 3-0','El partido'],ans:2},
+      {q:'¿Cuál es la idea principal de: "Dormir bien mejora la memoria, el humor y la salud. Los expertos recomiendan 8 horas"?',opts:['Dormir 8 horas','Los expertos recomiendan','Dormir bien tiene múltiples beneficios para la salud','La memoria mejora'],ans:2},
+      {q:'Lee: "A pesar del frío, Santi salió a jugar fútbol." ¿Qué conector usa y qué indica?',opts:['"A pesar de" indica causa','A pesar de" indica contraste o concesión','"A pesar de" indica consecuencia','"A pesar de" indica tiempo'],ans:1},
+      {q:'¿Qué inferencia puedes hacer si un texto dice: "Juan llegó empapado y tiritando"?',opts:['Que Juan se duchó','Que afuera llovía y hacía frío','Que Juan estaba enfermo','Que Juan nadó en la alberca'],ans:1},
+      {q:'Texto: "Los videojuegos desarrollan la coordinación, el pensamiento estratégico y el trabajo en equipo." ¿Es objetivo o subjetivo?',opts:['Subjetivo, es opinión','Objetivo, son datos verificables','Ninguno de los dos','Es un texto narrativo'],ans:1},
+      {q:'¿Cuál es el tema central de un texto sobre la importancia del agua?',opts:['La lluvia','El agua y su importancia para la vida','Los ríos','La contaminación'],ans:1},
+      {q:'¿Qué tipo de texto da pasos ordenados para hacer algo?',opts:['Narrativo','Argumentativo','Instructivo','Descriptivo'],ans:2},
+      {q:'En el texto "El maestro explicó el tema con paciencia y claridad", ¿qué palabras son adjetivos?',opts:['maestro, tema','explicó, explicar','paciencia, claridad','paciente, claro (implícito)'],ans:3},
+      {q:'¿Qué recurso usa el autor en: "La ciudad nunca duerme"?',opts:['Símil','Hipérbole','Personificación','Metáfora'],ans:2},
+    ],[// L4 Real Madrid
+      {q:'Lee este titular: "El Real Madrid remontó un 0-2 y ganó 3-2 en el último minuto." ¿Qué tipo de texto es y cuál es su idea principal?',opts:['Texto literario; el Madrid juega bien','Noticia deportiva; el Madrid remontó para ganar','Artículo de opinión; el Madrid fue superior','Texto instructivo; cómo ganar partidos'],ans:1},
+      {q:'Infiere: "Mbappé llegó tarde al entrenamiento con gesto serio y sin hablar con nadie." ¿Qué podemos deducir?',opts:['Está feliz','Probablemente tiene algún problema personal o físico','No le gusta el fútbol','Está lesionado gravemente'],ans:1},
+      {q:'"El Bernabéu rugió cuando Vinicius marcó el gol." ¿Qué figura retórica es?',opts:['Hipérbole','Símil','Personificación','Metáfora'],ans:2},
+      {q:'Texto: "Algunos dicen que Mbappé es el mejor del mundo, pero sus estadísticas en la Liga no lo confirman aún." ¿Qué tipo de texto es?',opts:['Narrativo','Argumentativo con contrapunto','Informativo objetivo','Instructivo'],ans:1},
+      {q:'¿Cuál es la idea principal de: "El Real Madrid tiene más Champions que cualquier otro club. Su historia, sus jugadores y su estadio lo hacen único en el mundo"?',opts:['El Real Madrid tiene muchas Champions','El Bernabéu es único','El Real Madrid es el club más grande e histórico del mundo','Sus jugadores son los mejores'],ans:2},
+      {q:'Lee: "Para ser como Mbappé necesitas: 1) entrenar diario, 2) cuidar tu alimentación, 3) descansar bien." ¿Qué tipo de texto es?',opts:['Narrativo','Argumentativo','Instructivo-informativo','Poético'],ans:2},
+      {q:'"Mbappé vuela por la banda" es una...',opts:['Comparación literal','Metáfora (no vuela de verdad)','Hipérbole exagerada','Personificación'],ans:1},
+      {q:'¿Cuál conector usarías para agregar información positiva sobre el Real Madrid?',opts:['Sin embargo','Aunque','Además','A pesar de'],ans:2},
+      {q:'Si un artículo dice "El Madrid es el mejor equipo de la historia", ¿es objetivo o subjetivo?',opts:['Objetivo, hay datos','Subjetivo, es una opinión','Ambos','Ninguno'],ans:1},
+      {q:'¿Qué pregunta periodística NO responde el titular "El Real Madrid ganó la Champions en Wembley"?',opts:['¿Qué pasó?','¿Quién?','¿Dónde?','¿Por qué ganaron?'],ans:3},
+    ]
+  ]},
+  { name:'Escritura y redacción', levels:[
+    [
+      {q:'¿Qué es un borrador?',opts:['La versión final de un texto','Una primera versión del texto que se puede corregir','Un tipo de poema','El resumen de un libro'],ans:1},
+      {q:'¿Cuál es el primer paso para escribir un buen texto?',opts:['Escribir rápido sin pensar','Planear: definir el tema, propósito y audiencia','Buscar palabras difíciles','Corregir la ortografía'],ans:1},
+      {q:'¿Qué es la cohesión en un texto?',opts:['Que sea interesante','Que las oraciones y párrafos estén bien conectados entre sí','Que sea muy largo','Que tenga buen vocabulario'],ans:1},
+      {q:'¿Qué son los conectores?',opts:['Palabras que describen','Palabras que unen ideas y muestran su relación','Palabras de acción','Nombres de personas'],ans:1},
+      {q:'¿Cuándo se usa punto y aparte?',opts:['Al terminar una idea dentro de un párrafo','Al terminar un párrafo completo y comenzar otro','Al terminar una lista','Nunca'],ans:1},
+      {q:'¿Qué es la introducción de un texto?',opts:['El desarrollo de las ideas','La parte que presenta el tema y capta la atención','La conclusión','El título'],ans:1},
+      {q:'¿Cuál es la función de la conclusión?',opts:['Presentar el tema','Desarrollar los argumentos','Cerrar el texto resumiendo las ideas principales','Iniciar la historia'],ans:2},
+      {q:'¿Qué es la audiencia de un texto?',opts:['El autor','Las personas a quienes va dirigido el texto','Los personajes','El editor'],ans:1},
+      {q:'¿Cuál signo de puntuación separa elementos de una lista?',opts:['Punto','Coma','Dos puntos','Punto y coma'],ans:1},
+      {q:'¿Qué es la tesis en un texto argumentativo?',opts:['Una pregunta','La posición o idea principal que el autor defiende','Un ejemplo','Una cita'],ans:1},
+    ],[
+      {q:'Ordena los pasos de la escritura: ¿Cuál va primero?',opts:['Revisar y corregir','Publicar o entregar','Planear (lluvia de ideas, esquema)','Redactar el borrador'],ans:2},
+      {q:'¿Cuál oración usa correctamente los dos puntos?',opts:['Hay tres colores: rojo, azul y verde.','Hay tres colores, rojo: azul y verde.','Hay: tres colores rojo azul y verde.','Hay tres colores rojo, azul: y verde.'],ans:0},
+      {q:'¿Cuál párrafo está mejor organizado?',opts:['El fútbol es bonito. Las vacas son animales. Me gusta leer.','El fútbol desarrolla trabajo en equipo, resistencia física y disciplina mental.','Fútbol. Equipo. Jugar. Correr. Gol.','Me gusta el fútbol porque sí, es bueno y divertido siempre.'],ans:1},
+      {q:'¿Qué conector indica contraste?',opts:['Además','Por eso','Sin embargo','También'],ans:2},
+      {q:'¿Cuál es el error en: "Ayer fuimos al estadio, vimos el partido, comimos tacos, fue muy divertido"?',opts:['No hay error','Uso excesivo de comas (falta punto y seguido o conectores)','Falta vocabulario difícil','Falta tilde en "fuimos"'],ans:1},
+      {q:'¿Cómo se hace un texto más formal?',opts:['Usando emojis','Evitando palabras coloquiales y usando vocabulario preciso','Escribiendo en mayúsculas','Usando muchas exclamaciones'],ans:1},
+      {q:'¿Qué es una oración compuesta?',opts:['Una oración con sujeto y verbo','Una oración que contiene dos o más proposiciones unidas','Una oración muy larga','Una oración sin sujeto'],ans:1},
+      {q:'¿Cuál es el propósito de un texto persuasivo?',opts:['Contar una historia','Dar instrucciones','Convencer al lector de adoptar una postura o acción','Describir un lugar'],ans:2},
+      {q:'¿Qué significa "revisar" un texto?',opts:['Leerlo una vez','Verificar contenido, estructura, gramática y ortografía para mejorar','Entregarlo al maestro','Agregarle imágenes'],ans:1},
+      {q:'¿Cuál recurso hace más persuasivo un texto?',opts:['Muchos errores ortográficos','Usar datos, ejemplos y argumentos sólidos','Escribir muy corto','Usar lenguaje infantil'],ans:1},
+    ],[
+      {q:'Santi quiere convencer a sus papás de comprar una consola. ¿Qué tipo de texto debe escribir?',opts:['Un cuento','Una carta argumentativa','Una receta','Un poema'],ans:1},
+      {q:'¿Cuál introducción es más atractiva para un texto sobre el Real Madrid?',opts:['"Voy a hablar del Real Madrid"','"El Real Madrid es un equipo"','"¿Sabías que ningún club ha ganado más Copas de Europa que el Real Madrid? Su historia es única."','"El Real Madrid tiene jugadores buenos"'],ans:2},
+      {q:'Escribe una conclusión para: "El ejercicio mejora la salud física y mental." ¿Cuál es mejor?',opts:['"El ejercicio es bueno"','"Por todo lo anterior, incorporar el ejercicio diario en nuestra rutina es una de las mejores decisiones para nuestra salud integral."','"Hay que hacer ejercicio"','"El ejercicio sirve para algo"'],ans:1},
+      {q:'¿Qué conector usarías para agregar un tercer argumento a favor del fútbol?',opts:['Sin embargo','Pero','En tercer lugar','Aunque'],ans:2},
+      {q:'¿Cuál oración tiene el sujeto y predicado claramente identificables?',opts:['Llueve mucho.','El equipo del Real Madrid ganó el partido ayer.','¡Qué golazo!','Corriendo rápidamente.'],ans:1},
+      {q:'¿Qué es el estilo de escritura?',opts:['Los errores del autor','La forma particular en que un autor usa el lenguaje','La cantidad de páginas','El tema del texto'],ans:1},
+      {q:'¿Cuál es el error en este texto: "Mbappé es un buen jugador porque es rápido, porque es técnico, porque es goleador"?',opts:['No hay error','Repetición innecesaria del conector "porque"','Falta información','Mbappé no es buen jugador'],ans:1},
+      {q:'¿Cómo evitar la repetición de palabras en un texto?',opts:['Usando sinónimos y pronombres','Escribiendo más corto','Usando más comas','No hay forma de evitarlo'],ans:0},
+      {q:'¿Qué recursos hacen más vívida una descripción?',opts:['Solo verbos de acción','Adjetivos precisos, comparaciones y detalles sensoriales','Números y estadísticas','Solo sustantivos'],ans:1},
+      {q:'¿Cuál párrafo describe mejor a Vinicius?',opts:['"Vinicius es bueno"','"Vinicius juega bien y rápido"','"Vinicius es un extremo explosivo, con regate eléctrico y una sonrisa que ilumina el Bernabéu tras cada gol."','"Vinicius es jugador del Real Madrid"'],ans:2},
+    ],[
+      {q:'Escribe mentalmente un párrafo argumentativo a favor de Mbappé como el mejor del mundo. ¿Cuál estructura es correcta?',opts:['Narrar su historia','Tesis + 3 argumentos con datos + conclusión','Solo enumerar sus goles','Describir su apariencia física'],ans:1},
+      {q:'¿Cuál es el error en: "el real madrid gano la champions en wembley el año pasado"?',opts:['No hay errores','Faltan mayúsculas en "Real Madrid", tilde en "ganó" y punto final','Falta información','El tiempo verbal es incorrecto'],ans:1},
+      {q:'Para escribir una crónica del Clásico Real Madrid vs Barcelona, ¿qué elementos son esenciales?',opts:['Solo el marcador final','Fecha, lugar, narración cronológica de los eventos, datos relevantes','Solo las alineaciones','Solo el gol ganador'],ans:1},
+      {q:'¿Cuál es la diferencia entre un resumen y una síntesis?',opts:['No hay diferencia','El resumen reduce el texto manteniendo sus ideas; la síntesis reorganiza y reinterpreta','El resumen es más largo','La síntesis solo usa las primeras ideas'],ans:1},
+      {q:'¿Qué hace que un argumento sea sólido?',opts:['Que sea muy largo','Que incluya datos verificables, ejemplos concretos y lógica clara','Que use palabras difíciles','Que repita la tesis muchas veces'],ans:1},
+      {q:'Mejora esta oración: "El partido estuvo bien y los jugadores jugaron bien y ganaron bien." ¿Cuál versión es mejor?',opts:['La original está bien','El emocionante partido culminó con una victoria contundente gracias al brillante desempeño del equipo.','El partido estuvo muy bien y los jugadores jugaron muy bien.','Fue un partido bueno con buenos jugadores que ganaron.'],ans:1},
+      {q:'¿Cuál es el propósito de citar fuentes en un texto informativo?',opts:['Para hacerlo más largo','Para dar credibilidad y permitir verificar la información','Para impresionar al lector','Porque es obligatorio por ley'],ans:1},
+      {q:'¿Cómo se inicia correctamente un diálogo en un texto narrativo?',opts:['Con comillas simples','Con guión largo (—) al inicio de cada intervención','Con paréntesis','Con asteriscos'],ans:1},
+      {q:'¿Cuál es el tono adecuado para una carta formal al director de la escuela?',opts:['Informal, como hablar con amigos','Formal, con vocabulario preciso y respetuoso','Coloquial con emojis','Muy emotivo y personal'],ans:1},
+      {q:'Un buen cierre de un texto argumentativo sobre por qué Santi debe tener más tiempo libre incluye:',opts:['Una pregunta nueva sin responder','Retomar la tesis y los argumentos principales con una reflexión final','Agregar nuevos argumentos','Repetir la introducción'],ans:1},
+    ]
+  ]},
+  { name:'Literatura', levels:[
+    [
+      {q:'¿Qué es la literatura?',opts:['Solo novelas y cuentos','El arte de expresar ideas y emociones mediante el lenguaje escrito','Solo poesía','Los libros de texto'],ans:1},
+      {q:'¿Cuáles son los tres grandes géneros literarios?',opts:['Cuento, novela, poema','Narrativo, lírico y dramático','Ficción, no-ficción y poesía','Clásico, moderno y contemporáneo'],ans:1},
+      {q:'¿Qué es el género narrativo?',opts:['El que cuenta historias a través de un narrador','El que se escribe para ser representado','El que expresa sentimientos en versos','El género periodístico'],ans:0},
+      {q:'¿Qué es el género lírico?',opts:['Cuentos de aventura','Textos escritos para teatro','Textos que expresan sentimientos y emociones, generalmente en verso','Biografías'],ans:2},
+      {q:'¿Qué es el género dramático?',opts:['Textos muy tristes','Textos escritos para ser representados en escena','Novelas de terror','Poemas épicos'],ans:1},
+      {q:'¿Cuáles son los elementos de un cuento?',opts:['Solo personajes y lugar','Personajes, narrador, ambiente, trama y tema','Solo inicio y fin','Solo el conflicto'],ans:1},
+      {q:'¿Qué es el clímax de una historia?',opts:['El inicio','El momento de mayor tensión o conflicto','El desenlace','La descripción del lugar'],ans:1},
+      {q:'¿Qué es una fábula?',opts:['Un poema muy largo','Una historia corta con animales que transmite una moraleja','Una novela de aventuras','Un texto informativo'],ans:1},
+      {q:'¿Qué es la rima en poesía?',opts:['La longitud del verso','La repetición de sonidos similares al final de los versos','El tema del poema','El número de estrofas'],ans:1},
+      {q:'¿Qué es un personaje protagonista?',opts:['El villano de la historia','El personaje principal sobre quien gira la trama','Un personaje secundario','El narrador'],ans:1},
+    ],[
+      {q:'¿Cuál es la diferencia entre cuento y novela?',opts:['La novela tiene más personajes siempre','El cuento es breve y enfocado; la novela es extensa con tramas complejas','La novela siempre es de amor','El cuento no tiene narrador'],ans:1},
+      {q:'¿Qué tipo de narrador sabe todo sobre todos los personajes?',opts:['Narrador testigo','Narrador protagonista','Narrador omnisciente','Narrador objetivo'],ans:2},
+      {q:'¿Qué es el ambiente o escenario de una historia?',opts:['El título','El lugar y época donde ocurren los hechos','El conflicto principal','El narrador'],ans:1},
+      {q:'¿Qué es el conflicto en una narrativa?',opts:['El lugar de la historia','El problema o tensión que enfrenta el protagonista','El tema del texto','El desenlace'],ans:1},
+      {q:'¿Cuáles son los tipos de rima?',opts:['Rima perfecta e imperfecta','Rima consonante y asonante','Rima larga y corta','Rima antigua y moderna'],ans:1},
+      {q:'¿Qué es una estrofa?',opts:['Un verso suelto','Un conjunto de versos que forman una unidad','El título del poema','La rima del poema'],ans:1},
+      {q:'¿Qué es el monólogo en teatro?',opts:['Un diálogo entre dos personajes','Cuando un personaje habla solo o reflexiona en voz alta','Una acotación','El final de la obra'],ans:1},
+      {q:'¿Qué son las acotaciones en una obra de teatro?',opts:['Los diálogos','Las instrucciones sobre escenografía, acciones y expresiones de los actores','Los títulos de las escenas','Los nombres de los personajes'],ans:1},
+      {q:'¿Cuál es la estructura de la tragedia clásica?',opts:['Inicio-conflicto-solución feliz','Planteamiento-desarrollo-clímax-desenlace generalmente trágico','Solo el sufrimiento del personaje','Personajes buenos vs malos'],ans:1},
+      {q:'¿Qué es el realismo mágico?',opts:['Una historia de magia pura','Un género donde lo mágico y lo real coexisten de forma natural','Un tipo de ciencia ficción','Una corriente solo de poesía'],ans:1},
+    ],[
+      {q:'En "Romeo y Julieta", el conflicto principal es:',opts:['Una guerra entre países','El amor prohibido entre dos jóvenes de familias enemigas','Un problema económico','Una aventura de viajes'],ans:1},
+      {q:'¿Qué moraleja transmite la fábula de "La liebre y la tortuga"?',opts:['Los animales pueden hablar','La constancia y el esfuerzo vencen a la velocidad y la arrogancia','Las tortugas son más listas','No hay que correr'],ans:1},
+      {q:'Santi lee un poema que expresa tristeza por perder un partido. ¿A qué género pertenece?',opts:['Narrativo','Dramático','Lírico','Épico'],ans:2},
+      {q:'¿Qué caracteriza a los cuentos de Gabriel García Márquez?',opts:['Solo ciencia ficción','Realismo mágico: elementos fantásticos en contextos cotidianos','Solo terror','Solo humor'],ans:1},
+      {q:'¿Cuál es la diferencia entre un cuento de terror y uno de suspenso?',opts:['No hay diferencia','El terror provoca miedo con elementos sobrenaturales; el suspenso genera tensión e incertidumbre','El terror es más largo','El suspenso no tiene personajes'],ans:1},
+      {q:'¿Qué tipo de narrador usa "nosotros" para contar?',opts:['Omnisciente','Primera persona singular','Primera persona plural','Segunda persona'],ans:2},
+      {q:'En un drama, ¿qué indica la acotación "(sale corriendo)"?',opts:['Lo que dice el personaje','Una acción que debe realizar el actor','El título de la escena','Un pensamiento interno'],ans:1},
+      {q:'¿Qué es el tema en una obra literaria?',opts:['El título','La idea o mensaje central que el autor quiere transmitir','Los personajes','El lugar donde ocurre'],ans:1},
+      {q:'¿Cuál es la función del antagonista en una historia?',opts:['Ayudar al protagonista','Ser el personaje secundario más importante','Crear conflicto y obstáculos para el protagonista','Narrar la historia'],ans:2},
+      {q:'¿Qué es una leyenda?',opts:['Un cuento inventado completamente','Relato de tradición oral que mezcla hechos históricos con elementos fantásticos','Un tipo de poema','Una obra de teatro'],ans:1},
+    ],[
+      {q:'Santi escribe un cuento donde Mbappé y Vinicius viajan al pasado para jugar con los equipos de los años 50. ¿Qué géneros combina?',opts:['Terror y suspenso','Ciencia ficción/fantasía y deporte','Realismo mágico y drama','Fábula y leyenda'],ans:1},
+      {q:'¿Cuál recurso literario usa: "El Bernabéu es un gigante de acero y pasión"?',opts:['Símil','Hipérbole','Metáfora','Personificación'],ans:2},
+      {q:'En la historia: "Mbappé soñó que marcaba el gol de la victoria, y al día siguiente lo hizo." ¿Qué recurso narrativo es?',opts:['Flashback','Premonición o sueño profético','Analepsis','Descripción'],ans:1},
+      {q:'¿Qué es un anti-héroe en literatura?',opts:['Un villano puro','Un protagonista con defectos y cualidades negativas pero con quien el lector puede empatizar','Un héroe perfecto','Un personaje secundario'],ans:1},
+      {q:'La novela "El Quijote" narra a un hombre que sueña con ser caballero andante. ¿Qué tema central trabaja?',opts:['La guerra','La diferencia entre ilusión/realidad y el valor de los ideales','El amor romántico','La amistad'],ans:1},
+      {q:'¿Qué es la ironía literaria?',opts:['Cuando algo da miedo','Cuando se dice lo contrario de lo que se piensa, con intención expresiva','Cuando hay acción','Cuando el narrador miente'],ans:1},
+      {q:'Un poema tiene versos de 8 sílabas. ¿Cómo se llama esa medida?',opts:['Heptasílabo','Octosílabo','Endecasílabo','Decasílabo'],ans:1},
+      {q:'¿Qué es el narrador no confiable?',opts:['Un narrador que no sabe bien español','Un narrador cuya versión de los hechos puede ser incompleta o manipulada','Un narrador omnisciente','Un personaje secundario'],ans:1},
+      {q:'¿Cuál obra es un ejemplo del género épico?',opts:['Romeo y Julieta','La Odisea de Homero','Cien años de soledad','El principito'],ans:1},
+      {q:'Mbappé escribe en su diario: "Hoy entrené 6 horas bajo la lluvia. Cada gota me recordó por qué sueño." ¿Qué tipo de texto es?',opts:['Noticia deportiva','Texto lírico-personal (diario)','Texto argumentativo','Texto instructivo'],ans:1},
+    ]
+  ]},
+  { name:'Gramática avanzada', levels:[
+    [
+      {q:'¿Cuáles son las categorías gramaticales principales?',opts:['Solo sustantivos y verbos','Sustantivo, adjetivo, verbo, adverbio, pronombre, preposición, conjunción, artículo','Solo palabras largas y cortas','Letras, sílabas y palabras'],ans:1},
+      {q:'¿Qué es un sustantivo abstracto?',opts:['Un nombre de persona','Un nombre de cosa que no se puede tocar (amor, justicia, libertad)','Un nombre de animal','Un nombre de lugar'],ans:1},
+      {q:'¿Qué es un adjetivo calificativo?',opts:['Indica cantidad','Expresa una cualidad o característica del sustantivo','Indica posesión','Reemplaza al sustantivo'],ans:1},
+      {q:'¿Qué es un verbo en infinitivo?',opts:['Conjugado en presente','La forma base del verbo que termina en -ar, -er o -ir','Conjugado en pasado','Un verbo auxiliar'],ans:1},
+      {q:'¿Qué es un pronombre?',opts:['Palabra que modifica al verbo','Palabra que sustituye al sustantivo','Palabra que une oraciones','Palabra que indica acción'],ans:1},
+      {q:'¿Cuáles son los tiempos verbales básicos?',opts:['Rápido, lento, medio','Presente, pasado y futuro','Formal, informal, coloquial','Simple, compuesto, complejo'],ans:1},
+      {q:'¿Qué es una preposición?',opts:['Tipo de verbo','Palabra invariable que une o relaciona palabras (a, de, en, con, por)','Tipo de sustantivo','Un artículo'],ans:1},
+      {q:'¿Qué es una conjunción?',opts:['Un tipo de pronombre','Palabra que une oraciones o palabras (y, pero, porque, aunque)','Un tipo de adjetivo','Una preposición larga'],ans:1},
+      {q:'¿Cuál es la diferencia entre sujeto y predicado?',opts:['No hay diferencia','El sujeto es quien realiza la acción; el predicado es lo que se dice del sujeto','El predicado es más importante','El sujeto siempre va al final'],ans:1},
+      {q:'¿Qué es una oración unimembre?',opts:['Una oración con un solo sustantivo','Una oración que no puede dividirse en sujeto y predicado (¡Fuego! ¿Qué hora es?)','Una oración con un solo verbo','Una oración corta'],ans:1},
+    ],[
+      {q:'Identifica el sustantivo en: "El veloz delantero marcó un golazo espectacular"',opts:['veloz','marcó','delantero y golazo','espectacular'],ans:2},
+      {q:'¿Cuál es el verbo en: "Mbappé corrió 12 kilómetros durante el partido"?',opts:['Mbappé','corrió','kilómetros','partido'],ans:1},
+      {q:'¿Cuál es el adjetivo en: "El Real Madrid jugó un partido brillante"?',opts:['Real Madrid','jugó','partido','brillante'],ans:3},
+      {q:'"Rápidamente" es un adverbio de:',opts:['Lugar','Tiempo','Modo','Cantidad'],ans:2},
+      {q:'¿Cuál oración está en tiempo futuro?',opts:['Santi estudió matemáticas','Santi estudia matemáticas','Santi estudiará matemáticas','Santi ha estudiado matemáticas'],ans:2},
+      {q:'¿Cuál es el sujeto de: "Los jugadores del Madrid celebraron el gol con emoción"?',opts:['celebraron el gol','Los jugadores del Madrid','con emoción','el gol'],ans:1},
+      {q:'¿Cuál es el complemento directo de: "Vinicius marcó un golazo"?',opts:['Vinicius','marcó','un golazo','ninguno'],ans:2},
+      {q:'¿Qué tipo de oración es: "¡Qué golazo marcó Mbappé!"?',opts:['Declarativa','Interrogativa','Exclamativa','Imperativa'],ans:2},
+      {q:'¿Cuál conjunción indica contraste?',opts:['Y','O','Pero','Porque'],ans:2},
+      {q:'¿Cuál oración está en voz pasiva?',opts:['Mbappé marcó el gol','El gol fue marcado por Mbappé','El equipo ganó','Santi estudió bien'],ans:1},
+    ],[
+      {q:'Santi escribe: "El niño que ganó el torneo es mi amigo." ¿Cuál es la oración subordinada?',opts:['El niño es mi amigo','que ganó el torneo','mi amigo ganó','ninguna'],ans:1},
+      {q:'¿Cuál es el error gramatical en: "Hubieron muchos aficionados en el Bernabéu"?',opts:['No hay error','Hubieron debe ser Hubo (haber es impersonal)','Bernabéu no lleva tilde','Aficionados es plural incorrecto'],ans:1},
+      {q:'¿Qué modo verbal expresa deseo o posibilidad? "Ojalá el Madrid gane la Champions"',opts:['Indicativo','Subjuntivo','Imperativo','Infinitivo'],ans:1},
+      {q:'¿Cuál es la función del complemento circunstancial en: "Mbappé entrenó ayer en el Bernabéu"?',opts:['Mbappé es el sujeto — el CC indica quién','Ayer (tiempo) y en el Bernabéu (lugar) son CC','Entrenó es el CC','El Bernabéu es el complemento directo'],ans:1},
+      {q:'¿Cuál oración tiene concordancia correcta?',opts:['Los jugador corrieron rápido','El jugadores corrieron rápido','Los jugadores corrieron rápido','Los jugadores correrón rápido'],ans:2},
+      {q:'¿Qué es una oración subordinada adjetiva?',opts:['Una oración que describe cómo','Una oración que modifica a un sustantivo (como un adjetivo)','Una oración con muchos adjetivos','Una oración sin verbo'],ans:1},
+      {q:'¿Cuál es el tiempo verbal compuesto en: "Mbappé ha marcado 30 goles esta temporada"?',opts:['Presente simple','Pretérito perfecto compuesto','Futuro perfecto','Pretérito indefinido'],ans:1},
+      {q:'¿Cuál es el error en: "A mi me gusta el fútbol"?',opts:['No hay error','"mi" no lleva tilde cuando es pronombre personal antes de verbo (debe ser "mí")','A siempre lleva tilde','Fútbol no lleva tilde'],ans:1},
+      {q:'¿Qué es la perífrasis verbal?',opts:['Un verbo conjugado solo','Combinación de verbo auxiliar + infinitivo/gerundio/participio que expresa aspecto o modalidad','Un verbo irregular','Un tiempo verbal simple'],ans:1},
+      {q:'¿Cuál oración usa correctamente "haber" y "a ver"?',opts:['"Voy haber si hay tarea"','"Voy a ver si hay tarea"','"Voy a haber si hay tarea"','"Voy a ver si haber tarea"'],ans:1},
+    ],[
+      {q:'Analiza: "El Real Madrid, que ganó 14 Champions, es el mejor club de la historia." ¿Qué tipo de subordinada es "que ganó 14 Champions"?',opts:['Subordinada adverbial','Subordinada sustantiva','Subordinada adjetiva o relativa','Oración principal'],ans:2},
+      {q:'¿Cuál es la diferencia entre "sino" y "si no"?',opts:['No hay diferencia','Sino conecta ideas contrastivas (No estudia sino juega); si no es condicional negativa (Si no estudias, repruebes)','Sino es siempre condicional','Si no siempre va en preguntas'],ans:1},
+      {q:'Identifica el tipo de complemento en: "Mbappé le regaló un gol al Bernabéu"',opts:['Solo complemento directo','Complemento directo: un gol; Complemento indirecto: al Bernabéu (metafórico)','Solo complemento indirecto','No hay complementos'],ans:1},
+      {q:'¿Cuál es el uso correcto del subjuntivo?',opts:['"Espero que Mbappé marca un gol"','"Espero que Mbappé marque un gol"','"Espero que Mbappé marcó un gol"','"Espero que Mbappé marcará un gol"'],ans:1},
+      {q:'¿Qué figura gramatical hay en: "Llegué, vi, vencí" (sin conjunciones)?',opts:['Polisíndeton','Asíndeton','Anáfora','Elipsis'],ans:1},
+      {q:'¿Cuál es el gerundio de "correr"?',opts:['corrido','correrá','corriendo','corre'],ans:2},
+      {q:'¿Cuál oración usa correctamente los tiempos verbales en secuencia?',opts:['Cuando llegué, el partido terminará','Cuando llegué, el partido ya había terminado','Cuando llegará, el partido terminó','Cuando llegué, el partido terminaría siempre'],ans:1},
+      {q:'¿Qué es la elipsis en gramática?',opts:['Una figura de sonido','La omisión de elementos que se sobreentienden por el contexto','Un tipo de sustantivo','Una forma verbal'],ans:1},
+      {q:'Clasifica: "Aunque llovía, el Bernabéu estaba lleno."',opts:['Oración coordinada','Oración simple','Oración subordinada adverbial concesiva','Oración yuxtapuesta'],ans:2},
+      {q:'¿Cuál es el participio irregular de "escribir"?',opts:['escribido','escribido/escrito','escrito','escribiendo'],ans:2},
+    ]
+  ]}
+]}
+
+function _ESP_DEAD() { return [
+  { name:'Comprensión lectora', levels:[
+    [// L1
+      {q:'¿Qué es la idea principal de un texto?',opts:['La primera oración','El mensaje más importante que el autor quiere transmitir','El título','El último párrafo'],ans:1},
+      {q:'¿Qué son las ideas secundarias?',opts:['Las ideas más importantes','Las ideas que apoyan o explican la idea principal','El resumen del texto','Las conclusiones'],ans:1},
+      {q:'¿Qué es inferir en la lectura?',opts:['Copiar el texto','Deducir información que no está escrita directamente','Buscar palabras difíciles','Resumir el texto'],ans:1},
+      {q:'¿Qué es el contexto en la lectura?',opts:['El título del libro','La información alrededor de una palabra que ayuda a entender su significado','El autor del texto','El número de páginas'],ans:1},
+      {q:'¿Cuál estrategia ayuda a comprender mejor un texto?',opts:['Leer muy rápido sin parar','Subrayar ideas importantes y hacerse preguntas','Solo leer el título','Memorizar palabra por palabra'],ans:1},
+    ],[// L2
+      {q:'Lee: "El Real Madrid ganó el partido pese a las adversidades." ¿Qué significa "adversidades"?',opts:['Ventajas','Dificultades o problemas','Jugadores','Aficionados'],ans:1},
+      {q:'¿Cuál es la diferencia entre un hecho y una opinión?',opts:['No hay diferencia','El hecho es verificable; la opinión es una valoración personal','La opinión siempre es correcta','El hecho es más interesante'],ans:1},
+      {q:'"Mbappé es el mejor jugador del mundo." Esta afirmación es...',opts:['Un hecho comprobable','Una opinión','Una definición','Un dato científico'],ans:1},
+      {q:'"Mbappé marcó 3 goles en el partido del martes." Esta afirmación es...',opts:['Una opinión','Un hecho verificable','Una hipótesis','Una metáfora'],ans:1},
+      {q:'¿Qué es un párrafo?',opts:['Una oración muy larga','Un conjunto de oraciones que desarrollan una idea','El título de un texto','La conclusión'],ans:1},
+    ],[// L3
+      {q:'Lee: "Aunque el equipo perdió, los jugadores salieron con la frente en alto." ¿Qué significa "frente en alto"?',opts:['Con la cabeza literalmente levantada','Con dignidad y orgullo a pesar de la derrota','Con enojo','Con tristeza profunda'],ans:1},
+      {q:'¿Cuál es el propósito de leer las noticias deportivas del Real Madrid?',opts:['Entretenerse únicamente','Informarse sobre hechos actuales','Aprender gramática','Practicar matemáticas'],ans:1},
+      {q:'Si un artículo dice "Los expertos predicen que el Madrid ganará la Champions", ¿qué tipo de información es?',opts:['Un hecho pasado','Una predicción o pronóstico','Una ley científica','Un dato histórico'],ans:1},
+      {q:'¿Qué hace un buen lector cuando encuentra una palabra desconocida?',opts:['Salta la palabra','Usa el contexto y el diccionario para entender','Deja de leer','Adivina sin pensar'],ans:1},
+      {q:'Un texto sobre "Las tácticas del Real Madrid en la Champions" tiene como propósito principal:',opts:['Entretener con una historia ficticia','Informar y analizar estrategias reales','Dar instrucciones de cocina','Escribir poesía'],ans:1},
+    ],[// L4 - Real Madrid
+      {q:'Lee: "El Bernabéu, ese coloso de cemento y pasión, vibró hasta sus cimientos." ¿Qué figura literaria hay?',opts:['Símil','Personificación e hipérbole','Anáfora','Definición técnica'],ans:1},
+      {q:'Un artículo dice: "Vinicius llegó al Madrid siendo un diamante en bruto; hoy es una joya pulida." ¿Qué significa esto?',opts:['Que Vinicius trabaja con joyas','Que llegó con potencial y maduró como jugador','Que le gustan los diamantes','Que es muy caro'],ans:1},
+      {q:'¿Cuál es la idea principal de: "El Real Madrid no solo gana partidos, construye historia. Cada título es un ladrillo más en su legado"?',opts:['El Madrid usa ladrillos en su estadio','El Madrid tiene una historia de éxitos que lo define','El Madrid ganó un partido','El Madrid construye estadios'],ans:1},
+      {q:'Si la crónica dice "El árbitro apagó el fuego madridista con una decisión polémica", ¿qué quiere decir?',opts:['El árbitro usó agua','Una decisión del árbitro frenó el buen momento del Madrid','El estadio tuvo un incendio','El árbitro hizo un buen trabajo'],ans:1},
+      {q:'¿Cuál es la diferencia entre una crónica deportiva y una noticia deportiva?',opts:['No hay diferencia','La crónica narra y valora; la noticia informa objetivamente','La noticia es más larga','La crónica solo tiene opiniones'],ans:1},
+    ]
+  ]},
   { name:'Tipos de textos', levels:[
+    [
+      {q:'¿Qué es un texto narrativo?',opts:['Cuenta una historia con personajes','Explica un proceso','Da instrucciones','Convence de algo'],ans:0},
+      {q:'¿Cuál es un ejemplo de texto descriptivo?',opts:['Un cuento','Una receta','La descripción de un lugar','Un artículo de opinión'],ans:2},
+      {q:'¿Qué tipo de texto intenta convencer?',opts:['Narrativo','Descriptivo','Argumentativo','Informativo'],ans:2},
+      {q:'Un manual de instrucciones es un texto...',opts:['Narrativo','Instructivo','Poético','Dramático'],ans:1},
+      {q:'¿Cuál es un texto expositivo?',opts:['Una novela','Un poema','Un artículo enciclopédico','Una obra de teatro'],ans:2}],
+    [{q:'¿Qué elemento NO pertenece a un cuento?',opts:['Personajes','Trama','Nota al pie técnica','Desenlace'],ans:2},
+     {q:'¿Qué es el narrador omnisciente?',opts:['El protagonista que narra','Alguien que sabe todo de todos los personajes','Un personaje secundario','El autor del texto'],ans:1},
+     {q:'¿Qué función tiene la introducción en un texto?',opts:['Concluir las ideas','Presentar el tema','Desarrollar argumentos','Resumir conclusiones'],ans:1},
+     {q:'¿Qué es el tema de un texto?',opts:['El título','La idea central que se desarrolla','Los personajes','El lugar donde ocurre'],ans:1},
+     {q:'¿Cuál es la estructura de un texto argumentativo?',opts:['Inicio-nudo-desenlace','Tesis-argumentos-conclusión','Introducción-desarrollo-cierre','Planteo-conflicto-resolución'],ans:1}],
+    [{q:'Santi lee un artículo sobre por qué el Real Madrid es el mejor club. ¿Qué tipo de texto es?',opts:['Narrativo','Informativo','Argumentativo','Descriptivo'],ans:2},
+     {q:'Un recetario de cocina es un texto...',opts:['Argumentativo','Instructivo','Narrativo','Poético'],ans:1},
+     {q:'¿Cuál es la diferencia entre un cuento y una novela?',opts:['La novela tiene más personajes','El cuento es más corto y enfocado','La novela siempre es de aventuras','El cuento siempre tiene moraleja'],ans:1},
+     {q:'¿Qué es una anécdota?',opts:['Un poema largo','Un relato breve sobre algo que ocurrió','Una descripción técnica','Una obra de teatro'],ans:1},
+     {q:'En una entrevista al entrenador del Real Madrid, ¿qué tipo de texto es?',opts:['Narrativo','Expositivo-informativo','Poético','Dramático'],ans:1}],
+    [{q:'Mbappé escribe sus memorias sobre su carrera. ¿Qué género es?',opts:['Novela de ficción','Autobiografía','Cuento','Crónica deportiva'],ans:1},
+     {q:'Un periódico publica: "El Real Madrid debería vender a su centrocampista". ¿Qué tipo de texto es?',opts:['Noticia','Reportaje','Artículo de opinión','Crónica'],ans:2},
+     {q:'¿Qué diferencia una noticia de un artículo de opinión?',opts:['La noticia es más larga','La noticia informa hechos, la opinión valora o interpreta','La opinión tiene más fotos','No hay diferencia'],ans:1},
+     {q:'Una crónica deportiva del partido Real Madrid vs Barcelona es principalmente...',opts:['Argumentativa','Instructiva','Narrativo-informativa','Poética'],ans:2},
+     {q:'¿Cuál es la función del párrafo de cierre en un texto argumentativo?',opts:['Presentar nuevos argumentos','Resumir y reforzar la tesis','Introducir el tema','Citar fuentes'],ans:1}]
+  ]},
+  { name:'Figuras retóricas', levels:[
+    [{q:'¿Qué es una metáfora?',opts:['Una comparación usando "como"','Identificar una cosa con otra sin usar "como"','Una exageración','Una repetición'],ans:1},
+     {q:'"Tan valiente como un león" es un ejemplo de...',opts:['Metáfora','Símil','Hipérbole','Anáfora'],ans:1},
+     {q:'¿Qué es una hipérbole?',opts:['Una comparación','Una exageración intencional','Una repetición de sonidos','Una personificación'],ans:1},
+     {q:'"El sol me saludó esta mañana" es un ejemplo de...',opts:['Hipérbole','Metáfora','Personificación','Símil'],ans:2},
+     {q:'¿Qué es una anáfora?',opts:['Comparar dos cosas','Repetir palabras al inicio de versos o frases','Exagerar algo','Dar vida a objetos'],ans:1}],
+    [{q:'"Mbappé es un rayo en la cancha" es una...',opts:['Hipérbole','Símil','Metáfora','Anáfora'],ans:2},
+     {q:'"¡Te lo he dicho un millón de veces!" es una...',opts:['Metáfora','Hipérbole','Personificación','Anáfora'],ans:1},
+     {q:'"Corre, corre, corre sin parar" es una...',opts:['Metáfora','Hipérbole','Anáfora','Personificación'],ans:2},
+     {q:'¿Cuál de estas es una metáfora?',opts:['"Rápido como el viento"','"El tiempo es oro"','"¡Me muero de risa!"','"El árbol creció"'],ans:1},
+     {q:'"El viento susurra secretos" es una...',opts:['Metáfora','Hipérbole','Personificación','Aliteración'],ans:2}],
+    [{q:'En el anuncio "¡Real Madrid, la pasión que nunca se apaga!", ¿cuál figura hay?',opts:['Hipérbole','Metáfora','Anáfora','Símil'],ans:1},
+     {q:'El comentarista dice: "Vinicius voló por la banda izquierda". ¿Qué figura usa?',opts:['Hipérbole','Anáfora','Metáfora','Personificación'],ans:2},
+     {q:'"Ganamos, ganamos, ganamos la Champions" repite el narrador. ¿Qué figura es?',opts:['Metáfora','Hipérbole','Anáfora','Símil'],ans:2},
+     {q:'"Bellingham juega como los ángeles" es un...',opts:['Metáfora','Símil','Hipérbole','Personificación'],ans:1},
+     {q:'Una canción del Real Madrid dice "El Bernabéu late con cada gol". ¿Qué figura es?',opts:['Símil','Metáfora','Personificación','Hipérbole'],ans:2}],
+    [{q:'Escribe el tipo de figura: "La pelota bailó en la red"',opts:['Hipérbole','Personificación','Metáfora','Símil'],ans:1},
+     {q:'"¡Esperé mil años para este gol!" dice Mbappé. ¿Qué figura es?',opts:['Anáfora','Metáfora','Hipérbole','Personificación'],ans:2},
+     {q:'¿Cuál opción contiene una anáfora?',opts:['"Corrió como un toro"','"Es un diamante en bruto"','"Juega, ríe, baila en la cancha"','"Hoy gané, mañana gané, siempre gané"'],ans:3},
+     {q:'"El Bernabéu es un volcán cuando marca el Madrid" combina:',opts:['Símil y anáfora','Metáfora e hipérbole','Personificación y símil','Anáfora y hipérbole'],ans:1},
+     {q:'¿Cuál figura NO se encontraría en poesía lírica principalmente?',opts:['Metáfora','Símil','Hipérbole','Instructivo'],ans:3}]
+  ]},
+  { name:'Ortografía y gramática', levels:[
     [{q:'¿Qué es un texto narrativo?',opts:['Cuenta una historia con personajes','Explica un proceso','Da instrucciones','Convence de algo'],ans:0},
      {q:'¿Cuál es un ejemplo de texto descriptivo?',opts:['Un cuento','Una receta','La descripción de un lugar','Un artículo de opinión'],ans:2},
      {q:'¿Qué tipo de texto intenta convencer?',opts:['Narrativo','Descriptivo','Argumentativo','Informativo'],ans:2},
@@ -1275,127 +1991,211 @@ function ESP_TOPICS() { return [
 
 function CIE_TOPICS() { return [
   { name:'Célula y seres vivos', levels:[
-    [{q:'¿Cuál es la unidad básica de todos los seres vivos?',opts:['El tejido','El órgano','La célula','El sistema'],ans:2},
-     {q:'¿Qué diferencia a una célula animal de una vegetal?',opts:['La animal tiene núcleo','La vegetal tiene pared celular y cloroplastos','La animal tiene membrana','La vegetal no tiene núcleo'],ans:1},
-     {q:'¿Dónde está el material genético (ADN) de la célula?',opts:['Membrana','Citoplasma','Núcleo','Vacuola'],ans:2},
-     {q:'¿Qué organelo produce energía en la célula?',opts:['Núcleo','Ribosoma','Mitocondria','Vacuola'],ans:2},
-     {q:'¿Qué es la fotosíntesis?',opts:['Respiración celular','Proceso por el que las plantas producen alimento con luz solar','División celular','Movimiento celular'],ans:1}],
-    [{q:'¿Cuál es la función de la membrana celular?',opts:['Producir energía','Controlar qué entra y sale de la célula','Contener el ADN','Realizar la fotosíntesis'],ans:1},
-     {q:'¿Qué son los ribosomas?',opts:['Producen energía','Sintetizan proteínas','Almacenan agua','Controlan la célula'],ans:1},
-     {q:'¿Cuál organelo solo está en células vegetales?',opts:['Mitocondria','Núcleo','Cloroplasto','Membrana'],ans:2},
-     {q:'¿Qué es la mitosis?',opts:['División celular que produce dos células idénticas','Unión de dos células','Muerte celular','Respiración'],ans:0},
-     {q:'¿Cuál es la diferencia entre célula procariota y eucariota?',opts:['El tamaño','La procariota no tiene núcleo definido','La eucariota no tiene ADN','No hay diferencia'],ans:1}],
-    [{q:'¿Por qué las plantas son organismos autótrofos?',opts:['Porque se mueven','Porque producen su propio alimento','Porque respiran','Porque tienen raíces'],ans:1},
-     {q:'Si una célula tiene 0.01 mm de tamaño, ¿cuántas caben en 1 mm?',opts:['10','100','1000','10000'],ans:1},
-     {q:'¿Cuál tejido está formado por células que se contraen?',opts:['Tejido epitelial','Tejido muscular','Tejido nervioso','Tejido conectivo'],ans:1},
-     {q:'¿Qué ocurre durante la respiración celular?',opts:['Se produce glucosa','Se libera energía del alimento','Se captura luz solar','Se divide la célula'],ans:1},
-     {q:'¿Por qué los hongos NO son plantas?',opts:['Tienen células','No realizan fotosíntesis','No tienen núcleo','No se reproducen'],ans:1}],
-    [{q:'Los músculos de Mbappé al correr utilizan energía. ¿Qué proceso celular la produce?',opts:['Fotosíntesis','Mitosis','Respiración celular aeróbica','Meiosis'],ans:2},
-     {q:'Un deportista necesita proteínas para recuperar músculo. ¿Qué organelo las sintetiza?',opts:['Mitocondria','Ribosoma','Núcleo','Vacuola'],ans:1},
-     {q:'El césped del Bernabéu es verde gracias a la clorofila en los...',opts:['Núcleos','Ribosomas','Cloroplastos','Vacuolas'],ans:2},
-     {q:'Si una muestra de músculo tiene 500 células y cada una se divide una vez, ¿cuántas células habrá?',opts:['500','750','1000','1500'],ans:2},
-     {q:'¿Cuál nivel de organización es el correcto de menor a mayor?',opts:['Órgano→tejido→célula','Célula→tejido→órgano→sistema','Sistema→órgano→célula','Tejido→célula→sistema'],ans:1}]
+    [
+      {q:'¿Cuál es la unidad básica de todos los seres vivos?',opts:['El tejido','El órgano','La célula','El sistema'],ans:2},
+      {q:'¿Qué diferencia a una célula vegetal de una animal?',opts:['La animal tiene núcleo','La vegetal tiene pared celular y cloroplastos','La animal tiene membrana','La vegetal no tiene núcleo'],ans:1},
+      {q:'¿Dónde está el ADN en una célula eucariota?',opts:['Membrana','Citoplasma','Núcleo','Vacuola'],ans:2},
+      {q:'¿Qué organelo produce energía en la célula?',opts:['Núcleo','Ribosoma','Mitocondria','Vacuola'],ans:2},
+      {q:'¿Qué es la fotosíntesis?',opts:['Respiración celular','Proceso por el que las plantas producen alimento con luz solar','División celular','Movimiento celular'],ans:1},
+      {q:'¿Cuál es la función de la membrana celular?',opts:['Producir energía','Controlar qué entra y sale de la célula','Contener el ADN','Realizar fotosíntesis'],ans:1},
+      {q:'¿Qué organelo sintetiza proteínas?',opts:['Mitocondria','Núcleo','Ribosoma','Vacuola'],ans:2},
+      {q:'¿Cuál organelo solo está en células vegetales?',opts:['Mitocondria','Núcleo','Cloroplasto','Membrana'],ans:2},
+      {q:'¿Qué es la mitosis?',opts:['División celular que produce dos células idénticas','Unión de dos células','Muerte celular','Respiración'],ans:0},
+      {q:'¿Cuál nivel de organización es correcto de menor a mayor?',opts:['Órgano→tejido→célula','Célula→tejido→órgano→sistema','Sistema→órgano→célula','Tejido→célula→sistema'],ans:1},
+    ],[
+      {q:'¿Cuál es la diferencia entre célula procariota y eucariota?',opts:['El tamaño','La procariota no tiene núcleo definido','La eucariota no tiene ADN','No hay diferencia'],ans:1},
+      {q:'¿Qué son los organismos autótrofos?',opts:['Los que comen plantas','Los que producen su propio alimento mediante fotosíntesis','Los que comen animales','Los que no se alimentan'],ans:1},
+      {q:'¿Qué ocurre en la respiración celular aeróbica?',opts:['Se produce glucosa','Se libera energía del alimento usando oxígeno','Se captura luz solar','Se divide la célula'],ans:1},
+      {q:'Un tejido está formado por células que se contraen. ¿Qué tipo de tejido es?',opts:['Epitelial','Muscular','Nervioso','Conectivo'],ans:1},
+      {q:'¿Qué función tiene la vacuola en la célula vegetal?',opts:['Producir energía','Almacenar agua, nutrientes o desechos','Sintetizar proteínas','Controlar la célula'],ans:1},
+      {q:'¿Por qué los hongos NO son plantas?',opts:['Tienen células','No realizan fotosíntesis; son heterótrofos','No tienen núcleo','No se reproducen'],ans:1},
+      {q:'¿Qué es la meiosis?',opts:['División que produce 2 células idénticas','División que produce 4 células con la mitad de cromosomas (para reproducción sexual)','Fusión celular','Muerte programada'],ans:1},
+      {q:'¿Cuántos cromosomas tiene una célula humana normal?',opts:['23','44','46','48'],ans:2},
+      {q:'¿Qué es el tejido epitelial?',opts:['Tejido que se contrae','Tejido que recubre órganos y superficies del cuerpo','Tejido que conduce impulsos','Tejido que almacena grasa'],ans:1},
+      {q:'¿Cuál es la diferencia entre organismo unicelular y pluricelular?',opts:['Solo el tamaño','El unicelular está formado por una sola célula; el pluricelular por muchas especializadas','El unicelular es más complejo','No hay diferencia'],ans:1},
+    ],[
+      {q:'Un atleta corre 100m. Sus células musculares necesitan energía. ¿Qué proceso la produce principalmente?',opts:['Fotosíntesis','Mitosis','Respiración celular aeróbica','Meiosis'],ans:2},
+      {q:'Si una muestra de músculo tiene 200 células y cada una se divide por mitosis, ¿cuántas células habrá?',opts:['200','300','400','800'],ans:2},
+      {q:'El césped necesita sol para crecer. ¿En qué organelo ocurre este proceso?',opts:['Núcleo','Ribosoma','Cloroplasto','Vacuola'],ans:2},
+      {q:'¿Por qué un deportista necesita proteínas para recuperar músculo?',opts:['Las proteínas dan energía directa','Los ribosomas sintetizan proteínas para reparar y construir tejido muscular','Las proteínas son carbohidratos','No necesita proteínas'],ans:1},
+      {q:'¿Cuántas células nuevas produce una célula que se divide por mitosis 3 veces?',opts:['6','8','16','24'],ans:1},
+      {q:'Si una bacteria (procariota) y una célula vegetal se comparan, ¿qué tiene la vegetal y no la bacteria?',opts:['Membrana celular','ADN','Núcleo definido, pared celular de celulosa y cloroplastos','Citoplasma'],ans:2},
+      {q:'¿Qué le pasaría a una planta sin cloroplastos?',opts:['Crecería más rápido','No podría realizar fotosíntesis y moriría sin producir su alimento','Solo cambiaría de color','Seguiría igual'],ans:1},
+      {q:'¿Cuál sistema del cuerpo está formado por neuronas?',opts:['Sistema digestivo','Sistema nervioso','Sistema circulatorio','Sistema muscular'],ans:1},
+      {q:'¿Cuál es la función de los glóbulos rojos?',opts:['Combatir infecciones','Transportar oxígeno por el cuerpo','Digerir alimentos','Producir hormonas'],ans:1},
+      {q:'Un organismo vive en el agua, realiza fotosíntesis y es unicelular. ¿Qué es?',opts:['Bacteria','Hongo','Alga unicelular','Ameba'],ans:2},
+    ],[
+      {q:'Mbappé entrena 6 horas. Sus mitocondrias trabajan a máximo. ¿Qué molécula producen como "moneda de energía"?',opts:['Glucosa','ADN','ATP (adenosín trifosfato)','Proteína'],ans:2},
+      {q:'El VAR analiza si la pelota cruzó la línea a nivel celular de cámara. ¿A qué se parece el núcleo celular en una organización deportiva?',opts:['Al portero','Al centro de mando/dirección técnica que contiene la información genética del equipo','Al estadio','A los aficionados'],ans:1},
+      {q:'Si el ADN de Mbappé tiene instrucciones para su velocidad, ¿en qué organelo están almacenadas?',opts:['Mitocondria','Ribosoma','Núcleo','Vacuola'],ans:2},
+      {q:'Los músculos de un futbolista se dañan tras un partido intenso y se reparan. ¿Qué proceso celular permite esta reparación?',opts:['Fotosíntesis','Mitosis: las células se dividen para reemplazar las dañadas','Meiosis','Respiración únicamente'],ans:1},
+      {q:'¿Por qué los jugadores usan suplementos con hierro? Relaciona con biología celular:',opts:['Para el sabor','El hierro forma parte de la hemoglobina en glóbulos rojos que transportan O₂ a los músculos','Solo es tendencia','Para los huesos'],ans:1},
+      {q:'Un estadio tiene 88,000 "células" (asientos). Si se duplican las zonas, ¿cuántos asientos habría? (analogía con mitosis)',opts:['88,000','132,000','176,000','264,000'],ans:2},
+      {q:'¿Cuál sería la consecuencia si las mitocondrias de Bellingham dejaran de funcionar durante un partido?',opts:['Jugaría más rápido','Sus células musculares no producirían energía y no podría moverse','Solo cambiaría su ritmo','No habría consecuencia'],ans:1},
+      {q:'La piel de un portero se regenera tras un raspón. ¿Qué tipo de división celular ocurre?',opts:['Meiosis','Mitosis (produce células idénticas para reparar tejido)','Fusión celular','Ninguna'],ans:1},
+      {q:'¿Por qué las células musculares tienen más mitocondrias que otras células?',opts:['Por casualidad','Porque necesitan más energía para contraerse constantemente','Porque son más grandes','Porque son más antiguas'],ans:1},
+      {q:'Si se bloquea la pared celular de una bacteria con antibiótico, ¿qué ocurre?',opts:['La bacteria crece más','La bacteria muere porque pierde su estructura de soporte y protección','No pasa nada','La bacteria se hace más fuerte'],ans:1},
+    ]
   ]},
   { name:'Leyes de Newton', levels:[
-    [{q:'¿Cuántas leyes del movimiento describió Newton?',opts:['1','2','3','4'],ans:2},
-     {q:'La primera ley de Newton habla de:',opts:['Fuerza y masa','Acción y reacción','Inercia','Velocidad'],ans:2},
-     {q:'¿Qué es la inercia?',opts:['La fuerza de gravedad','La tendencia de un objeto a mantener su estado de movimiento','La resistencia del aire','La velocidad de un objeto'],ans:1},
-     {q:'F = m × a es la fórmula de la:',opts:['Primera ley','Segunda ley','Tercera ley','Ley de gravedad'],ans:1},
-     {q:'La tercera ley dice:',opts:['F = ma','A mayor masa, mayor fuerza','A toda acción le corresponde una reacción igual y opuesta','Un objeto en reposo tiende a seguir en reposo'],ans:2}],
-    [{q:'Un balón de 0.5 kg recibe una fuerza de 10 N. ¿Cuál es su aceleración?',opts:['5 m/s²','10 m/s²','20 m/s²','50 m/s²'],ans:2},
-     {q:'Si un jugador pesa 70 kg y corre con aceleración de 2 m/s², ¿qué fuerza aplica?',opts:['35 N','70 N','140 N','280 N'],ans:2},
-     {q:'¿Qué ocurre con la aceleración si duplicas la masa pero mantienes la misma fuerza?',opts:['Se duplica','Se mantiene igual','Se divide entre 2','Se divide entre 4'],ans:2},
-     {q:'Un auto frena con fuerza de 5000 N. Si pesa 1000 kg, ¿cuál es su desaceleración?',opts:['2 m/s²','5 m/s²','10 m/s²','50 m/s²'],ans:1},
-     {q:'¿Por qué un objeto en el espacio sigue moviéndose sin fuerzas?',opts:['Tiene motor','Por la primera ley (inercia)','Por la gravedad','Por la tercera ley'],ans:1}],
-    [{q:'Cuando Mbappé chuta el balón, ¿cuál ley explica por qué el balón sale disparado?',opts:['Primera ley','Segunda ley (F=ma)','Tercera ley','Ley de gravedad'],ans:1},
-     {q:'Cuando el portero salta y atrapa el balón, retrocede por:',opts:['Primera ley','Segunda ley','Tercera ley (reacción)','Ley de gravedad'],ans:2},
-     {q:'Un árbitro de 80 kg corre con aceleración 1.5 m/s². ¿Qué fuerza aplica?',opts:['53.3 N','80 N','120 N','160 N'],ans:2},
-     {q:'¿Por qué es más difícil mover un jugador que un balón?',opts:['Por la tercera ley','Porque el jugador tiene más masa (segunda ley)','Primera ley','No hay diferencia'],ans:1},
-     {q:'El VAR mide que el balón tardó 0.5 s en ir de la patada a la portería, recorriendo 25 m. ¿Cuál fue su velocidad promedio?',opts:['12.5 m/s','25 m/s','50 m/s','100 m/s'],ans:2}],
-    [{q:'En el Bernabéu, Bellingham remata un balón de 0.45 kg con F = 90 N. ¿Con qué aceleración sale?',opts:['0.005 m/s²','2 m/s²','40.5 m/s²','200 m/s²'],ans:3},
-     {q:'Si Mbappé corre y frena de 10 m/s a 0 en 2 segundos, y pesa 73 kg, ¿qué fuerza de fricción lo detiene?',opts:['36.5 N','73 N','146 N','365 N'],ans:3},
-     {q:'Dos jugadores colisionan: uno de 80 kg y otro de 70 kg. ¿Cuál siente más fuerza de impacto?',opts:['El de 80 kg','El de 70 kg','Los dos sienten la misma fuerza (3ª ley)','Depende de la velocidad'],ans:2},
-     {q:'Un balón recibe fuerza F y acelera a 20 m/s². Si la masa se triplica y F se mantiene, ¿cuánto acelera?',opts:['6.67 m/s²','10 m/s²','20 m/s²','60 m/s²'],ans:0},
-     {q:'¿Por qué los jugadores usan tacos en el campo? Relaciona con Newton:',opts:['Mayor fricción → puede aplicar más fuerza (2ª ley)','Menor masa → más aceleración','Tercera ley: el campo los empuja','Para verse bien'],ans:0}]
+    [
+      {q:'¿Cuántas leyes del movimiento describió Newton?',opts:['1','2','3','4'],ans:2},
+      {q:'La primera ley de Newton habla de:',opts:['Fuerza y masa','Acción y reacción','Inercia','Velocidad'],ans:2},
+      {q:'¿Qué es la inercia?',opts:['La fuerza de gravedad','La tendencia de un objeto a mantener su estado de movimiento o reposo','La resistencia del aire','La velocidad'],ans:1},
+      {q:'F = m × a es la fórmula de la:',opts:['Primera ley','Segunda ley','Tercera ley','Ley de gravedad'],ans:1},
+      {q:'La tercera ley de Newton dice:',opts:['F=ma','A mayor masa, mayor fuerza','A toda acción le corresponde una reacción igual y opuesta','Un objeto en reposo tiende a seguir en reposo'],ans:2},
+      {q:'¿Qué unidad se usa para medir la fuerza?',opts:['Kilogramo','Newton (N)','Metro','Joule'],ans:1},
+      {q:'¿Qué es la aceleración?',opts:['La velocidad máxima','El cambio de velocidad por unidad de tiempo','La distancia recorrida','La fuerza aplicada'],ans:1},
+      {q:'¿Qué ocurre con la aceleración si aumenta la fuerza y la masa se mantiene?',opts:['Disminuye','Se mantiene igual','Aumenta','Se hace negativa'],ans:2},
+      {q:'¿Cuál es un ejemplo de la tercera ley de Newton?',opts:['Un auto frenando','Un cohete expulsando gases hacia abajo y elevándose','Una pelota rodando','Un libro en reposo'],ans:1},
+      {q:'¿Por qué un objeto en el espacio sigue moviéndose sin fuerzas?',opts:['Tiene motor','Por la primera ley (inercia)','Por la gravedad','Por la tercera ley'],ans:1},
+    ],[
+      {q:'Un balón de 0.5 kg recibe 10 N de fuerza. ¿Cuál es su aceleración?',opts:['5 m/s²','10 m/s²','20 m/s²','50 m/s²'],ans:2},
+      {q:'Si un jugador de 70 kg corre con aceleración de 2 m/s², ¿qué fuerza aplica?',opts:['35 N','70 N','140 N','280 N'],ans:2},
+      {q:'¿Qué ocurre con la aceleración si duplicas la masa con la misma fuerza?',opts:['Se duplica','Se mantiene igual','Se divide entre 2','Se divide entre 4'],ans:2},
+      {q:'Un auto frena con 5,000 N. Pesa 1,000 kg. ¿Cuál es su desaceleración?',opts:['2 m/s²','5 m/s²','10 m/s²','50 m/s²'],ans:1},
+      {q:'¿Cuánta fuerza necesitas para acelerar 3 kg a 4 m/s²?',opts:['1.33 N','7 N','12 N','24 N'],ans:2},
+      {q:'Si la fuerza es 100 N y la masa es 25 kg, ¿cuánto es la aceleración?',opts:['2 m/s²','4 m/s²','25 m/s²','2,500 m/s²'],ans:1},
+      {q:'¿Cuál de estas situaciones describe la primera ley de Newton?',opts:['Una pelota acelerando al ser pateada','Un astronauta flotando a velocidad constante en el espacio','Un cohete despegando','Una pelota rebotando'],ans:1},
+      {q:'¿Cuánto acelera un objeto de 8 kg con una fuerza de 40 N?',opts:['0.2 m/s²','5 m/s²','32 m/s²','320 m/s²'],ans:1},
+      {q:'Si doblas la masa y doblas la fuerza, ¿qué pasa con la aceleración?',opts:['Se duplica','Se mantiene igual','Se divide entre 2','Se cuadruplica'],ans:1},
+      {q:'¿Cuál par fuerza-masa da mayor aceleración?',opts:['100 N / 50 kg = 2 m/s²','50 N / 10 kg = 5 m/s²','200 N / 100 kg = 2 m/s²','80 N / 20 kg = 4 m/s²'],ans:1},
+    ],[
+      {q:'Mbappé chuta un balón de 0.45 kg y le imprime 90 N. ¿Con qué aceleración sale?',opts:['0.5 m/s²','40.5 m/s²','90 m/s²','200 m/s²'],ans:3},
+      {q:'Un árbitro de 80 kg corre con aceleración 1.5 m/s². ¿Qué fuerza aplica?',opts:['53.3 N','80 N','120 N','160 N'],ans:2},
+      {q:'Cuando el portero salta y atrapa el balón, retrocede un poco. ¿Qué ley lo explica?',opts:['Primera ley','Segunda ley','Tercera ley (reacción)','Ley de gravedad'],ans:2},
+      {q:'¿Por qué es más difícil mover a un jugador grande que un balón?',opts:['Por la tercera ley','El jugador tiene más masa, necesita más fuerza para misma aceleración (2ª ley)','Primera ley','No hay diferencia'],ans:1},
+      {q:'El VAR mide que el balón tardó 0.5 s en recorrer 25 m. ¿Cuál fue su velocidad promedio?',opts:['12.5 m/s','25 m/s','50 m/s','100 m/s'],ans:2},
+      {q:'¿Por qué los jugadores usan tacos en el campo? (Relación con Newton)',opts:['Mayor fricción permite aplicar más fuerza horizontal (2ª ley)','Menor masa = más aceleración','Tercera ley: el campo los empuja más','Solo estética'],ans:0},
+      {q:'Si Mbappé frena de 10 m/s a 0 en 2 s y pesa 73 kg, ¿qué fuerza lo detiene?',opts:['36.5 N','73 N','146 N','365 N'],ans:3},
+      {q:'Dos jugadores chocan frontalmente con la misma fuerza. ¿Cuál siente más impacto?',opts:['El más pesado','El más ligero','Los dos sienten la misma fuerza (3ª ley)','Depende de quién va más rápido'],ans:2},
+      {q:'Un balón recibe fuerza F y acelera a 20 m/s². Si la masa se triplica con igual F, ¿cuánto acelera?',opts:['6.67 m/s²','10 m/s²','20 m/s²','60 m/s²'],ans:0},
+      {q:'¿Por qué un futbolista corre más rápido con zapatillas ligeras que con botas pesadas? (Newton)',opts:['Por la tercera ley','Menor masa con misma fuerza muscular = mayor aceleración (2ª ley)','Primera ley de inercia','No hay relación'],ans:1},
+    ],[
+      {q:'Bellingham remata un balón de 0.45 kg con F = 90 N. La resistencia del aire es 8 N. ¿Fuerza neta y aceleración?',opts:['82 N / 182.2 m/s²','98 N / 217.7 m/s²','90 N / 200 m/s²','82 N / 18.2 m/s²'],ans:0},
+      {q:'El Real Madrid viaja en avión: 500 pasajeros+equipaje = 85,000 kg. Los motores generan 1,020,000 N. ¿Aceleración?',opts:['8 m/s²','10 m/s²','12 m/s²','15 m/s²'],ans:2},
+      {q:'Vinicius corre a 10 m/s y frena en 1.5 s. Si pesa 73 kg, ¿qué fuerza de fricción lo detiene?',opts:['109.5 N','243.3 N','486.7 N','730 N'],ans:3},
+      {q:'¿Por qué el balón de fútbol moderno (más ligero) viaja más rápido con la misma patada que antes?',opts:['Tercera ley','Menor masa = mayor aceleración con la misma fuerza (F=ma)','Primera ley','No hay relación'],ans:1},
+      {q:'Si el campo genera 200 N de fricción contra Mbappé (73 kg) al correr, ¿cuánto reduce su aceleración?',opts:['1.37 m/s²','2.74 m/s²','5.48 m/s²','14.6 m/s²'],ans:1},
+      {q:'Un dron-cámara del Bernabéu pesa 2 kg y necesita subir con a = 3 m/s². La gravedad lo jala con 19.6 N. ¿Cuánta fuerza total necesitan sus motores?',opts:['6 N','19.6 N','25.6 N','31.6 N'],ans:2},
+      {q:'¿Por qué es más difícil para Mbappé cambiar de dirección a máxima velocidad que a velocidad baja?',opts:['Por la tercera ley','A mayor velocidad, mayor inercia, se necesita más fuerza para cambiar el movimiento (1ª y 2ª ley)','Por el peso de los tacos','No hay diferencia'],ans:1},
+      {q:'Dos futbolistas chocan: uno de 90 kg a 8 m/s y uno de 60 kg a 12 m/s. ¿Cuál tiene mayor momentum (m×v)?',opts:['El de 90 kg: 720 kg·m/s','El de 60 kg: 720 kg·m/s','Son iguales: ambos 720 kg·m/s','No se puede calcular'],ans:2},
+      {q:'El Bernabéu pesa millones de kg pero no se mueve. ¿Qué ley explica que esté en reposo?',opts:['Segunda ley','Primera ley: objeto en reposo tiende a permanecer en reposo si la fuerza neta es cero','Tercera ley','Ninguna'],ans:1},
+      {q:'¿Por qué los sacos de arena en el entrenamiento de Mbappé tienen masa grande? (Objetivo de resistencia)',opts:['Para que sean más baratos','Mayor masa = mayor fuerza requerida para moverlos = mayor entrenamiento de fuerza muscular','Por estética','Por tradición'],ans:1},
+    ]
+  ]},
+  { name:'Química básica', levels:[
+    [
+      {q:'¿Qué es un elemento químico?',opts:['Una mezcla de sustancias','Una sustancia pura formada por un solo tipo de átomo','Un compuesto','Una solución'],ans:1},
+      {q:'¿Qué es un átomo?',opts:['La molécula más grande','La partícula más pequeña de un elemento que conserva sus propiedades','Un tipo de compuesto','Un ion'],ans:1},
+      {q:'¿Cuáles son las partículas subatómicas básicas?',opts:['Átomos, moléculas e iones','Protones, neutrones y electrones','Sólidos, líquidos y gases','Metales, no metales y metaloides'],ans:1},
+      {q:'¿Dónde se encuentran los electrones en el átomo?',opts:['En el núcleo','En órbitas o niveles de energía alrededor del núcleo','Dentro de los protones','Fuera del átomo'],ans:1},
+      {q:'¿Qué es una molécula?',opts:['Un átomo solo','Dos o más átomos unidos por enlaces químicos','Una mezcla','Un elemento'],ans:1},
+      {q:'¿Qué es una mezcla?',opts:['Un compuesto nuevo','La combinación de dos o más sustancias que NO se unen químicamente','Un elemento','Un átomo complejo'],ans:1},
+      {q:'¿Qué es una reacción química?',opts:['Mezclar físicamente sustancias','Proceso donde sustancias (reactivos) se transforman en nuevas sustancias (productos)','Cambiar el estado de la materia','Disolver algo en agua'],ans:1},
+      {q:'¿Qué es el número atómico?',opts:['La masa del átomo','El número de protones en el núcleo','El número de neutrones','El número de electrones externos'],ans:1},
+      {q:'¿Qué es la tabla periódica?',opts:['Una lista de mezclas','Una organización de todos los elementos químicos por número atómico y propiedades','Una tabla de reacciones','Un listado de moléculas'],ans:1},
+      {q:'¿Cuál es la fórmula del agua?',opts:['CO₂','H₂O','NaCl','O₂'],ans:1},
+    ],[
+      {q:'¿Cuántos protones tiene el carbono (C, número atómico 6)?',opts:['3','6','8','12'],ans:1},
+      {q:'¿Cuál es la diferencia entre mezcla homogénea y heterogénea?',opts:['No hay diferencia','La homogénea tiene composición uniforme; la heterogénea tiene partes visibles distintas','La homogénea es siempre líquida','La heterogénea es siempre sólida'],ans:1},
+      {q:'¿Cuál es un cambio físico?',opts:['Quemar madera','Oxidar hierro','Derretir hielo','Fermentar jugo'],ans:2},
+      {q:'¿Cuál es un cambio químico (reacción)?',opts:['Cortar papel','Disolver sal en agua','Doblar metal','Quemar gasolina'],ans:3},
+      {q:'Si el hidrógeno (H) tiene número atómico 1, ¿cuántos protones tiene?',opts:['0','1','2','3'],ans:1},
+      {q:'¿Qué indica el subíndice en H₂O?',opts:['Hay 2 moléculas de agua','Hay 2 átomos de hidrógeno por cada 1 de oxígeno','Hay 2 oxígenos','Hay 2 tipos de agua'],ans:1},
+      {q:'¿Cuál es la fórmula del dióxido de carbono?',opts:['CO','CO₂','C₂O','O₂C'],ans:1},
+      {q:'¿Qué sucede en la electrólisis del agua?',opts:['El agua se calienta','El agua se separa en hidrógeno y oxígeno usando electricidad','El agua se congela','El agua cambia de color'],ans:1},
+      {q:'¿Qué es un ácido?',opts:['Sustancia que libera OH⁻ en agua','Sustancia que libera H⁺ en agua y tiene pH menor a 7','Una base fuerte','Un metal disuelto'],ans:1},
+      {q:'¿Qué es una base (álcali)?',opts:['Sustancia con pH menor a 7','Sustancia que libera OH⁻ en agua y tiene pH mayor a 7','Un ácido diluido','Una sal'],ans:1},
+    ],[
+      {q:'El agua de la alberca del estadio está desinfectada con cloro (Cl). ¿Qué tipo de cambio es agregar cloro al agua?',opts:['Cambio físico (solo mezcla)','Cambio químico (reacción que mata bacterias)','Cambio de estado','Ningún cambio'],ans:1},
+      {q:'El bote de los uniformes del Real Madrid se lava con detergente. El detergente es básico (pH > 7). ¿Qué tipo de sustancia es?',opts:['Ácido','Base o álcali','Sal neutra','Mezcla heterogénea'],ans:1},
+      {q:'La bebida energética de Mbappé contiene CO₂ (gas). ¿Qué tipo de mezcla es?',opts:['Mezcla heterogénea sólido-líquido','Mezcla homogénea gas-líquido (solución gaseosa)','Compuesto puro','Elemento'],ans:1},
+      {q:'El hierro de las porterías del Bernabéu se oxida. ¿Es cambio físico o químico?',opts:['Físico, solo cambia de color','Químico, el hierro reacciona con O₂ y H₂O formando óxido de hierro','Físico, solo se mezclan','Ningún cambio'],ans:1},
+      {q:'La sal del sudor de los jugadores es NaCl. ¿Cuántos átomos tiene una molécula de NaCl?',opts:['1','2','3','4'],ans:1},
+      {q:'¿Por qué el agua no se puede separar simplemente en H y O agitándola? (A diferencia de una mezcla)',opts:['Porque es muy pesada','Porque H y O están unidos por enlace químico covalente, requiere energía romperlos','Porque el agua es pura','Porque los átomos son invisibles'],ans:1},
+      {q:'Si el pH del agua de la cancha del Madrid es 7, ¿es ácida, neutra o básica?',opts:['Ácida','Básica','Neutra','No tiene pH'],ans:2},
+      {q:'¿Qué tipo de mezcla es la bebida isotónica que toman los jugadores (agua + sales + glucosa uniformemente distribuidos)?',opts:['Heterogénea','Homogénea (solución)','Compuesto','Elemento puro'],ans:1},
+      {q:'El aluminio de los tacos de Mbappé tiene número atómico 13. ¿Cuántos protones tiene?',opts:['6','8','13','26'],ans:2},
+      {q:'¿Qué cambio ocurre cuando el chef del Real Madrid cocina carne? (Proteínas se desnaturalizan)',opts:['Cambio físico reversible','Cambio químico irreversible','Solo cambio de temperatura','Cambio de estado'],ans:1},
+    ],[
+      {q:'Mbappé suda durante el partido. El sudor contiene H₂O, NaCl y urea (CO(NH₂)₂). ¿Qué tipo de mezcla es?',opts:['Compuesto puro','Mezcla homogénea (solución)','Elemento','Mezcla heterogénea'],ans:1},
+      {q:'Para fabricar los tacos de carbono del Madrid, se necesita grafito (C puro). ¿Cuántos protones tiene C?',opts:['2','4','6','8'],ans:2},
+      {q:'La reacción de fermentación del pan del club es: glucosa → CO₂ + etanol. ¿Qué tipo de reacción es?',opts:['Síntesis','Descomposición','Combustión','Fermentación (tipo de redox)'],ans:3},
+      {q:'¿Cuál es la diferencia entre O₂ (molécula) y O (átomo)?',opts:['No hay diferencia','O₂ tiene 2 átomos de oxígeno unidos; O es un átomo solo','O₂ es más pesado','O es más reactivo'],ans:1},
+      {q:'El agua del estadio tiene pH 6.5. ¿Qué agregan para neutralizarla?',opts:['Más agua','Un ácido más fuerte','Una base para subir el pH a 7','Nada, está bien'],ans:2},
+      {q:'¿Por qué el hielo seco (CO₂ sólido) usado en efectos del estadio pasa directo de sólido a gas?',opts:['Se derrite primero','Sublimación: pasa de estado sólido a gaseoso sin pasar por líquido','Es un cambio químico','Se evapora'],ans:1},
+      {q:'Si tienes 3 moléculas de H₂O, ¿cuántos átomos de hidrógeno hay en total?',opts:['3','6','9','12'],ans:1},
+      {q:'¿Qué tipo de enlace mantiene unidos los átomos de H y O en el agua?',opts:['Enlace iónico','Enlace covalente','Enlace metálico','No hay enlace'],ans:1},
+      {q:'La gasolina del autobús del Real Madrid es un hidrocarburo (C y H). Al quemarse produce CO₂ y H₂O. ¿Qué tipo de reacción es?',opts:['Síntesis','Descomposición','Combustión','Neutralización'],ans:2},
+      {q:'Si el número atómico del Fe (hierro) es 26 y su masa atómica es 56, ¿cuántos neutrones tiene?',opts:['26','30','56','82'],ans:1},
+    ]
+  ]},
+  { name:'Ecosistemas', levels:[
+    [
+      {q:'¿Qué es un ecosistema?',opts:['Solo los animales de un lugar','El conjunto de seres vivos y su ambiente físico que interactúan entre sí','Solo las plantas','El clima de una región'],ans:1},
+      {q:'¿Cuál es la diferencia entre biotopo y biocenosis?',opts:['No hay diferencia','El biotopo es el ambiente físico (suelo, agua, clima); la biocenosis son todos los seres vivos','El biotopo son animales','La biocenosis es el clima'],ans:1},
+      {q:'¿Qué son los productores en un ecosistema?',opts:['Animales que cazan','Organismos que producen su propio alimento (plantas, algas)','Animales que comen plantas','Bacterias descomponedoras'],ans:1},
+      {q:'¿Qué son los consumidores primarios?',opts:['Plantas','Animales que comen plantas (herbívoros)','Animales que comen otros animales','Hongos'],ans:1},
+      {q:'¿Qué son los descomponedores?',opts:['Plantas grandes','Organismos (hongos, bacterias) que degradan materia orgánica muerta','Animales carnívoros','Productores'],ans:1},
+      {q:'¿Qué es una cadena alimentaria?',opts:['Una tienda de comida','La secuencia de quién se come a quién en un ecosistema','Un tipo de planta','El ciclo del agua'],ans:1},
+      {q:'¿Qué es la biodiversidad?',opts:['Solo la cantidad de animales','La variedad de especies, genes y ecosistemas de un lugar','El número de plantas','El tamaño del ecosistema'],ans:1},
+      {q:'¿Cuál es un ecosistema acuático?',opts:['El desierto','La selva','Un arrecife de coral','La sabana'],ans:2},
+      {q:'¿Qué es el nicho ecológico?',opts:['El lugar donde vive un animal','El rol o función que cumple un organismo en su ecosistema','El alimento de un animal','El tamaño de la población'],ans:1},
+      {q:'¿Qué es la fotosíntesis y por qué es fundamental para los ecosistemas?',opts:['Un proceso animal','El proceso por el que las plantas convierten luz en energía química, base de casi todas las cadenas alimentarias','Un tipo de respiración animal','Un ciclo del agua'],ans:1},
+    ],[
+      {q:'En la cadena: pasto→conejo→zorro→águila, ¿quién es consumidor terciario?',opts:['Pasto','Conejo','Zorro','Águila'],ans:3},
+      {q:'¿Qué es la pirámide ecológica?',opts:['Un tipo de ecosistema','Representación gráfica que muestra la energía/biomasa en cada nivel trófico','Una montaña con ecosistemas','Un tipo de cadena alimentaria'],ans:1},
+      {q:'¿Por qué hay menos energía disponible en cada nivel trófico superior?',opts:['Porque los animales grandes comen poco','Porque se pierde ~90% de la energía en cada transferencia trófica','Porque las plantas producen poca energía','No hay pérdida de energía'],ans:1},
+      {q:'¿Qué es la simbiosis?',opts:['Una relación de competencia','Una relación estrecha entre dos especies diferentes (puede ser mutualismo, comensalismo o parasitismo)','Una cadena alimentaria','Un tipo de ecosistema'],ans:1},
+      {q:'¿Cuál es la diferencia entre mutualismo y parasitismo?',opts:['No hay diferencia','En mutualismo ambos se benefician; en parasitismo uno se beneficia dañando al otro','En ambos uno sale dañado','El mutualismo solo ocurre en el mar'],ans:1},
+      {q:'¿Qué es una especie invasora?',opts:['Una especie en peligro','Una especie introducida en un ecosistema donde no es nativa y puede dañarlo','Una especie grande','Una especie carnívora'],ans:1},
+      {q:'¿Qué son los ciclos biogeoquímicos?',opts:['El ciclo de vida de los animales','Los ciclos de elementos como C, N, O y H₂O entre seres vivos y el ambiente','Las rutas migratorias','Los ciclos climáticos'],ans:1},
+      {q:'¿Qué es la deforestación y cómo afecta los ecosistemas?',opts:['Plantar más árboles','La eliminación de bosques que destruye hábitats, reduce biodiversidad y afecta el clima','Regar los bosques','Un tipo de contaminación del agua'],ans:1},
+      {q:'¿Qué es la huella de carbono?',opts:['Una marca en el suelo','La cantidad total de CO₂ emitida por una persona, empresa o actividad','El peso de una persona','Un tipo de contaminación sonora'],ans:1},
+      {q:'¿Cuál es la diferencia entre clima y tiempo atmosférico?',opts:['Son lo mismo','El tiempo es el estado atmosférico en un momento; el clima es el patrón a largo plazo de una región','El clima es diario','El tiempo es anual'],ans:1},
+    ],[
+      {q:'En Zacatecas hay maguey, conejos, coyotes y águilas. Construye la cadena: ¿qué va después del maguey?',opts:['Coyote','Conejo','Águila','Descomponedor'],ans:1},
+      {q:'El Real Madrid instaló paneles solares en el Bernabéu. ¿Cómo reduce su huella de carbono?',opts:['Solo ahorra dinero','Genera energía limpia sin emitir CO₂, reduciendo su impacto ambiental','No tiene relación con el ecosistema','Solo es publicidad'],ans:1},
+      {q:'NATYO usa yogurt natural. Las bacterias lácticas en el yogurt son ¿qué tipo de organismo en el ecosistema?',opts:['Productores','Consumidores primarios','Descomponedores/transformadores','Consumidores terciarios'],ans:2},
+      {q:'¿Por qué la extinción de las abejas afectaría gravemente los ecosistemas?',opts:['Solo porque son bonitas','Las abejas polinizan ~75% de los cultivos; sin ellas colapsan muchas cadenas alimentarias y la producción de alimentos','Solo afecta a las flores','Porque producen miel'],ans:1},
+      {q:'En un lago contaminado, los peces mueren. Los patos que los comen también disminuyen. Esto se llama:',opts:['Simbiosis','Bioacumulación y efecto cascada trófica','Fotosíntesis','Ciclo del agua'],ans:1},
+      {q:'¿Por qué el desierto de Zacatecas tiene baja biodiversidad comparado con una selva?',opts:['Por el tamaño','Las condiciones extremas (calor, poca agua) limitan la cantidad de especies que pueden sobrevivir','Por la altitud','Por la contaminación'],ans:1},
+      {q:'Si eliminas al zorro de: pasto→conejo→zorro→águila, ¿qué pasaría?',opts:['Nada','Los conejos aumentarían descontroladamente, consumiendo más pasto y alterando el ecosistema','El águila desaparecería también','El pasto crecería menos'],ans:1},
+      {q:'¿Cuál es el impacto ambiental de construir un estadio como el nuevo Bernabéu?',opts:['Ninguno','Uso de materiales, energía en construcción, generación de residuos y posible afectación de ecosistemas locales','Solo beneficios','Solo afecta el tráfico'],ans:1},
+      {q:'¿Qué es el efecto invernadero natural vs el antropogénico?',opts:['Son iguales','El natural mantiene temperatura habitable; el antropogénico es el exceso de CO₂ humano que calienta el planeta','El natural es dañino','El antropogénico es natural'],ans:1},
+      {q:'¿Cómo contribuye el huerto escolar a la sustentabilidad?',opts:['No contribuye','Produce alimentos localmente, reduce transporte, recicla nutrientes y educa sobre ecosistemas','Solo sirve de decoración','Solo para clases de biología'],ans:1},
+    ],[
+      {q:'El Bernabéu implementó techo verde (plantas en el estadio). ¿Qué beneficios ecosistémicos tiene?',opts:['Solo estética','Reduce temperatura, absorbe CO₂, provee hábitat para insectos y reduce escorrentía de agua','No tiene beneficios reales','Solo ahorra agua'],ans:1},
+      {q:'Zacatecas tiene ecosistema semiárido. Analiza: si hay sequía severa, ¿qué cadena de eventos ocurre?',opts:['Nada cambia','Menos plantas → menos herbívoros → menos carnívoros → colapso parcial de la cadena trófica','Solo los cactus mueren','Los animales migran y vuelven'],ans:1},
+      {q:'El Real Madrid Carbon-Neutral 2050 busca equilibrar sus emisiones. ¿Qué significa "carbono neutro"?',opts:['No usar nada de energía','Emitir exactamente la cantidad de CO₂ que se puede absorber/compensar, llegando a emisiones netas = 0','Usar solo energía solar','No usar gasolina'],ans:1},
+      {q:'¿Por qué los ecosistemas con mayor biodiversidad son más resilientes (resistentes a perturbaciones)?',opts:['Por suerte','Más especies = más redundancia funcional; si una especie falla, otra cumple su rol','Porque son más grandes','Porque tienen más agua'],ans:1},
+      {q:'Mbappé come: pasta (trigo→harina→pasta), pollo y verduras. ¿En qué nivel trófico está principalmente?',opts:['Productor','Consumidor primario (verduras/pasta) y secundario (pollo) — consumidor mixto (omnívoro)','Consumidor terciario','Descomponedor'],ans:1},
+      {q:'¿Cuál es el ciclo del carbono y por qué es crucial?',opts:['Solo el CO₂ del aire','El movimiento del carbono entre atmósfera, seres vivos, océanos y suelo; regula el clima y es base de la vida orgánica','El ciclo del carbón mineral','Solo la fotosíntesis'],ans:1},
+      {q:'Si NATYO usa envases biodegradables, ¿qué proceso natural los descompone?',opts:['La fotosíntesis','Bacterias y hongos descomponedores que degradan materia orgánica reciclando nutrientes','El ciclo del agua','La respiración'],ans:1},
+      {q:'¿Por qué la introducción del pez diablo en ríos mexicanos es un problema ecológico?',opts:['Es muy feo','Es especie invasora que compite con peces nativos, los desplaza y altera el ecosistema acuático','Solo afecta a los pescadores','Es venenoso para humanos'],ans:1},
+      {q:'Calcula la eficiencia energética: si pasto produce 10,000 kcal, ¿cuánta energía disponible hay para el águila (4to nivel)?',opts:['10,000 kcal','1,000 kcal','100 kcal','10 kcal'],ans:3},
+      {q:'¿Por qué es importante que Santi separe basura en orgánica e inorgánica?',opts:['Solo por las reglas','Los residuos orgánicos se pueden compostar (reciclar nutrientes) y los inorgánicos reciclarse, reduciendo contaminación y apoyando ciclos del ecosistema','No tiene impacto real','Solo para limpiar la casa'],ans:1},
+    ]
   ]}
 ]}
-
-function FIN_TOPICS() { return [
-  { name:'Ahorro e inversión', levels:[
-    [{q:'¿Qué es el ahorro?',opts:['Gastar todo lo que ganas','Guardar parte de tus ingresos','Pedir dinero prestado','Invertir en bolsa'],ans:1},
-     {q:'¿Cuál es la diferencia entre necesidad y deseo?',opts:['No hay diferencia','La necesidad es esencial para vivir; el deseo es opcional','El deseo es más importante','Las necesidades cuestan más'],ans:1},
-     {q:'¿Qué es un presupuesto?',opts:['Una deuda','Un plan de cómo gastar e ingresar dinero','Un tipo de inversión','Un banco'],ans:1},
-     {q:'Si ganas $500 y gastas $420, ¿cuánto ahorras?',opts:['$80','$920','$500','$420'],ans:0},
-     {q:'¿Qué es el interés bancario?',opts:['El dinero que el banco te cobra por guardar tu dinero','El costo de pedir prestado o la ganancia de ahorrar','El saldo de tu cuenta','Tu salario'],ans:1}],
-    [{q:'Si ahorras $200 al mes, ¿cuánto ahorras en 1 año?',opts:['$1,200','$2,000','$2,400','$3,000'],ans:2},
-     {q:'Si tienes $5,000 en el banco al 10% de interés anual, ¿cuánto ganas en 1 año?',opts:['$100','$500','$1,000','$5,000'],ans:1},
-     {q:'Tu presupuesto mensual es $3,000. Si el 30% va a comida, ¿cuánto es?',opts:['$300','$600','$900','$1,200'],ans:2},
-     {q:'¿Qué es una inversión?',opts:['Gastar dinero en algo innecesario','Usar dinero ahora esperando ganar más en el futuro','Pedir un préstamo','Guardar dinero bajo el colchón'],ans:1},
-     {q:'Si inviertes $10,000 y ganas 15% al año, ¿cuánto tienes al final del año?',opts:['$10,150','$10,500','$11,000','$11,500'],ans:3}],
-    [{q:'Santi gana $600 por semana cortando césped. Quiere comprar unos tenis de $1,800. ¿Cuántas semanas necesita ahorrar si guarda el 50%?',opts:['3','4','5','6'],ans:3},
-     {q:'NATYO vende 200 yogures al día a $35 cada uno. ¿Cuánto ingresa por semana (6 días)?',opts:['$35,000','$42,000','$49,000','$63,000'],ans:1},
-     {q:'Si el 20% de las ventas de NATYO van a gastos, y vende $42,000, ¿cuánta ganancia queda?',opts:['$8,400','$33,600','$38,400','$42,000'],ans:1},
-     {q:'¿Cuál es la mejor decisión financiera?',opts:['Gastar todo el salario en ropa','Ahorrar el 10% de lo que ganas cada mes','Pedir prestado para comprar ropa','Nunca gastar nada'],ans:1},
-     {q:'Si NATYO invierte $50,000 en nueva maquinaria y gana $8,000 más al mes, ¿en cuántos meses recupera la inversión?',opts:['4','5','6','7'],ans:2}],
-    [{q:'El salario de Mbappé es $1,000,000 al mes. Si ahorra el 25%, ¿cuánto ahorra al año?',opts:['$2,500,000','$3,000,000','$4,000,000','$5,000,000'],ans:1},
-     {q:'El Real Madrid invirtió $180M en fichajes y espera recuperar 3× en mercadotecnia en 5 años. ¿Cuánto espera recuperar?',opts:['$180M','$360M','$540M','$720M'],ans:2},
-     {q:'Si el valor de un jugador sube 12% al año y hoy vale $50M, ¿cuánto valdrá en 1 año?',opts:['$54M','$56M','$58M','$60M'],ans:1},
-     {q:'NATYO planea abrir nueva sucursal con préstamo de $200,000 al 15% anual. ¿Cuánto paga de interés el primer año?',opts:['$15,000','$20,000','$25,000','$30,000'],ans:3},
-     {q:'¿Cuál es el concepto clave de "interés compuesto"?',opts:['Ganar interés solo sobre el capital original','Ganar interés sobre el capital Y sobre los intereses acumulados','Pagar interés solo una vez','No hay diferencia con interés simple'],ans:1}]
-  ]}
-]}
-
-function SOC_TOPICS() { return [
-  { name:'Emociones y bienestar', levels:[
-    [{q:'¿Qué es la inteligencia emocional?',opts:['La inteligencia para matemáticas','La capacidad de reconocer y manejar tus emociones y las de otros','Ser muy inteligente en ciencias','No sentir emociones'],ans:1},
-     {q:'¿Cuál es una emoción básica?',opts:['Confusión','Alegría','Aburrimiento','Curiosidad'],ans:1},
-     {q:'¿Qué es la empatía?',opts:['Sentir lo mismo que otro','Entender y compartir los sentimientos de otras personas','Ignorar a los demás','Solo ayudar a amigos'],ans:1},
-     {q:'¿Qué haces cuando tienes una emoción muy intensa y necesitas calmarte?',opts:['Explotar de enojo','Ignorar el sentimiento','Respirar profundo y pensar antes de actuar','Guardar el sentimiento para siempre'],ans:2},
-     {q:'¿Qué es el autoconocimiento?',opts:['Conocer a mucha gente','Conocer tus propias fortalezas, debilidades y emociones','Estudiar mucho','Ser famoso'],ans:1}],
-    [{q:'Santi se pone nervioso antes de un examen. ¿Cuál estrategia le ayuda?',opts:['No dormir para estudiar más','Practicar respiración y organizar su tiempo','Posponer el estudio','Decir que no puede'],ans:1},
-     {q:'¿Qué es la resiliencia?',opts:['Rendirse ante las dificultades','La capacidad de recuperarse de situaciones difíciles','Evitar todos los problemas','No tener emociones'],ans:1},
-     {q:'¿Cuál es un ejemplo de comunicación asertiva?',opts:['"¡Me caes mal!"','"Creo que eso no estuvo bien porque me afectó así"','"No importa, da igual"','"Haz lo que quieras"'],ans:1},
-     {q:'Si un amigo está triste, ¿cuál es la mejor respuesta empática?',opts:['"Ya supéralo"','"¿Qué pasó? Cuéntame"','"A mí también me pasan cosas"','"Eso no es para tanto"'],ans:1},
-     {q:'¿Qué es el estrés?',opts:['Una enfermedad grave','La respuesta del cuerpo ante demandas o presiones','Un tipo de tristeza','Solo un sentimiento'],ans:1}],
-    [{q:'El equipo de Santi perdió un partido importante. ¿Cómo manejar esa frustración?',opts:['Culpar al árbitro','Reconocer el sentimiento, aprender y seguir adelante','Llorar y no jugar más','Enojarse con los compañeros'],ans:1},
-     {q:'¿Cuál hábito ayuda más al bienestar emocional?',opts:['Dormir poco para aprovechar más','Ejercicio regular y sueño suficiente','Pasar todo el día en redes sociales','Comer solo comida rápida'],ans:1},
-     {q:'Santi recibe una crítica de su maestro. ¿Cuál es la respuesta emocionalmente inteligente?',opts:['Enojarse y no hacer caso','Escuchar, reflexionar y usar la crítica para mejorar','Guardar rencor','Decir que el maestro está equivocado'],ans:1},
-     {q:'¿Qué es el pensamiento positivo realista?',opts:['Creer que todo siempre saldrá perfecto','Ver los problemas como oportunidades sin ignorar la realidad','Ignorar los problemas','Siempre decir que todo está mal'],ans:1},
-     {q:'¿Por qué es importante pedir ayuda cuando la necesitas?',opts:['No es importante, debes resolver todo solo','Porque todos necesitamos apoyo a veces','Solo los débiles piden ayuda','Para molestar a los demás'],ans:1}],
-    [{q:'Mbappé dice: "Cuando no marco goles, trabajo más duro en entrenamiento". ¿Qué actitud demuestra?',opts:['Resignación','Resiliencia y mentalidad de crecimiento','Arrogancia','Indiferencia'],ans:1},
-     {q:'Un jugador del Real Madrid falla un penalti en la final. ¿Cuál respuesta es emocionalmente sana?',opts:['Retirarse del fútbol','Culpar a sus compañeros','Sentir la decepción, aprender y comprometerse a mejorar','Negar que falló'],ans:2},
-     {q:'¿Por qué los equipos deportivos exitosos tienen psicólogo?',opts:['Para que los jugadores no hablen','Para ayudar con el rendimiento mental y emocional','Es obligatorio por la Liga','Solo es para los que tienen problemas'],ans:1},
-     {q:'¿Cuál es la diferencia entre autoestima sana y arrogancia?',opts:['No hay diferencia','La autoestima sana se basa en valorarte sin menospreciar a otros','La arrogancia es mejor','La autoestima es de niños'],ans:1},
-     {q:'Santi quiere mejorar en matemáticas pero cree que no puede. ¿Qué tipo de mentalidad tiene?',opts:['Mentalidad de crecimiento','Mentalidad fija','Mentalidad positiva','Mentalidad resiliente'],ans:1}]
-  ]}
-]}
-
-function IA_TOPICS() { return [
-  { name:'Fundamentos de IA', levels:[
-    [{q:'¿Qué significa "IA"?',opts:['Internet Avanzada','Inteligencia Artificial','Información Automatizada','Industria Actual'],ans:1},
-     {q:'¿Cuál es un ejemplo de IA en la vida cotidiana?',opts:['Una calculadora','El asistente de voz del teléfono','Una lámpara','Un libro'],ans:1},
-     {q:'¿Qué es el aprendizaje automático (machine learning)?',opts:['Programar robots físicos','Una computadora que aprende de datos sin ser programada explícitamente','Memorizar información','Usar internet'],ans:1},
-     {q:'¿Qué es un algoritmo?',opts:['Una computadora','Un programa de televisión','Un conjunto de pasos para resolver un problema','Un tipo de base de datos'],ans:2},
-     {q:'¿Cuál de estos NO es un ejemplo de IA?',opts:['Recomendaciones de Netflix','Filtros de spam de email','Una calculadora básica','Reconocimiento facial'],ans:2}],
-    [{q:'¿Qué es una "red neuronal"?',opts:['Una red de internet','Un sistema de IA inspirado en el cerebro humano','Un tipo de virus','Una red social'],ans:1},
-     {q:'¿Qué hace la IA generativa como ChatGPT?',opts:['Solo busca información existente','Genera nuevo contenido (texto, imágenes, etc.) basado en patrones aprendidos','Toma fotos','Controla robots'],ans:1},
-     {q:'¿Qué son los "datos de entrenamiento" en IA?',opts:['Ejercicios físicos','La información con la que se enseña a un modelo de IA','Los usuarios del sistema','El código fuente'],ans:1},
-     {q:'¿Qué es el reconocimiento de voz?',opts:['Una IA que habla por sí sola','La capacidad de una IA de entender y procesar lenguaje hablado','Un tipo de micrófono','Un idioma de programación'],ans:1},
-     {q:'¿Por qué los datos son importantes para la IA?',opts:['No son importantes','Porque la IA aprende y mejora gracias a los datos','Solo para almacenar información','Para llenar espacio en el disco'],ans:1}],
-    [{q:'El VAR del fútbol usa IA para analizar jugadas. ¿Cuál tipo de IA es?',opts:['IA generativa','Visión por computadora','Reconocimiento de voz','Chatbot'],ans:1},
-     {q:'Una app recomienda videos de Real Madrid porque los ves mucho. Esto es:',opts:['Coincidencia','Un sistema de recomendación basado en IA','Publicidad pagada','Un error del sistema'],ans:1},
-     {q:'¿Cuál es una ventaja de la IA en medicina?',opts:['Reemplaza completamente a los doctores','Puede analizar miles de resultados médicos para ayudar en diagnósticos','Es solo para entretenimiento','No tiene ventajas'],ans:1},
-     {q:'¿Qué es un sesgo en IA?',opts:['Un error de código','Cuando la IA aprende patrones injustos o incorrectos de los datos','Una falla de internet','Un tipo de virus'],ans:1},
-     {q:'¿Cuál es una preocupación ética sobre la IA?',opts:['Que procese datos muy rápido','Privacidad de datos y posible desplazamiento de empleos','Que use mucha electricidad','Que sea difícil de usar'],ans:1}],
-    [{q:'El Real Madrid usa IA para analizar el rendimiento de sus jugadores. ¿Qué tipo de datos usa?',opts:['Solo videos','Datos físicos, tácticos, de salud y estadísticas combinados','Solo estadísticas de goles','Solo datos de redes sociales'],ans:1},
-     {q:'Si quisieras crear una IA para predecir quién ganará la Champions, ¿qué datos necesitas principalmente?',opts:['Solo el nombre de los equipos','Historial de partidos, rendimiento de jugadores, estadísticas, lesiones','Solo los resultados del año actual','El ranking de los entrenadores'],ans:1},
-     {q:'¿Cuál es la diferencia entre IA débil y IA fuerte?',opts:['La IA débil es más lenta','La IA débil hace tareas específicas; la IA fuerte (hipotética) tendría inteligencia general como humanos','La IA fuerte usa más electricidad','No hay diferencia'],ans:1},
-     {q:'¿Por qué es importante que los jóvenes aprendan sobre IA hoy?',opts:['Solo es para programadores','Porque la IA transformará todos los trabajos y la sociedad en el futuro','No es importante','Solo para hacer videojuegos'],ans:1},
-     {q:'Claude (la IA que está en esta app) es un ejemplo de:',opts:['IA robótica','Modelo de lenguaje grande (LLM) de IA generativa','Sistema de control industrial','Red social'],ans:1}]
-  ]}
-]}
+// =====================
 
 // =====================
+// DATA
+// =====================
+
+const SUBJECTS = [
+  { id:'mat', name:'Matemáticas', icon:'📐', cls:'s-mat', topics: MAT_TOPICS() },
+  { id:'esp', name:'Español', icon:'📖', cls:'s-esp', topics: ESP_TOPICS() },
+  { id:'cie', name:'Ciencias', icon:'🔬', cls:'s-cie', topics: CIE_TOPICS() },
+  { id:'fin', name:'Finanzas', icon:'💰', cls:'s-fin', topics: FIN_TOPICS() },
+  { id:'soc', name:'Socioemocional', icon:'💜', cls:'s-soc', topics: SOC_TOPICS() },
+  { id:'ia',  name:'IA', icon:'🤖', cls:'s-ia',  topics: IA_TOPICS() },
+];
+
+const LEVEL_LABELS = ['Reconocer','Calcular','Aplicar','⚽ Reto Real Madrid'];
+
 // APP STATE
 // =====================
 
@@ -1671,6 +2471,7 @@ function startLevel(subjectId, topicIdx, levelIdx) {
   const subName = `${topic.name} · ${LEVEL_LABELS[levelIdx]}`;
   document.getElementById('quiz-title').textContent = subName;
 
+  recordStudyDay(state.currentUserId);
   showScreen('quiz');
   renderQuestion();
 }
@@ -1724,10 +2525,12 @@ function selectOption(optIdx) {
     state.correct++;
     feedback.className = 'feedback-box correct';
     feedback.textContent = '✅ ¡Correcto!';
+    playSound('correct');
   } else {
     opts[optIdx].classList.add('wrong');
     opts[q.ans].classList.add('correct');
     state.hearts--;
+    animateHeartLoss();
     feedback.className = 'feedback-box wrong';
     feedback.textContent = `❌ Respuesta correcta: ${q.opts[q.ans]}`;
 
@@ -1825,6 +2628,7 @@ function endQuiz(completed) {
     nextBtn.style.display = 'none';
   }
 
+  if (stars === 3) { setTimeout(() => { launchConfetti(); playSound('star3'); }, 300); } else if (stars > 0) { setTimeout(() => playSound('correct'), 300); }
   showScreen('results');
 }
 
@@ -1865,6 +2669,330 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+
+// =====================
+// PAPA DASHBOARD
+// =====================
+
+function openPapaDashboard() {
+  const userId = state.currentUserId;
+  if (!userId) { showToast('Selecciona un usuario primero'); return; }
+  const profile = state.profiles.find(p => p.id === userId);
+  const data = getUserData(userId);
+
+  // Update header
+  document.getElementById('papa-user-badge').textContent = profile.emoji + ' ' + profile.name;
+
+  // Build body
+  const body = document.getElementById('papa-body');
+  body.innerHTML = '';
+
+  // ---- HERO ----
+  const totalXP = data.xp || 0;
+  const level = Math.floor(totalXP / 500) + 1;
+  const xpInLevel = totalXP % 500;
+  const heroDiv = document.createElement('div');
+  heroDiv.className = 'papa-hero';
+  heroDiv.innerHTML = `
+    <div class="papa-hero-emoji">${profile.emoji}</div>
+    <div class="papa-hero-info">
+      <div class="papa-hero-name">${profile.name}</div>
+      <div class="papa-hero-xp">⚡ ${totalXP} XP total</div>
+    </div>
+    <div class="papa-hero-level">Nivel${level}</div>
+  `;
+  body.appendChild(heroDiv);
+
+  // ---- STATS ----
+  const levels = data.levels || {};
+  const completedLevels = Object.values(levels).filter(s => s > 0).length;
+  const totalStars = Object.values(levels).reduce((a,b) => a+b, 0);
+  
+  // Count study days from localStorage
+  const studyDays = getStudyDays(userId);
+  const estimatedMinutes = completedLevels * 8; // ~8 min per level avg
+
+  const statsDiv = document.createElement('div');
+  statsDiv.className = 'papa-stats';
+  statsDiv.innerHTML = `
+    <div class="papa-stat">
+      <div class="papa-stat-val">${completedLevels}</div>
+      <div class="papa-stat-label">Niveles completados</div>
+    </div>
+    <div class="papa-stat">
+      <div class="papa-stat-val">${totalStars}</div>
+      <div class="papa-stat-label">Estrellas ganadas</div>
+    </div>
+    <div class="papa-stat">
+      <div class="papa-stat-val">${studyDays.length}</div>
+      <div class="papa-stat-label">Días estudiados</div>
+    </div>
+  `;
+  body.appendChild(statsDiv);
+
+  // ---- TIME ESTIMATE ----
+  if (estimatedMinutes > 0) {
+    const timeDiv = document.createElement('div');
+    timeDiv.style.cssText = 'background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.3);border-radius:12px;padding:0.7rem 1rem;margin-bottom:1.2rem;font-size:0.9rem;color:#c4b5fd;font-weight:700;text-align:center;';
+    const hrs = Math.floor(estimatedMinutes/60);
+    const mins = estimatedMinutes % 60;
+    timeDiv.innerHTML = '⏱️ Tiempo estimado de estudio: ' + (hrs > 0 ? hrs + 'h ' : '') + mins + ' min';
+    body.appendChild(timeDiv);
+  }
+
+  // ---- PROGRESS POR MATERIA ----
+  const matSection = document.createElement('div');
+  matSection.className = 'papa-section';
+  matSection.innerHTML = '<div class="papa-section-title">📊 Progreso por materia</div>';
+
+  const subjectColors = { mat:'#3b82f6', esp:'#ec4899', cie:'#10b981', fin:'#fbbf24', soc:'#a78bfa', ia:'#fb7185' };
+
+  SUBJECTS.forEach(s => {
+    let total = 0, done = 0, stars = 0;
+    s.topics.forEach((t, ti) => {
+      t.levels.forEach((_, li) => {
+        total++;
+        const st = levels[getLevelKey(s.id, ti, li)] || 0;
+        if (st > 0) { done++; stars += st; }
+      });
+    });
+    const pct = total > 0 ? Math.round(done/total*100) : 0;
+    const color = subjectColors[s.id] || '#7c3aed';
+    const row = document.createElement('div');
+    row.className = 'papa-subject-row';
+    row.innerHTML = `
+      <div class="papa-subject-top">
+        <div class="papa-subject-icon">${s.icon}</div>
+        <div class="papa-subject-name">${s.name}</div>
+        <div class="papa-subject-pct" style="color:${color}">${pct}%</div>
+      </div>
+      <div class="papa-subject-bar">
+        <div class="papa-subject-fill" style="width:${pct}%;background:${color}"></div>
+      </div>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:0.4rem;">${done}/${total} niveles · ${stars} ⭐</div>
+    `;
+    matSection.appendChild(row);
+  });
+  body.appendChild(matSection);
+
+  // ---- PUNTOS DEBILES Y FUERTES ----
+  const areaData = [];
+  SUBJECTS.forEach(s => {
+    s.topics.forEach((t, ti) => {
+      let topicDone = 0, topicStars = 0, topicTotal = t.levels.length;
+      t.levels.forEach((_, li) => {
+        const st = levels[getLevelKey(s.id, ti, li)] || 0;
+        if (st > 0) { topicDone++; topicStars += st; }
+      });
+      if (topicDone > 0) {
+        areaData.push({
+          subject: s.name, icon: s.icon, topic: t.name,
+          done: topicDone, total: topicTotal,
+          stars: topicStars, maxStars: topicTotal * 3,
+          pct: Math.round(topicDone/topicTotal*100),
+          avgStars: topicStars / topicDone
+        });
+      }
+    });
+  });
+
+  if (areaData.length > 0) {
+    // Sort by avgStars
+    const sorted = [...areaData].sort((a,b) => a.avgStars - b.avgStars);
+    const weak = sorted.slice(0, Math.min(3, sorted.length));
+    const strong = sorted.slice(-Math.min(3, sorted.length)).reverse();
+
+    const weakSection = document.createElement('div');
+    weakSection.className = 'papa-section';
+    weakSection.innerHTML = '<div class="papa-section-title">⚠️ Áreas a reforzar</div>';
+    weak.forEach(a => {
+      const card = document.createElement('div');
+      card.className = 'papa-area-card';
+      card.innerHTML = `
+        <div class="papa-area-badge weak">${a.icon}</div>
+        <div class="papa-area-info">
+          <div class="papa-area-name">${a.topic}</div>
+          <div class="papa-area-detail">${a.subject} · ${a.done}/${a.total} niveles completados</div>
+        </div>
+        <div class="papa-area-stars">${'⭐'.repeat(Math.round(a.avgStars)) || '☆'}</div>
+      `;
+      weakSection.appendChild(card);
+    });
+    body.appendChild(weakSection);
+
+    const strongSection = document.createElement('div');
+    strongSection.className = 'papa-section';
+    strongSection.innerHTML = '<div class="papa-section-title">🏆 Puntos fuertes</div>';
+    strong.forEach(a => {
+      const card = document.createElement('div');
+      card.className = 'papa-area-card';
+      card.innerHTML = `
+        <div class="papa-area-badge strong">${a.icon}</div>
+        <div class="papa-area-info">
+          <div class="papa-area-name">${a.topic}</div>
+          <div class="papa-area-detail">${a.subject} · ${a.pct}% completado</div>
+        </div>
+        <div class="papa-area-stars">${'⭐'.repeat(Math.round(a.avgStars))}</div>
+      `;
+      strongSection.appendChild(card);
+    });
+    body.appendChild(strongSection);
+  } else {
+    const empty = document.createElement('div');
+    empty.className = 'papa-empty';
+    empty.innerHTML = '🎮 Santi aún no ha completado ningún nivel.<br><span style="font-size:0.85rem">¡Anímalos a empezar!</span>';
+    body.appendChild(empty);
+  }
+
+  // ---- DIAS ESTUDIADOS ----
+  if (studyDays.length > 0) {
+    const daysSection = document.createElement('div');
+    daysSection.className = 'papa-section';
+    daysSection.innerHTML = '<div class="papa-section-title">📅 Días que ha estudiado</div>';
+    const grid = document.createElement('div');
+    grid.className = 'papa-days-grid';
+    studyDays.slice(-20).forEach(d => {
+      const chip = document.createElement('div');
+      chip.className = 'papa-day-chip studied';
+      chip.textContent = d;
+      grid.appendChild(chip);
+    });
+    daysSection.appendChild(grid);
+    body.appendChild(daysSection);
+  }
+
+  showScreen('papa');
+}
+
+function getStudyDays(userId) {
+  const key = `as3_days_${userId}`;
+  const raw = localStorage.getItem(key);
+  return raw ? JSON.parse(raw) : [];
+}
+
+function recordStudyDay(userId) {
+  const key = `as3_days_${userId}`;
+  const today = new Date().toLocaleDateString('es-MX', {day:'2-digit', month:'short'});
+  const days = getStudyDays(userId);
+  if (!days.includes(today)) {
+    days.push(today);
+    localStorage.setItem(key, JSON.stringify(days));
+  }
+}
+
+
+// =====================
+// PREMIUM EFFECTS
+// =====================
+
+// Confetti
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#fbbf24','#a855f7','#10b981','#3b82f6','#f472b6','#f87171','#34d399'];
+  const particles = Array.from({length: 80}, () => ({
+    x: Math.random() * canvas.width,
+    y: -10 - Math.random() * 100,
+    r: 4 + Math.random() * 6,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    vx: (Math.random() - 0.5) * 3,
+    vy: 2 + Math.random() * 4,
+    rotation: Math.random() * 360,
+    rotSpeed: (Math.random() - 0.5) * 8,
+    shape: Math.random() > 0.5 ? 'rect' : 'circle',
+    opacity: 1
+  }));
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = p.color;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation * Math.PI / 180);
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.r, -p.r/2, p.r*2, p.r);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.rotSpeed;
+      if (p.y > canvas.height * 0.6) p.opacity -= 0.02;
+    });
+    frame++;
+    if (frame < 120) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+
+// Sound effects (Web Audio API — no external files needed)
+function playSound(type) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+
+    if (type === 'correct') {
+      osc.frequency.setValueAtTime(520, ctx.currentTime);
+      osc.frequency.setValueAtTime(660, ctx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(800, ctx.currentTime + 0.2);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } else if (type === 'wrong') {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(300, ctx.currentTime);
+      osc.frequency.setValueAtTime(200, ctx.currentTime + 0.15);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.3);
+    } else if (type === 'star3') {
+      // Victory fanfare
+      [523, 659, 784, 1047].forEach((freq, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0.12, ctx.currentTime + i*0.12);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i*0.12 + 0.3);
+        o.start(ctx.currentTime + i*0.12);
+        o.stop(ctx.currentTime + i*0.12 + 0.3);
+      });
+    }
+  } catch(e) {}
+}
+
+// Animate hearts row when losing a heart
+function animateHeartLoss() {
+  const row = document.getElementById('hearts-row');
+  row.classList.remove('lost');
+  void row.offsetWidth; // reflow
+  row.classList.add('lost');
+  setTimeout(() => row.classList.remove('lost'), 500);
+}
+
+// Screen transition with direction
+function showScreenAnimated(name) {
+  const current = document.querySelector('.screen.active');
+  const next = document.getElementById('screen-' + name);
+  if (!next || current === next) return;
+  current.classList.remove('active');
+  next.classList.add('active');
 }
 
 // =====================
