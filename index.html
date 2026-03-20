@@ -2186,14 +2186,15 @@ function CIE_TOPICS() { return [
 // DATA
 // =====================
 
-const SUBJECTS = [
-  { id:'mat', name:'Matemáticas', icon:'📐', cls:'s-mat', topics: MAT_TOPICS() },
-  { id:'esp', name:'Español', icon:'📖', cls:'s-esp', topics: ESP_TOPICS() },
-  { id:'cie', name:'Ciencias', icon:'🔬', cls:'s-cie', topics: CIE_TOPICS() },
-  { id:'fin', name:'Finanzas', icon:'💰', cls:'s-fin', topics: FIN_TOPICS() },
-  { id:'soc', name:'Socioemocional', icon:'💜', cls:'s-soc', topics: SOC_TOPICS() },
-  { id:'ia',  name:'IA', icon:'🤖', cls:'s-ia',  topics: IA_TOPICS() },
-];
+function getSubjects() { return [
+  { id:"mat", name:"Matemáticas", icon:"📐", cls:"s-mat", topics: MAT_TOPICS() },
+  { id:"esp", name:"Español", icon:"📖", cls:"s-esp", topics: ESP_TOPICS() },
+  { id:"cie", name:"Ciencias", icon:"🔬", cls:"s-cie", topics: CIE_TOPICS() },
+  { id:"fin", name:"Finanzas", icon:"💰", cls:"s-fin", topics: FIN_TOPICS() },
+  { id:"soc", name:"Socioemocional", icon:"💜", cls:"s-soc", topics: SOC_TOPICS() },
+  { id:"ia",  name:"IA", icon:"🤖", cls:"s-ia",  topics: IA_TOPICS() },
+]; }
+
 
 const LEVEL_LABELS = ['Reconocer','Calcular','Aplicar','⚽ Reto Real Madrid'];
 
@@ -2249,7 +2250,7 @@ function isLevelUnlocked(userId, subjectId, topicIdx, levelIdx) {
   }
   // First level of a topic: check if previous topic's last level is done
   if (topicIdx > 0) {
-    const subj = SUBJECTS.find(s => s.id === subjectId);
+    const subj = getSubjects().find(s => s.id === subjectId);
     const prevTopic = subj.topics[topicIdx - 1];
     const lastLevel = prevTopic.levels.length - 1;
     return getLevelStars(userId, subjectId, topicIdx - 1, lastLevel) > 0;
@@ -2383,7 +2384,7 @@ function renderSubjects() {
   grid.innerHTML = '';
   const userId = state.currentUserId;
 
-  SUBJECTS.forEach(s => {
+  getSubjects().forEach(s => {
     const data = getUserData(userId);
     let totalLevels = 0;
     let completedLevels = 0;
@@ -2414,7 +2415,7 @@ function renderSubjects() {
 
 function openSubject(subjectId) {
   state.currentSubjectId = subjectId;
-  const subj = SUBJECTS.find(s => s.id === subjectId);
+  const subj = getSubjects().find(s => s.id === subjectId);
   document.getElementById('subj-icon').textContent = subj.icon;
   document.getElementById('subj-name').textContent = subj.name;
   renderTopics(subj);
@@ -2475,7 +2476,7 @@ function startLevel(subjectId, topicIdx, levelIdx) {
   state.currentTopicIdx = topicIdx;
   state.currentLevelIdx = levelIdx;
 
-  const subj = SUBJECTS.find(s => s.id === subjectId);
+  const subj = getSubjects().find(s => s.id === subjectId);
   const topic = subj.topics[topicIdx];
   state.questions = [...topic.levels[levelIdx]];
   state.questionIdx = 0;
@@ -2498,7 +2499,7 @@ function renderQuestion() {
   document.getElementById('quiz-progress').style.width =
     ((state.questionIdx) / total * 100) + '%';
 
-  const subj = SUBJECTS.find(s => s.id === state.currentSubjectId);
+  const subj = getSubjects().find(s => s.id === state.currentSubjectId);
   const topic = subj.topics[state.currentTopicIdx];
   document.getElementById('q-badge').textContent =
     `${topic.name} · Nivel ${state.currentLevelIdx + 1} · ${LEVEL_LABELS[state.currentLevelIdx]}`;
@@ -2627,7 +2628,7 @@ function endQuiz(completed) {
   document.getElementById('papa-msg').innerHTML = '💬 ' + msgList[Math.floor(Math.random() * msgList.length)];
 
   // Next button
-  const subj = SUBJECTS.find(s => s.id === state.currentSubjectId);
+  const subj = getSubjects().find(s => s.id === state.currentSubjectId);
   const topic = subj.topics[state.currentTopicIdx];
   const hasNext = state.currentLevelIdx < topic.levels.length - 1 ||
                   state.currentTopicIdx < subj.topics.length - 1;
@@ -2657,7 +2658,7 @@ function continueAfterResults() {
     return;
   }
 
-  const subj = SUBJECTS.find(s => s.id === state.currentSubjectId);
+  const subj = getSubjects().find(s => s.id === state.currentSubjectId);
 
   // Next level in same topic
   if (state.currentLevelIdx < subj.topics[state.currentTopicIdx].levels.length - 1) {
@@ -2671,7 +2672,7 @@ function continueAfterResults() {
 }
 
 function goToSubject() {
-  const subj = SUBJECTS.find(s => s.id === state.currentSubjectId);
+  const subj = getSubjects().find(s => s.id === state.currentSubjectId);
   openSubject(state.currentSubjectId);
 }
 
@@ -2764,7 +2765,7 @@ function openPapaDashboard() {
 
   const subjectColors = { mat:'#3b82f6', esp:'#ec4899', cie:'#10b981', fin:'#fbbf24', soc:'#a78bfa', ia:'#fb7185' };
 
-  SUBJECTS.forEach(s => {
+  getSubjects().forEach(s => {
     let total = 0, done = 0, stars = 0;
     s.topics.forEach((t, ti) => {
       t.levels.forEach((_, li) => {
@@ -2794,7 +2795,7 @@ function openPapaDashboard() {
 
   // ---- PUNTOS DEBILES Y FUERTES ----
   const areaData = [];
-  SUBJECTS.forEach(s => {
+  getSubjects().forEach(s => {
     s.topics.forEach((t, ti) => {
       let topicDone = 0, topicStars = 0, topicTotal = t.levels.length;
       t.levels.forEach((_, li) => {
