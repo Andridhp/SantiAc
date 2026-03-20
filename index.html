@@ -1229,6 +1229,7 @@
   <div class="profiles-sub">¿Quién va a estudiar hoy?</div>
   <div class="profiles-grid" id="profiles-grid"></div>
   <button class="btn-add-profile" onclick="openAddProfile()">＋ Agregar usuario</button>
+  <button onclick="resetApp()" style="margin-top:1rem;background:none;border:none;color:rgba(139,131,196,0.5);font-size:0.75rem;cursor:pointer;font-family:Nunito,sans-serif;">↺ Reiniciar app</button>
 </div>
 
 <!-- ADD PROFILE MODAL -->
@@ -2269,15 +2270,26 @@ function showScreen(name) {
 // PROFILES
 // =====================
 
-function loadProfiles() {
-  const raw = localStorage.getItem('as3_profiles');
-  if (raw) {
-    state.profiles = JSON.parse(raw);
-  } else {
-    state.profiles = [...DEFAULT_PROFILES];
+
+function resetApp() {
+  if (confirm('¿Reiniciar la app? Esto borrará el progreso guardado.')) {
+    localStorage.clear();
+    location.reload();
   }
-  if (!state.profiles.find(p => p.id === 'santi')) {
-    state.profiles.unshift({ id:'santi', name:'Santi', emoji:'⚽' });
+}
+function loadProfiles() {
+  try {
+    const raw = localStorage.getItem('as3_profiles');
+    if (raw) {
+      state.profiles = JSON.parse(raw);
+    } else {
+      state.profiles = [...DEFAULT_PROFILES];
+    }
+    if (!state.profiles.find(p => p.id === 'santi')) {
+      state.profiles.unshift({ id:'santi', name:'Santi', emoji:'⚽' });
+    }
+  } catch(e) {
+    state.profiles = [...DEFAULT_PROFILES];
   }
   saveProfiles();
   renderProfiles();
